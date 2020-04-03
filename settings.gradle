@@ -1,0 +1,4 @@
+rootProject.name='CovidUpdate'
+include ':app'
+include ':domain'
+include ':data-adapter'
