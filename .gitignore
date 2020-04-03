@@ -17,6 +17,9 @@
 .externalNativeBuild
 .cxx
 
+# koin
+koin.propoperties
+
 # Files for the Dalvik VM
 *.dex
 
@@ -73,3 +76,5 @@ captures/
 
 wh.properties
 
+
+app/src/main/assets/koin.properties
