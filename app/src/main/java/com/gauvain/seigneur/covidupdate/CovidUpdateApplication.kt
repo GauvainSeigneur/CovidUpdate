@@ -1,6 +1,8 @@
 package com.gauvain.seigneur.covidupdate
 
 import android.app.Application
+import com.gauvain.seigneur.covidupdate.injection.useCaseModule
+import com.gauvain.seigneur.covidupdate.injection.viewModelModule
 import com.gauvain.seigneur.data_adapter.injection.adapterModule
 import com.gauvain.seigneur.data_adapter.injection.remoteDataSourceModule
 import org.koin.android.ext.koin.androidContext
@@ -18,7 +20,10 @@ class CovidUpdateApplication : Application() {
             androidFileProperties()
             modules(listOf(
                 remoteDataSourceModule,
-                adapterModule))
+                adapterModule,
+                useCaseModule,
+                viewModelModule
+            ))
         }
     }
 }
