@@ -30,11 +30,14 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
-
     implementation project(':domain')
+
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kt_version"
