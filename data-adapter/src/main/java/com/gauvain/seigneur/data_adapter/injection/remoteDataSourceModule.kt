@@ -1,6 +1,8 @@
-package com.gauvain.seigneur.data_adapter
+package com.gauvain.seigneur.data_adapter.injection
 
 import android.util.Log
+import com.gauvain.seigneur.data_adapter.service.CovidService
+import com.gauvain.seigneur.data_adapter.service.HeaderApiKeyInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +23,11 @@ val remoteDataSourceModule = module {
     factory {
         OkHttpClient.Builder()
             .addInterceptor(get())
-            .addNetworkInterceptor(HeaderApiKeyInterceptor(getProperty("api_key")))
+            .addNetworkInterceptor(
+                HeaderApiKeyInterceptor(
+                    getProperty("api_key")
+                )
+            )
             .connectTimeout(30L, TimeUnit.SECONDS)
             .readTimeout(30L, TimeUnit.SECONDS)
             .build()

@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.data_adapter
+package com.gauvain.seigneur.data_adapter.service
 
 import java.io.IOException
 
