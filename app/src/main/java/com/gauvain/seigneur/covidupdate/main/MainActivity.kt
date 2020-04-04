@@ -1,14 +1,16 @@
-package com.gauvain.seigneur.covidupdate
+package com.gauvain.seigneur.covidupdate.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.utils.RequestState
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val statsViewModel: StatisticsViewModel by viewModel()
+    private val statsViewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

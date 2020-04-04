@@ -1,21 +1,23 @@
-package com.gauvain.seigneur.covidupdate
+package com.gauvain.seigneur.covidupdate.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gauvain.seigneur.covidupdate.main.data.StatisticsData
+import com.gauvain.seigneur.covidupdate.main.data.toStatisticsData
+import com.gauvain.seigneur.covidupdate.utils.RequestState
 import com.gauvain.seigneur.domain.request.Outcome
-import com.gauvain.seigneur.domain.model.StatisticsModel
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class StatisticsViewModel(private val fetchStatisticsUseCase: FetchStatisticsUseCase) :
+class MainViewModel(private val fetchStatisticsUseCase: FetchStatisticsUseCase) :
     ViewModel() {
 
-    val statisticsModel: MutableLiveData<List<StatisticsModel>> by lazy {
+    val statisticsModel: MutableLiveData<List<StatisticsData>> by lazy {
         fetchStatistics()
-        MutableLiveData<List<StatisticsModel>>()
+        MutableLiveData<List<StatisticsData>>()
     }
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
 
@@ -31,7 +33,9 @@ class StatisticsViewModel(private val fetchStatisticsUseCase: FetchStatisticsUse
                     if (result.data.isEmpty()) {
                         loadingState.value = RequestState.IS_EMPTY
                     } else {
-                        statisticsModel.value = result.data
+                        statisticsModel.value = result.data.map {
+                            it.toStatisticsData()
+                        }
                     }
                 }
                 is Outcome.Error -> {

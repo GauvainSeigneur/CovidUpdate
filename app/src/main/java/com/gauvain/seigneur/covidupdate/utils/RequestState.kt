@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate
+package com.gauvain.seigneur.covidupdate.utils
 
 enum class RequestState {
     IS_LOADING,
