@@ -1,18 +1,18 @@
 package com.gauvain.seigneur.data_adapter.model
 
-typealias DomainStatistics = com.gauvain.seigneur.domain.model.Statistics
-typealias DomainCases = com.gauvain.seigneur.domain.model.Cases
-typealias DomainDeaths = com.gauvain.seigneur.domain.model.Deaths
+import com.gauvain.seigneur.domain.model.CasesModel
+import com.gauvain.seigneur.domain.model.DeathsModel
+import com.gauvain.seigneur.domain.model.StatisticsModel
 
-fun Stat.toDomainStatistics() = DomainStatistics(
+fun Stat.toDomainStatistics() = StatisticsModel(
     country = this.country,
-    cases = this.cases.toDomainCases(),
-    deaths = this.deaths.toDomainDeaths(),
+    casesModel = this.cases.toDomainCases(),
+    deathsModel = this.deaths.toDomainDeaths(),
     day = this.day,
     time = this.time
 )
 
-fun Cases.toDomainCases() = DomainCases(
+fun Cases.toDomainCases() = CasesModel(
     new = this.new,
     active = this.active,
     critical = this.critical,
@@ -20,7 +20,7 @@ fun Cases.toDomainCases() = DomainCases(
     total = this.total
 )
 
-fun Deaths.toDomainDeaths() = DomainDeaths(
+fun Deaths.toDomainDeaths() = DeathsModel(
     new = this.new,
     total = this.total
 )

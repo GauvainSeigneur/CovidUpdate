@@ -10,7 +10,9 @@ data class Statistics(
     @SerializedName("errors")
     val errors: List<String>,
     @SerializedName("response")
-    val stats: List<Stat>
+    val stats: List<Stat>,
+    //in case of error like api key uncorrect
+    @SerializedName("message") val message: String?=null
 )
 
 data class Stat(
