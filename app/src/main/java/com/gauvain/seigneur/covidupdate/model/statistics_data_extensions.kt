@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.data
+package com.gauvain.seigneur.covidupdate.model
 
 import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.formatTo
@@ -6,9 +6,10 @@ import com.gauvain.seigneur.domain.model.CasesModel
 import com.gauvain.seigneur.domain.model.DeathsModel
 import com.gauvain.seigneur.domain.model.StatisticsModel
 
-fun StatisticsModel.toStatisticsData() =
+fun StatisticsModel.toStatisticsData(code:String?) =
     StatisticsData(
         country = this.country,
+        countryCode = code,
         casesData = this.casesModel.toCasesData(),
         deathsData = this.deathsModel.toDeathsData(),
         day = this.day.formatTo(DATA_DATE_FORMAT)
