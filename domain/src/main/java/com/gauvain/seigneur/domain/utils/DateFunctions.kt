@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.domain
+package com.gauvain.seigneur.domain.utils
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -13,7 +13,8 @@ const val SERVER_TIME_FORMAT = "$SERVER_DATE_FORMAT'T'HH:mm:ssX"
 fun createDate(date: String, format: String):
     Date = SimpleDateFormat(format, Locale.getDefault()).parse(date)
 
-fun String.toDate(format: String): Date = createDate(this, format)
+fun String.toDate(format: String): Date =
+    createDate(this, format)
 
 fun Date.formatTo(format: String): String =
     SimpleDateFormat(format, Locale.getDefault()).format(this)

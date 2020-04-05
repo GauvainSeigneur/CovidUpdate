@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.main.data
+package com.gauvain.seigneur.covidupdate.data
 
 data class StatisticsData(
     val country: String,

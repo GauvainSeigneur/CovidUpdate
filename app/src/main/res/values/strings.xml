@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">CovidUpdate</string>
+
+    <string name="empty_list_title">Empty list title</string>
+    <string name="empty_list_description">Empty list description</string>
 </resources>
