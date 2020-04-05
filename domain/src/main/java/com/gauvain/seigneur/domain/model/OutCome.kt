@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.domain.request
+package com.gauvain.seigneur.domain.model
 
 sealed class Outcome<out T : Any, out E : Any> {
     data class Success<out T : Any>(val data: T) : Outcome<T, Nothing>()

@@ -1,8 +1,8 @@
 package com.gauvain.seigneur.domain.provider
 
-import com.gauvain.seigneur.domain.request.RequestExceptionType
+import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.model.StatisticsModel
-import com.gauvain.seigneur.domain.request.BaseRequestException
+import java.lang.Exception
 
 interface StatisticsRepository {
     @Throws(GetStatisticsException::class)
@@ -10,6 +10,6 @@ interface StatisticsRepository {
 }
 
 class GetStatisticsException(
-    type: RequestExceptionType,
-    message: String? = null
-) : BaseRequestException(type, message)
+    val type: RequestExceptionType,
+    val description: String? = null
+) : Exception()

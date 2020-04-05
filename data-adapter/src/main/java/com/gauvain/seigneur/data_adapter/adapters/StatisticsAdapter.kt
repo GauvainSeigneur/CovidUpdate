@@ -1,17 +1,14 @@
 package com.gauvain.seigneur.data_adapter.adapters
 
+import com.gauvain.seigneur.data_adapter.model.Statistics
 import com.gauvain.seigneur.data_adapter.model.toDomainStatistics
 import com.gauvain.seigneur.data_adapter.service.CovidService
-import com.gauvain.seigneur.domain.request.RequestExceptionType
+import com.gauvain.seigneur.data_adapter.utils.getRequestExceptionContent
+import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.provider.GetStatisticsException
 import com.gauvain.seigneur.domain.provider.StatisticsRepository
 import com.gauvain.seigneur.domain.model.StatisticsModel
-import com.gauvain.seigneur.domain.request.BaseRequestException
 import retrofit2.Response
-import java.io.IOException
-import java.net.UnknownHostException
-
-typealias EncapsuledStatistics = com.gauvain.seigneur.data_adapter.model.Statistics
 
 class StatisticsAdapter(val service: CovidService) :
     StatisticsRepository {
@@ -20,12 +17,15 @@ class StatisticsAdapter(val service: CovidService) :
         val result = runCatching {
             service.statistics(country).execute()
         }.onFailure {
-            handleFailure(it)
+            val exceptionContent = getRequestExceptionContent(
+                it
+            )
+            throw GetStatisticsException(exceptionContent.exceptionType, exceptionContent.message)
         }
         return handleResult(result)
     }
 
-    private fun handleResult(result: Result<Response<EncapsuledStatistics>>): List<StatisticsModel> {
+    private fun handleResult(result: Result<Response<Statistics>>): List<StatisticsModel> {
         return result.run {
             getOrNull()?.body().run {
                 this?.message?.let {
@@ -35,29 +35,6 @@ class StatisticsAdapter(val service: CovidService) :
                     stat.toDomainStatistics()
                 }
             } ?: throw GetStatisticsException(RequestExceptionType.BODY_NULL, "Null value")
-        }
-    }
-
-    private fun handleFailure(throwable: Throwable) {
-        when (throwable) {
-            is UnknownHostException -> throw GetStatisticsException(
-                RequestExceptionType.UNKNOWN_HOST,
-                "Unknown Host Exception"
-            )
-            is UnknownError -> throw GetStatisticsException(
-                RequestExceptionType.ERROR_UNKNOWN,
-                "Error unknwon"
-            )
-            is IOException -> throw GetStatisticsException(
-                RequestExceptionType.CONNECTION_LOST,
-                "Connection lost during request"
-            )
-            else -> {
-                throw GetStatisticsException(
-                    RequestExceptionType.ERROR_UNKNOWN,
-                    "Error unknwon"
-                )
-            }
         }
     }
 }

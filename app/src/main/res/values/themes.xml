@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="CovidUpdateTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Original AppCompat attributes. -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryVariant</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="android:colorError" tools:targetApi="26">@color/colorError</item>
+        <!--<item name="android:textColor"></item> -->
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:navigationBarColor">@color/colorBackground</item>
+        <item name="android:colorEdgeEffect">@color/colorEdge</item>
+        <item name="android:fontFamily">@font/default_work_font_family</item>
+
+        <!-- New MaterialComponents attributes. -->
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <!-- color for tab, toolbar, bototm navgation, snackbar -->
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <!--<item name="colorOnBackground">@color/colorOnBackground</item> -->
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <!--<item name="scrimBackground">@color/mtrl_scrim_color</item>-->
+        <!-- Widgets default style -->
+        <item name="materialButtonStyle">@style/Widget.Button</item>
+        <item name="floatingActionButtonStyle">@style/Widget.Fab</item>
+        <item name="toolbarStyle">@style/Widget.Toolbar</item>
+        <item name="tabStyle">@style/Widget.Tabs</item>
+        <item name="appBarLayoutStyle">@style/Widget.AppbarLayout</item>
+        <!--<item name="materialCardViewStyle"></item>
+        <item name="chipStyle">@style/ChipStyle</item>-->
+
+        <!-- transition and overlay-->
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementsUseOverlay">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <!--Typography -->
+        <item name="textAppearanceHeadline1">@style/Typography.TextAppearance.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/Typography.TextAppearance.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/Typography.TextAppearance.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/Typography.TextAppearance.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/Typography.TextAppearance.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/Typography.TextAppearance.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/Typography.TextAppearance.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/Typography.TextAppearance.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/Typography.TextAppearance.Body1</item>
+        <item name="textAppearanceBody2">@style/Typography.TextAppearance.Body2</item>
+        <item name="textAppearanceButton">@style/Typography.TextAppearance.Button</item>
+        <item name="textAppearanceCaption">@style/Typography.TextAppearance.Caption</item>
+        <item name="textAppearanceOverline">@style/Typography.TextAppearance.Overline</item>
+    </style>
+
+</resources>

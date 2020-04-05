@@ -1,11 +1,13 @@
 package com.gauvain.seigneur.domain.model
 
+import java.util.*
+
 data class StatisticsModel(
     val country: String,
     val casesModel: CasesModel,
     val deathsModel: DeathsModel,
-    val day: String,
-    val time: String
+    val day: Date,
+    val time: Date
 )
 
 data class CasesModel(

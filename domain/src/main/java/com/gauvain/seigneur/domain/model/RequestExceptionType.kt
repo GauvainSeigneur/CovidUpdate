@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.domain.request
+package com.gauvain.seigneur.domain.model
 
 enum class RequestExceptionType {
     UNKNOWN_HOST,
@@ -6,5 +6,6 @@ enum class RequestExceptionType {
     CONNECTION_LOST,
     UNAUTHORIZED,
     SERVER_INTERNAL_ERROR,
-    BODY_NULL
+    BODY_NULL,
+    UNKNOWN_OBJECT
 }
