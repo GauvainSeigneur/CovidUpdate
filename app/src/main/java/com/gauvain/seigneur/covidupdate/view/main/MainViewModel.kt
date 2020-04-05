@@ -4,14 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.data.ErrorData
-import com.gauvain.seigneur.covidupdate.data.LiveDataState
-import com.gauvain.seigneur.covidupdate.data.StatisticsData
-import com.gauvain.seigneur.covidupdate.data.toStatisticsData
+import com.gauvain.seigneur.covidupdate.model.ErrorData
+import com.gauvain.seigneur.covidupdate.model.LiveDataState
+import com.gauvain.seigneur.covidupdate.model.StatisticsData
+import com.gauvain.seigneur.covidupdate.model.toStatisticsData
 import com.gauvain.seigneur.covidupdate.utils.RequestState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
+import com.gauvain.seigneur.domain.provider.CountryCodeProvider
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +20,10 @@ import kotlinx.coroutines.withContext
 
 typealias StatisticsState = LiveDataState<List<StatisticsData>>
 
-class MainViewModel(private val fetchStatisticsUseCase: FetchStatisticsUseCase) :
+class MainViewModel(
+    private val fetchStatisticsUseCase: FetchStatisticsUseCase,
+    private val countryCodeProvider: CountryCodeProvider
+) :
     ViewModel() {
 
     val statisLiveItemData: MutableLiveData<StatisticsState> by lazy {
@@ -38,14 +42,16 @@ class MainViewModel(private val fetchStatisticsUseCase: FetchStatisticsUseCase) 
             when (result) {
                 is Outcome.Success -> {
                     if (result.data.isEmpty()) {
-                        statisLiveItemData.value = LiveDataState.Error(ErrorData(
-                            null,
-                            StringPresenter(R.string.empty_list_title),
-                            StringPresenter(R.string.empty_list_description)
-                        ))
+                        statisLiveItemData.value = LiveDataState.Error(
+                            ErrorData(
+                                null,
+                                StringPresenter(R.string.empty_list_title),
+                                StringPresenter(R.string.empty_list_description)
+                            )
+                        )
                     } else {
                         statisLiveItemData.value = LiveDataState.Success(result.data.map {
-                            it.toStatisticsData()
+                            it.toStatisticsData(getCountryCode(it.country))
                         })
                     }
                 }
@@ -55,6 +61,9 @@ class MainViewModel(private val fetchStatisticsUseCase: FetchStatisticsUseCase) 
             }
         }
     }
+
+    private fun getCountryCode(countryName: String): String? =
+        countryCodeProvider.getCountryCode(countryName)
 
     private fun setErrorLiveData(errorType: ErrorType): LiveDataState.Error =
         when (errorType) {

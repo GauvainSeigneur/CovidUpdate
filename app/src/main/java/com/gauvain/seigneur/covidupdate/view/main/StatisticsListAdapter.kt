@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.gauvain.seigneur.covidupdate.data.StatisticsData
+import com.gauvain.seigneur.covidupdate.model.StatisticsData
 
 class StatisticsListAdapter(
     private val itemListener: (position: Int) -> Unit

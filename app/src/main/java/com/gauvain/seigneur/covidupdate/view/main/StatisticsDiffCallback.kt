@@ -2,7 +2,7 @@ package com.gauvain.seigneur.covidupdate.view.main
 
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import com.gauvain.seigneur.covidupdate.data.StatisticsData
+import com.gauvain.seigneur.covidupdate.model.StatisticsData
 
 class StatisticsDiffCallback(
     private var newStats: List<StatisticsData>,

@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.data
+package com.gauvain.seigneur.covidupdate.model
 
 sealed class LiveDataState<out T : Any> {
     data class Success<out T : Any>(val data: T) : LiveDataState<T>()

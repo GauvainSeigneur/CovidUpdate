@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.data
+package com.gauvain.seigneur.covidupdate.model
 
 import androidx.annotation.DrawableRes
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter

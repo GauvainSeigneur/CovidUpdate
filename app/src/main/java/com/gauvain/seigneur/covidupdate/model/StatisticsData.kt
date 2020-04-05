@@ -1,7 +1,8 @@
-package com.gauvain.seigneur.covidupdate.data
+package com.gauvain.seigneur.covidupdate.model
 
 data class StatisticsData(
     val country: String,
+    val countryCode: String? = null,
     val casesData: CasesData,
     val deathsData: DeathsData,
     val day: String
