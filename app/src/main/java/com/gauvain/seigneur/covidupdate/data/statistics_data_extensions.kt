@@ -1,7 +1,7 @@
-package com.gauvain.seigneur.covidupdate.main.data
+package com.gauvain.seigneur.covidupdate.data
 
-import com.gauvain.seigneur.domain.DATA_DATE_FORMAT
-import com.gauvain.seigneur.domain.formatTo
+import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
+import com.gauvain.seigneur.domain.utils.formatTo
 import com.gauvain.seigneur.domain.model.CasesModel
 import com.gauvain.seigneur.domain.model.DeathsModel
 import com.gauvain.seigneur.domain.model.StatisticsModel
