@@ -4,14 +4,17 @@ import com.google.gson.annotations.SerializedName
 
 data class Statistics(
     @SerializedName("get")
-    val get: String,
+    override val get: String,
     @SerializedName("parameters")
-    val parameters: List<String>,
+    override val parameters: List<String>,
     @SerializedName("errors")
-    val errors: List<String>,
+    override val errors: List<String>,
     @SerializedName("response")
-    val stats: List<Stat>
-)
+    val stats: List<Stat>,
+    //in case of error like api key uncorrect
+    @SerializedName("message")
+    override val message: String?=null
+):BaseResponse()
 
 data class Stat(
     @SerializedName("country")

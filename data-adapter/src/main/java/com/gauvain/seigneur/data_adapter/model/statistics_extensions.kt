@@ -1,18 +1,21 @@
 package com.gauvain.seigneur.data_adapter.model
 
-typealias DomainStatistics = com.gauvain.seigneur.domain.model.Statistics
-typealias DomainCases = com.gauvain.seigneur.domain.model.Cases
-typealias DomainDeaths = com.gauvain.seigneur.domain.model.Deaths
+import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
+import com.gauvain.seigneur.domain.utils.SERVER_TIME_FORMAT
+import com.gauvain.seigneur.domain.model.CasesModel
+import com.gauvain.seigneur.domain.model.DeathsModel
+import com.gauvain.seigneur.domain.model.StatisticsModel
+import com.gauvain.seigneur.domain.utils.toDate
 
-fun Stat.toDomainStatistics() = DomainStatistics(
+fun Stat.toDomainStatistics() = StatisticsModel(
     country = this.country,
-    cases = this.cases.toDomainCases(),
-    deaths = this.deaths.toDomainDeaths(),
-    day = this.day,
-    time = this.time
+    casesModel = this.cases.toDomainCases(),
+    deathsModel = this.deaths.toDomainDeaths(),
+    day = this.day.toDate(SERVER_DATE_FORMAT),
+    time = this.time.toDate(SERVER_TIME_FORMAT)
 )
 
-fun Cases.toDomainCases() = DomainCases(
+fun Cases.toDomainCases() = CasesModel(
     new = this.new,
     active = this.active,
     critical = this.critical,
@@ -20,7 +23,7 @@ fun Cases.toDomainCases() = DomainCases(
     total = this.total
 )
 
-fun Deaths.toDomainDeaths() = DomainDeaths(
+fun Deaths.toDomainDeaths() = DeathsModel(
     new = this.new,
     total = this.total
 )

@@ -1,14 +1,16 @@
 package com.gauvain.seigneur.domain.model
 
-data class Statistics(
+import java.util.*
+
+data class StatisticsModel(
     val country: String,
-    val cases: Cases,
-    val deaths: Deaths,
-    val day: String,
-    val time: String
+    val casesModel: CasesModel,
+    val deathsModel: DeathsModel,
+    val day: Date,
+    val time: Date
 )
 
-data class Cases(
+data class CasesModel(
     val new: String? = null,
     val active: Int,
     val critical: Int,
@@ -16,7 +18,7 @@ data class Cases(
     val total: Int
 )
 
-data class Deaths(
+data class DeathsModel(
     val new: String? = null,
     val total: Int
 )
