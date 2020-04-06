@@ -3,11 +3,10 @@ package com.gauvain.seigneur.covidupdate.view.main
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
-import coil.api.get
 import coil.api.load
 import coil.decode.SvgDecoder
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.StatisticsData
+import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
 import kotlinx.android.synthetic.main.item_statistics.view.*
 
 class StatisticsViewHolder(
@@ -19,9 +18,9 @@ class StatisticsViewHolder(
         val layout = R.layout.item_statistics
     }
 
-    fun bind(data: StatisticsData) {
+    fun bind(itemData: StatisticsItemData) {
         with(itemView) {
-            data.countryCode?.let {
+            itemData.countryCode?.let {
                 val imageLoader = ImageLoader(context) {
                     componentRegistry {
                         add(SvgDecoder(itemView.context))
@@ -31,8 +30,8 @@ class StatisticsViewHolder(
                 countryFlagView.load("https://hatscripts.github.io/circle-flags/flags/${it}.svg",
                     imageLoader)
             }
-            countryTextView.text = data.country
-            totalCasesTextView.text = data.casesData.total.toString()
+            countryTextView.text = itemData.country
+            totalCasesTextView.text = itemData.casesData.total.toString()
         }
     }
 

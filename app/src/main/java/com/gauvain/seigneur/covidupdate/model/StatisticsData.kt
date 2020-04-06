@@ -1,6 +1,23 @@
 package com.gauvain.seigneur.covidupdate.model
 
 data class StatisticsData(
+    val totalData: TotalStatisticsData,
+    val mostImpactCountriesData: List<MostImpactCountriesData>,
+    val stats : List<StatisticsItemData>
+)
+
+data class TotalStatisticsData(
+    val totalCases: Int,
+    val totalNewCases: Int
+)
+
+data class MostImpactCountriesData(
+    val name : String,
+    val total : Int,
+    val share : Double
+)
+
+data class StatisticsItemData(
     val country: String,
     val countryCode: String? = null,
     val casesData: CasesData,

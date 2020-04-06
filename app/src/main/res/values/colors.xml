@@ -14,11 +14,13 @@
 
     <color name="colorEdge">#2f2d63</color>
     <color name="colorBackgroundLight">#5442D3</color>
-    <color name="colorBackground">#16152E</color>
+    <color name="colorBackground">#151E3A</color> <!-- 16152E-->
     <color name="colorBackgroundDark">#0e0d1c</color>
     <color name="colorOnBackground">@color/colorPrimary</color>
 
-    <color name="colorSurface">#232148</color>
+    <color name="colorCard">#1E2851</color>
+
+    <color name="colorSurface">#1e1d40</color>
     <color name="colorOnSurface">@color/colorWhiteVariant</color>
 
     <color name="colorError">#E56B51</color>

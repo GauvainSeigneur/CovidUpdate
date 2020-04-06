@@ -6,8 +6,8 @@ import com.gauvain.seigneur.domain.model.CasesModel
 import com.gauvain.seigneur.domain.model.DeathsModel
 import com.gauvain.seigneur.domain.model.StatisticsModel
 
-fun StatisticsModel.toStatisticsData(code:String?) =
-    StatisticsData(
+fun StatisticsModel.toStatisticsItemData(code:String?) =
+    StatisticsItemData(
         country = this.country,
         countryCode = code,
         casesData = this.casesModel.toCasesData(),
