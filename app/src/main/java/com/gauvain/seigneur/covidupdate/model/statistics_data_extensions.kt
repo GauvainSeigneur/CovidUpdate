@@ -4,9 +4,9 @@ import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.formatTo
 import com.gauvain.seigneur.domain.model.CasesModel
 import com.gauvain.seigneur.domain.model.DeathsModel
-import com.gauvain.seigneur.domain.model.StatisticsModel
+import com.gauvain.seigneur.domain.model.StatisticsItemModel
 
-fun StatisticsModel.toStatisticsItemData(code:String?) =
+fun StatisticsItemModel.toStatisticsItemData(code:String?) =
     StatisticsItemData(
         country = this.country,
         countryCode = code,

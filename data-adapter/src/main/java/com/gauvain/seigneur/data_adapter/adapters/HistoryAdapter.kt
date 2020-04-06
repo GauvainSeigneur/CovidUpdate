@@ -5,22 +5,22 @@ import com.gauvain.seigneur.data_adapter.model.toDomainStatistics
 import com.gauvain.seigneur.data_adapter.service.CovidService
 import com.gauvain.seigneur.data_adapter.utils.getRequestExceptionContent
 import com.gauvain.seigneur.domain.model.RequestExceptionType
-import com.gauvain.seigneur.domain.provider.GetStatisticsException
-import com.gauvain.seigneur.domain.provider.StatisticsRepository
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
+import com.gauvain.seigneur.domain.provider.GetHistoryException
+import com.gauvain.seigneur.domain.provider.HistoryProvider
 import retrofit2.Response
 
-class StatisticsAdapter(val service: CovidService) :
-    StatisticsRepository {
+class HistoryAdapter(val service: CovidService) :
+    HistoryProvider {
 
-    override fun statistics(country: String?): List<StatisticsItemModel> {
+    override fun history(country:String): List<StatisticsItemModel> {
         val result = runCatching {
-            service.statistics(country).execute()
+            service.history(country).execute()
         }.onFailure {
             val exceptionContent = getRequestExceptionContent(
                 it
             )
-            throw GetStatisticsException(exceptionContent.exceptionType, exceptionContent.message)
+            throw GetHistoryException(exceptionContent.exceptionType, exceptionContent.message)
         }
         return handleResult(result)
     }
@@ -29,12 +29,12 @@ class StatisticsAdapter(val service: CovidService) :
         return result.run {
             getOrNull()?.body().let {
                 it?.message?.let { message ->
-                    throw GetStatisticsException(RequestExceptionType.UNAUTHORIZED, message)
+                    throw GetHistoryException(RequestExceptionType.UNAUTHORIZED, message)
                 }
                 it?.stats?.map { stat ->
                     stat.toDomainStatistics()
                 }
-            } ?: throw GetStatisticsException(RequestExceptionType.BODY_NULL, "Null value")
+            } ?: throw GetHistoryException(RequestExceptionType.BODY_NULL, "Null value")
         }
     }
 }

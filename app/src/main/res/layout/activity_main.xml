@@ -31,12 +31,10 @@
                 android:backgroundTint="@color/colorBackground"
                 app:layout_collapseMode="pin" />
 
-            <com.gauvain.seigneur.covidupdate.view.main.HeaderStatView
-                android:id="@+id/headerStatView"
+            <com.gauvain.seigneur.covidupdate.widget.AllHistoryChartView
+                android:id="@+id/allHistoryChartView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </com.gauvain.seigneur.covidupdate.view.main.HeaderStatView>
+                android:layout_height="wrap_content"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

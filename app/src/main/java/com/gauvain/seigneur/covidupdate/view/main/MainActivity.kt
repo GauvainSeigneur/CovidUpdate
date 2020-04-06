@@ -1,13 +1,14 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -23,17 +24,34 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initReviewsListAdapter()
         observe()
-        headerStatView.setData()
     }
 
     private fun observe() {
+        statsViewModel.historyData.observe(this, Observer {
+            when(it) {
+                is LiveDataState.Success -> {
+                    val entries = mutableListOf<Entry>()
+                    it.data.history.map {item ->
+                        entries.add(Entry(item.position, item.total))
+                    }
+                    allHistoryChartView.setData(entries, "all history")
+                }
+                is LiveDataState.Error -> {
+
+                }
+            }
+
+
+        })
         statsViewModel.statisLiveItemData.observe(this, Observer {
             when(it) {
                 is LiveDataState.Success -> {
-                    Toast.makeText(this, "total ${it.data.totalData.totalCases} new ${it.data
-                        .totalData.totalNewCases} list ${it.data.mostImpactCountriesData}" , Toast
-                        .LENGTH_LONG).show()
-                    statisticsListAdapter.updateStatList(it.data.stats)
+                    statisticsListAdapter.updateStatList(it.data)
+                    val entries = mutableListOf<Entry>()
+                    entries.add(Entry(0f, 10f))
+                    entries.add(Entry(5f, 20f))
+                    entries.add(Entry(10f, 10f))
+                    allHistoryChartView.setData(entries, "all history")
                 }
                 is LiveDataState.Error -> {
 

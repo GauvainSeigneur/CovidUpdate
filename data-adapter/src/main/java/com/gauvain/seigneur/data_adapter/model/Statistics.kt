@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class Statistics(
     @SerializedName("get")
     override val get: String,
-    @SerializedName("parameters")
-    override val parameters: List<String>,
+    /*@SerializedName("parameters")
+    override val parameters: List<String>,*/
     @SerializedName("errors")
     override val errors: List<String>,
     @SerializedName("response")

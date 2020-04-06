@@ -3,14 +3,14 @@ package com.gauvain.seigneur.domain.usecase
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.model.Outcome
-import com.gauvain.seigneur.domain.model.StatisticsModel
+import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.gauvain.seigneur.domain.provider.GetStatisticsException
 import com.gauvain.seigneur.domain.provider.StatisticsRepository
 
 internal class FetchStatisticsUseCaseImpl(private val repository: StatisticsRepository) :
     FetchStatisticsUseCase {
 
-    override suspend fun invoke(country: String?): Outcome<List<StatisticsModel>, ErrorType> {
+    override suspend fun invoke(country: String?): Outcome<List<StatisticsItemModel>, ErrorType> {
         return try {
             val result = repository.statistics(country)
             Outcome.Success(result)

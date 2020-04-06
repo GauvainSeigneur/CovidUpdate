@@ -4,12 +4,12 @@ import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import java.lang.Exception
 
-interface StatisticsRepository {
-    @Throws(GetStatisticsException::class)
-    fun statistics(country: String? = null): List<StatisticsItemModel>
+interface HistoryProvider {
+    @Throws(GetHistoryException::class)
+    fun history(country:String): List<StatisticsItemModel>
 }
 
-class GetStatisticsException(
+class GetHistoryException(
     val type: RequestExceptionType,
     val description: String? = null
 ) : Exception()
