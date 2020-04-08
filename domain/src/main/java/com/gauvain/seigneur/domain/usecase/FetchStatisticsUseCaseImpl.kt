@@ -12,6 +12,11 @@ internal class FetchStatisticsUseCaseImpl(
     private val provider: StatisticsProvider) :
     FetchStatisticsUseCase {
 
+    companion object {
+        const val ALL_COUNTRY_NAME = "all"
+        const val WORLD_COUNTRY_NAME = "world"
+    }
+
     override fun invoke(country: String?): Outcome<List<StatisticsItemModel>, ErrorType> {
         return try {
             val result = provider.statistics(country)
@@ -19,11 +24,6 @@ internal class FetchStatisticsUseCaseImpl(
         } catch (e: GetStatisticsException) {
             handleException(e)
         }
-    }
-
-    companion object {
-        const val ALL_COUNTRY_NAME = "all"
-        const val WORLD_COUNTRY_NAME = "world"
     }
 
     private fun getListWithoutTotalOrWorldData(statList: List<StatisticsItemModel>):

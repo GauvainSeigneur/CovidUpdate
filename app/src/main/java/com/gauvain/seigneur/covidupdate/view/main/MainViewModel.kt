@@ -11,17 +11,12 @@ import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.AllHistoryModel
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
-import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
 import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
-import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
-import com.gauvain.seigneur.domain.utils.formatTo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
-import kotlin.collections.ArrayList
 
 typealias StatisticsState = LiveDataState<List<StatisticsItemData>>
 typealias AllHistoryState = LiveDataState<AllHistoryData>
@@ -32,17 +27,12 @@ class MainViewModel(
     private val fetchAllHistoryUseCase: FetchAllHistoryUseCase
 ) : ViewModel() {
 
-    companion object {
-        const val ALL_COUNTRY_NAME = "all"
-        const val WORLD_COUNTRY_NAME = "world"
-    }
-
     val historyData: MutableLiveData<AllHistoryState> by lazy {
         fetchHistory()
         MutableLiveData<AllHistoryState>()
     }
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
-    val statisLiveItemData: MutableLiveData<StatisticsState> by lazy {
+    val statistics: MutableLiveData<StatisticsState> by lazy {
         fetchStatistics()
         MutableLiveData<StatisticsState>()
     }
@@ -73,7 +63,7 @@ class MainViewModel(
             when (result) {
                 is Outcome.Success -> {
                     if (result.data.isEmpty()) {
-                        statisLiveItemData.value = LiveDataState.Error(
+                        statistics.value = LiveDataState.Error(
                             ErrorData(
                                 null,
                                 StringPresenter(R.string.empty_list_title),
@@ -82,7 +72,7 @@ class MainViewModel(
                         )
                     } else {
                         val ascendingList = result.data.sortedByDescending { it.casesModel.total }
-                        statisLiveItemData.value = LiveDataState.Success(
+                        statistics.value = LiveDataState.Success(
                             ascendingList.map {
                                 it.toStatisticsItemData(getCountryCode(it.country))
                             }
@@ -90,7 +80,7 @@ class MainViewModel(
                     }
                 }
                 is Outcome.Error -> {
-                    statisLiveItemData.value = setErrorLiveData(result.error)
+                    statistics.value = setErrorLiveData(result.error)
                 }
             }
         }

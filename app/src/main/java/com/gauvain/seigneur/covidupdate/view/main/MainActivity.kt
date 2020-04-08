@@ -8,7 +8,6 @@ import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.RequestState
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
 
         })
-        statsViewModel.statisLiveItemData.observe(this, Observer {
+        statsViewModel.statistics.observe(this, Observer {
             when(it) {
                 is LiveDataState.Success -> {
                     statisticsListAdapter.updateStatList(it.data)
