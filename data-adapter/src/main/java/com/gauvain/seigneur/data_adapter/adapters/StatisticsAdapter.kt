@@ -3,6 +3,7 @@ package com.gauvain.seigneur.data_adapter.adapters
 import com.gauvain.seigneur.data_adapter.model.Statistics
 import com.gauvain.seigneur.data_adapter.model.toDomainStatistics
 import com.gauvain.seigneur.data_adapter.service.CovidService
+import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_BODY_NUL_DESC
 import com.gauvain.seigneur.data_adapter.utils.getRequestExceptionContent
 import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.provider.GetStatisticsException
@@ -34,7 +35,7 @@ class StatisticsAdapter(val service: CovidService) :
                 it?.stats?.map { stat ->
                     stat.toDomainStatistics()
                 }
-            } ?: throw GetStatisticsException(RequestExceptionType.BODY_NULL, "Null value")
+            } ?: throw GetStatisticsException(RequestExceptionType.BODY_NULL, EXCEPTION_BODY_NUL_DESC)
         }
     }
 }
