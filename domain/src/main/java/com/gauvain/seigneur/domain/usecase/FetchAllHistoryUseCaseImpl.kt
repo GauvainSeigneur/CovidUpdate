@@ -12,7 +12,7 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
         const val ALL_COUNTRY = "all"
     }
 
-    override suspend fun invoke(): Outcome<AllHistoryModel, ErrorType> {
+    override fun invoke(): Outcome<AllHistoryModel, ErrorType> {
         return try {
             val result = provider.history(ALL_COUNTRY)
             Outcome.Success(getAllHistoryModel(result))
@@ -56,7 +56,7 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
             RequestExceptionType.UNKNOWN_HOST -> Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST)
             RequestExceptionType.CONNECTION_LOST -> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
             RequestExceptionType.UNAUTHORIZED -> Outcome.Error(ErrorType.ERROR_UNAUTHORIZED)
-            RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.SERVER_INTERNAL_ERROR)
+            RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER)
             else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
         }
 }

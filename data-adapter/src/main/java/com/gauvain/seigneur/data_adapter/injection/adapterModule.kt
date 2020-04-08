@@ -5,11 +5,11 @@ import com.gauvain.seigneur.data_adapter.adapters.HistoryAdapter
 import com.gauvain.seigneur.data_adapter.adapters.StatisticsAdapter
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
 import com.gauvain.seigneur.domain.provider.HistoryProvider
-import com.gauvain.seigneur.domain.provider.StatisticsRepository
+import com.gauvain.seigneur.domain.provider.StatisticsProvider
 import org.koin.dsl.module
 
 val adapterModule = module {
-    single<StatisticsRepository> {
+    single<StatisticsProvider> {
         StatisticsAdapter(get())
     }
 

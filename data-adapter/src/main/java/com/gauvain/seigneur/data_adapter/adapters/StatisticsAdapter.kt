@@ -7,12 +7,12 @@ import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_BODY_NUL_DESC
 import com.gauvain.seigneur.data_adapter.utils.getRequestExceptionContent
 import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.provider.GetStatisticsException
-import com.gauvain.seigneur.domain.provider.StatisticsRepository
+import com.gauvain.seigneur.domain.provider.StatisticsProvider
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import retrofit2.Response
 
 class StatisticsAdapter(val service: CovidService) :
-    StatisticsRepository {
+    StatisticsProvider {
 
     override fun statistics(country: String?): List<StatisticsItemModel> {
         val result = runCatching {

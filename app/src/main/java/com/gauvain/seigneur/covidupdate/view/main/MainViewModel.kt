@@ -83,7 +83,7 @@ class MainViewModel(
                     } else {
                         val ascendingList = result.data.sortedByDescending { it.casesModel.total }
                         statisLiveItemData.value = LiveDataState.Success(
-                            getListWithoutTotalOrWorldData(ascendingList).map {
+                            ascendingList.map {
                                 it.toStatisticsItemData(getCountryCode(it.country))
                             }
                         )
@@ -111,21 +111,7 @@ class MainViewModel(
             )
         }
 
-        Log.d("weshAlors", "lol $dataList")
         return dataList
-    }
-
-    private fun getListWithoutTotalOrWorldData(statList: List<StatisticsItemModel>):
-        List<StatisticsItemModel> {
-        val listWithoutTotalOrWorldData = statList.toMutableList()
-        for (item in statList) {
-            if (item.country.toLowerCase(Locale.US) == WORLD_COUNTRY_NAME ||
-                item.country.toLowerCase(Locale.US) == ALL_COUNTRY_NAME
-            ) {
-                listWithoutTotalOrWorldData.remove(item)
-            }
-        }
-        return listWithoutTotalOrWorldData
     }
 
     private fun getCountryCode(countryName: String): String? =
