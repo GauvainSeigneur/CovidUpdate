@@ -5,24 +5,29 @@ import com.gauvain.seigneur.domain.model.RequestExceptionType
 import java.io.IOException
 import java.net.UnknownHostException
 
+const val EXCEPTION_UNKNOWN_HOST_DESC = "Unknown Host Exception"
+const val EXCEPTION_CONNECTION_LOST_DESC = "Connection lost during request"
+const val EXCEPTION_ERROR_UNKNOWN_DESC = "Error unknown"
+const val EXCEPTION_BODY_NUL_DESC = "Body is null"
+
 fun getRequestExceptionContent(throwable: Throwable): RequestExceptionContent =
     when (throwable) {
         is UnknownHostException -> RequestExceptionContent(
             RequestExceptionType.UNKNOWN_HOST,
-            "Unknown Host Exception"
+            EXCEPTION_UNKNOWN_HOST_DESC
         )
         is UnknownError -> RequestExceptionContent(
             RequestExceptionType.ERROR_UNKNOWN,
-            "Error unknwon"
+            EXCEPTION_ERROR_UNKNOWN_DESC
         )
         is IOException -> RequestExceptionContent(
             RequestExceptionType.CONNECTION_LOST,
-            "Connection lost during request"
+            EXCEPTION_CONNECTION_LOST_DESC
         )
         else -> {
             RequestExceptionContent(
                 RequestExceptionType.ERROR_UNKNOWN,
-                "Error unknwon"
+                EXCEPTION_ERROR_UNKNOWN_DESC
             )
         }
     }

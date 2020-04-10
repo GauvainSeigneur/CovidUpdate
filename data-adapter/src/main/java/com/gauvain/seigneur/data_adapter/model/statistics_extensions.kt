@@ -1,13 +1,11 @@
 package com.gauvain.seigneur.data_adapter.model
 
+import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.SERVER_TIME_FORMAT
-import com.gauvain.seigneur.domain.model.CasesModel
-import com.gauvain.seigneur.domain.model.DeathsModel
-import com.gauvain.seigneur.domain.model.StatisticsModel
 import com.gauvain.seigneur.domain.utils.toDate
 
-fun Stat.toDomainStatistics() = StatisticsModel(
+fun Stat.toDomainStatistics() = StatisticsItemModel(
     country = this.country,
     casesModel = this.cases.toDomainCases(),
     deathsModel = this.deaths.toDomainDeaths(),
@@ -16,7 +14,7 @@ fun Stat.toDomainStatistics() = StatisticsModel(
 )
 
 fun Cases.toDomainCases() = CasesModel(
-    new = this.new,
+    new = getNewCasesInfo(this.new),
     active = this.active,
     critical = this.critical,
     recovered = this.recovered,
@@ -27,3 +25,8 @@ fun Deaths.toDomainDeaths() = DeathsModel(
     new = this.new,
     total = this.total
 )
+
+private fun getNewCasesInfo(value: String?): Int =
+    value?.let {
+        it.removePrefix("+").toInt()
+    } ?: 0

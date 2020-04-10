@@ -14,4 +14,10 @@ interface CovidService {
         @Query("country")
         country: String?=null
     ): Call<Statistics>
+
+    @GET("/history")
+    fun history(
+        @Query("country")
+        country: String
+    ): Call<Statistics>
 }

@@ -2,7 +2,7 @@ package com.gauvain.seigneur.domain.model
 
 import java.util.*
 
-data class StatisticsModel(
+data class StatisticsItemModel(
     val country: String,
     val casesModel: CasesModel,
     val deathsModel: DeathsModel,
@@ -11,7 +11,7 @@ data class StatisticsModel(
 )
 
 data class CasesModel(
-    val new: String? = null,
+    val new: Int?,
     val active: Int,
     val critical: Int,
     val recovered: Int,

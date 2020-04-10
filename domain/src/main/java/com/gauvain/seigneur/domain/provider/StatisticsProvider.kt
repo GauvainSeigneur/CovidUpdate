@@ -1,12 +1,12 @@
 package com.gauvain.seigneur.domain.provider
 
 import com.gauvain.seigneur.domain.model.RequestExceptionType
-import com.gauvain.seigneur.domain.model.StatisticsModel
+import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import java.lang.Exception
 
-interface StatisticsRepository {
+interface StatisticsProvider {
     @Throws(GetStatisticsException::class)
-    fun statistics(country: String? = null): List<StatisticsModel>
+    fun statistics(country: String? = null): List<StatisticsItemModel>
 }
 
 class GetStatisticsException(

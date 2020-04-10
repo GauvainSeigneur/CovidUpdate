@@ -2,11 +2,11 @@ package com.gauvain.seigneur.covidupdate.view.main
 
 import androidx.annotation.Nullable
 import androidx.recyclerview.widget.DiffUtil
-import com.gauvain.seigneur.covidupdate.model.StatisticsData
+import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
 
 class StatisticsDiffCallback(
-    private var newStats: List<StatisticsData>,
-    private var oldStats: List<StatisticsData>
+    private var newStats: List<StatisticsItemData>,
+    private var oldStats: List<StatisticsItemData>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

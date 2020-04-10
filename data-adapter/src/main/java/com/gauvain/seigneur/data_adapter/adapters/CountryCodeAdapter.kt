@@ -1,19 +1,17 @@
 package com.gauvain.seigneur.data_adapter.adapters
 
 import android.app.Application
-import android.util.Log
 import com.gauvain.seigneur.data_adapter.model.Country
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import kotlin.collections.ArrayList
 
 class CountryCodeAdapter(application: Application) :
     CountryCodeProvider {
 
-    private val jsonfile: String = application.assets.open("country_code.json").bufferedReader()
+    private val jsonFile: String = application.assets.open("country_code.json").bufferedReader()
         .use {
             it.readText()
         }
@@ -41,7 +39,7 @@ class CountryCodeAdapter(application: Application) :
     }
 
     private fun populateCountryList() {
-        val obj = JSONObject(jsonfile)
+        val obj = JSONObject(jsonFile)
         val countries: JSONArray = obj.getJSONArray("countries")
         for (i in 0 until countries.length()) {
             val jsonObject = countries.getJSONObject(i)

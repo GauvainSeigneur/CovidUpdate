@@ -3,4 +3,14 @@
 
     <string name="empty_list_title">Empty list title</string>
     <string name="empty_list_description">Empty list description</string>
+
+    <string name="no_new_cases_label">No new cases</string>
+    <string name="new_cases_label">%s</string>
+    <string name="total_case_label">Total: %s</string>
+    <plurals name="active_case_label">
+        <item quantity="zero">%s active</item>
+        <item quantity="one">%s active</item>
+        <item quantity="other">%s actives</item>
+    </plurals>
+
 </resources>
