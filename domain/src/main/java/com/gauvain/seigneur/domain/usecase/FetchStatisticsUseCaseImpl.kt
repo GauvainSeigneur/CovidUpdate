@@ -15,23 +15,31 @@ internal class FetchStatisticsUseCaseImpl(
     companion object {
         const val ALL_COUNTRY_NAME = "all"
         const val WORLD_COUNTRY_NAME = "world"
+        const val EUROPE = "europe"
+        const val NORTH_AMERICA = "north-america"
+        const val SOUTH_AMERICA = "south-america"
+        const val ASIA = "asia"
+        const val AFRICA = "africa"
     }
 
     override fun invoke(country: String?): Outcome<List<StatisticsItemModel>, ErrorType> {
         return try {
             val result = provider.statistics(country)
-            Outcome.Success(getListWithoutTotalOrWorldData(result))
+            Outcome.Success(getListWithoutAllWorldOrContinentData(result))
         } catch (e: GetStatisticsException) {
             handleException(e)
         }
     }
 
-    private fun getListWithoutTotalOrWorldData(statList: List<StatisticsItemModel>):
+    private fun getListWithoutAllWorldOrContinentData(statList: List<StatisticsItemModel>):
         List<StatisticsItemModel> {
         val listWithoutTotalOrWorldData = statList.toMutableList()
         for (item in statList) {
-            if (item.country.toLowerCase(Locale.US) == WORLD_COUNTRY_NAME ||
-                item.country.toLowerCase(Locale.US) == ALL_COUNTRY_NAME
+            val country  = item.country.toLowerCase(Locale.US)
+            if (country == WORLD_COUNTRY_NAME || country == ALL_COUNTRY_NAME ||
+                country == EUROPE || country == NORTH_AMERICA ||
+                country == ASIA || country == SOUTH_AMERICA ||
+                country == AFRICA
             ) {
                 listWithoutTotalOrWorldData.remove(item)
             }

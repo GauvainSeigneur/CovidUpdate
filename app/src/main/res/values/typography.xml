@@ -59,12 +59,14 @@
         <item name="font">@font/work_sans_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorWhiteVariant</item>
     </style>
 
     <style name="Typography.TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="font">@font/work_sans_regular</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
     <style name="Typography.TextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">

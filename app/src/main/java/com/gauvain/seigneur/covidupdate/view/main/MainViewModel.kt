@@ -1,6 +1,7 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.gauvain.seigneur.domain.model.AllHistoryModel
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
+import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +26,8 @@ typealias AllHistoryState = LiveDataState<AllHistoryData>
 class MainViewModel(
     private val fetchStatisticsUseCase: FetchStatisticsUseCase,
     private val countryCodeProvider: CountryCodeProvider,
-    private val fetchAllHistoryUseCase: FetchAllHistoryUseCase
+    private val fetchAllHistoryUseCase: FetchAllHistoryUseCase,
+    private val numberFormatProvider: NumberFormatProvider
 ) : ViewModel() {
 
     val historyData: MutableLiveData<AllHistoryState> by lazy {
@@ -74,7 +77,11 @@ class MainViewModel(
                         val ascendingList = result.data.sortedByDescending { it.casesModel.total }
                         statistics.value = LiveDataState.Success(
                             ascendingList.map {
-                                it.toStatisticsItemData(getCountryCode(it.country))
+                                it.toStatisticsItemData(
+                                    getCountryCode(it.country),
+                                    getNewCasesDate(it.casesModel.new),
+                                    numberFormatProvider
+                                )
                             }
                         )
                     }
@@ -85,6 +92,21 @@ class MainViewModel(
             }
         }
     }
+
+    private fun getNewCasesDate(totalNewCases: Int?): NewCasesData =
+        if (totalNewCases == null || totalNewCases == 0) {
+            NewCasesData(
+                StringPresenter(R.string.no_new_cases_label),
+                null,
+                R.color.colorCool
+            )
+        } else {
+            NewCasesData(
+                StringPresenter(R.string.new_cases_label, numberFormatProvider.format(totalNewCases)),
+                R.drawable.ic_new_case_label_icon,
+                R.color.colorDanger
+            )
+        }
 
     private fun setUpAllHistoryData(model: AllHistoryModel): AllHistoryData =
         AllHistoryData(

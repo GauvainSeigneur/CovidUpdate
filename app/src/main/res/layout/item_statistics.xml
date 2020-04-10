@@ -3,31 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="@dimen/space_m"
     android:layout_marginEnd="@dimen/space_m"
     android:layout_marginTop="@dimen/space_s"
-    android:layout_marginBottom="@dimen/space_s"
-    app:cardBackgroundColor="@color/colorCard">
+    android:layout_marginBottom="@dimen/space_s">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/space_m"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/countryFlagView"
-            android:layout_width="24dp"
-            android:layout_height="24dp" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@drawable/ic_refresh_white_24dp"/>
 
         <TextView
             android:id="@+id/countryTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/TextAppearance.StatisticsItem.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@null"
+            app:layout_constraintStart_toEndOf="@id/countryFlagView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="France"/>
 
         <TextView
             android:id="@+id/totalCasesTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            style="@style/TextAppearance.StatisticsItem.subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@null"
+            android:paddingTop="@dimen/space_xs"
+            app:layout_constraintStart_toEndOf="@id/countryFlagView"
+            app:layout_constraintTop_toBottomOf="@id/countryTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Total: 4 505 000"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/activeCasesTextView"
+            style="@style/TextAppearance.StatisticsItem.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/countryTextView"
+            app:layout_constraintTop_toTopOf="@id/countryTextView"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="450 000 active"/>
+
+
+        <TextView
+            android:id="@+id/newCasesTextView"
+            style="@style/TextAppearance.StatisticsItem.subTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@id/totalCasesTextView"
+            app:layout_constraintTop_toBottomOf="@id/activeCasesTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/totalCasesTextView"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintVertical_bias="1"
+            tools:text="455000"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </com.google.android.material.card.MaterialCardView>

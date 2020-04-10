@@ -4,7 +4,7 @@ import java.util.*
 
 data class AllHistoryModel(
     val totalCases: Int,
-    val totalNewCases: String?=null,
+    val totalNewCases: Int?,
     val history: List<AllHistoryItemModel>
 )
 

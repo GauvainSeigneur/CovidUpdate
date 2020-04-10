@@ -5,9 +5,11 @@ import androidx.lifecycle.Observer
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
 import com.gauvain.seigneur.covidupdate.view.main.MainViewModel
 import com.gauvain.seigneur.covidupdate.view.main.StatisticsState
+import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
 import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
+import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.verify
 import io.kotest.core.test.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -44,12 +46,13 @@ class MainViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        viewModel.statistics.observeForever(statisticsLiveDataObserver)
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun exampleTest() = runBlockingTest {
+        given(statisticsUseCase.invoke(null)).willReturn(Outcome.Success(listOf()))
+        viewModel.statistics.observeForever(statisticsLiveDataObserver)
         verify(statisticsLiveDataObserver).onChanged(
             LiveDataState.Success(
                 listOf(

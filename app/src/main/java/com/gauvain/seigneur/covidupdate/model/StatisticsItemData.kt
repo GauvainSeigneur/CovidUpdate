@@ -1,22 +1,24 @@
 package com.gauvain.seigneur.covidupdate.model
 
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
+import com.gauvain.seigneur.covidupdate.utils.StringPresenter
+
 data class StatisticsItemData(
     val country: String,
     val countryCode: String? = null,
-    val casesData: CasesData,
-    val deathsData: DeathsData,
-    val day: String
+    val casesData: CasesData
 )
 
 data class CasesData(
-    val new: String,
-    val active: Int,
-    val critical: Int,
-    val recovered: Int,
-    val total: Int
+    val new: NewCasesData,
+    val active: QuantityStringPresenter,
+    val total: StringPresenter
 )
 
-data class DeathsData(
-    val new: String,
-    val total: Int
+data class NewCasesData(
+    val total :  StringPresenter,
+    @DrawableRes val icon: Int?=null,
+    @ColorRes val color:Int
 )

@@ -36,27 +36,20 @@ class MainActivity : AppCompatActivity() {
                     allHistoryChartView.setData(entries, "all history")
                 }
                 is LiveDataState.Error -> {
-
                 }
             }
 
-
         })
+
         statsViewModel.statistics.observe(this, Observer {
             when(it) {
                 is LiveDataState.Success -> {
                     statisticsListAdapter.updateStatList(it.data)
-                    val entries = mutableListOf<Entry>()
-                    entries.add(Entry(0f, 10f))
-                    entries.add(Entry(5f, 20f))
-                    entries.add(Entry(10f, 10f))
-                    allHistoryChartView.setData(entries, "all history")
                 }
                 is LiveDataState.Error -> {
 
                 }
             }
-
 
         })
 

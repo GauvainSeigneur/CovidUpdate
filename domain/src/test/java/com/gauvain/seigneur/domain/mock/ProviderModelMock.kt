@@ -16,7 +16,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1000",
+                    new = 1000,
                     active = 70000,
                     critical = 1000,
                     recovered = 35000,
@@ -32,7 +32,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1000",
+                    new = 1000,
                     active = 70000,
                     critical = 1000,
                     recovered = 35000,
@@ -48,7 +48,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1000",
+                    new = 1000,
                     active = 70000,
                     critical = 1000,
                     recovered = 35000,
@@ -64,7 +64,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1000",
+                    new = 1000,
                     active = 70000,
                     critical = 1000,
                     recovered = 35000,
@@ -80,7 +80,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+800",
+                    new = 800,
                     active = 60000,
                     critical = 200,
                     recovered = 3500,
@@ -100,7 +100,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1000",
+                    new = 1000,
                     active = 70000,
                     critical = 1000,
                     recovered = 35000,
@@ -116,7 +116,7 @@ object ProviderModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:00+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1000",
+                    new = 1000,
                     active = 70000,
                     critical = 1000,
                     recovered = 35000,
@@ -132,7 +132,7 @@ object ProviderModelMock {
                 day = "2020-04-07".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:00+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+800",
+                    new = 800,
                     active = 60000,
                     critical = 200,
                     recovered = 3500,

@@ -21,7 +21,7 @@ object AdapterOutcomeModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T10:15:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+62",
+                    new = 62,
                     active = 1190,
                     critical = 189,
                     recovered = 77279,
@@ -37,7 +37,7 @@ object AdapterOutcomeModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T10:15:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+3039",
+                    new = 3039,
                     active = 94067,
                     critical = 3792,
                     recovered = 24392,
@@ -57,7 +57,7 @@ object AdapterOutcomeModelMock {
                 day = "2020-04-08".toDate(SERVER_DATE_FORMAT),
                 time = "2020-04-08T09:45:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+11059",
+                    new = 11059,
                     active = 79404,
                     critical = 7131,
                     recovered = 19337,
@@ -73,7 +73,7 @@ object AdapterOutcomeModelMock {
                 day = "2020-03-22".toDate(SERVER_DATE_FORMAT),
                 time = "2020-03-22T03:15:05+00:00".toDate(SERVER_TIME_FORMAT),
                 casesModel = CasesModel(
-                    new = "+1847",
+                    new = 1847,
                     active = 12310,
                     critical = 1525,
                     recovered = 1587,

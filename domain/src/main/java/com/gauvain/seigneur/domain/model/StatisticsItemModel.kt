@@ -11,7 +11,7 @@ data class StatisticsItemModel(
 )
 
 data class CasesModel(
-    val new: String? = null,
+    val new: Int?,
     val active: Int,
     val critical: Int,
     val recovered: Int,

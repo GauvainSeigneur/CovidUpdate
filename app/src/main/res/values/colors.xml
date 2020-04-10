@@ -3,25 +3,26 @@
     <color name="colorBlack">#111111</color>
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="colorWhiteVariant">#fafafa</color>
+    <color name="colorWhiteDark">#BFffffff</color>
 
     <color name="colorPrimary">@color/colorWhite</color>
     <color name="colorPrimaryVariant">@color/colorWhiteVariant</color>
     <color name="colorOnPrimary">@color/colorBlack</color>
 
-    <color name="colorSecondary">#DE567C</color>
-    <color name="colorSecondaryVariant">#495DF3</color>
+    <color name="colorSecondary">#5569F2</color>
+    <color name="colorSecondaryVariant">#263fee</color>
     <color name="colorOnSecondary">@color/colorWhite</color>
 
-    <color name="colorEdge">#2f2d63</color>
-    <color name="colorBackgroundLight">#5442D3</color>
-    <color name="colorBackground">#151E3A</color> <!-- 16152E-->
-    <color name="colorBackgroundDark">#0e0d1c</color>
+    <color name="colorEdge">#5569F2</color>
+    <color name="colorBackgroundLight">#222222</color>
+    <color name="colorBackground">#0E0E0E</color>
     <color name="colorOnBackground">@color/colorPrimary</color>
 
-    <color name="colorCard">#1E2851</color>
-
-    <color name="colorSurface">#1e1d40</color>
+    <color name="colorSurface">#181A1E</color>
     <color name="colorOnSurface">@color/colorWhiteVariant</color>
+
+    <color name="colorCool">#8AEEB5</color>
+    <color name="colorDanger">#EB384B</color>
 
     <color name="colorError">#E56B51</color>
     <color name="colorOnError">#FFFFFF</color>

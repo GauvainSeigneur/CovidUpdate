@@ -50,7 +50,6 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
-        android:backgroundTint="@color/colorCard"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end" />

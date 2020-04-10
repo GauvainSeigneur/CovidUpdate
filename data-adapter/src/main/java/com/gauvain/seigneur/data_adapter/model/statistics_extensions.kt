@@ -14,7 +14,7 @@ fun Stat.toDomainStatistics() = StatisticsItemModel(
 )
 
 fun Cases.toDomainCases() = CasesModel(
-    new = this.new,
+    new = getNewCasesInfo(this.new),
     active = this.active,
     critical = this.critical,
     recovered = this.recovered,
@@ -25,3 +25,8 @@ fun Deaths.toDomainDeaths() = DeathsModel(
     new = this.new,
     total = this.total
 )
+
+private fun getNewCasesInfo(value: String?): Int =
+    value?.let {
+        it.removePrefix("+").toInt()
+    } ?: 0
