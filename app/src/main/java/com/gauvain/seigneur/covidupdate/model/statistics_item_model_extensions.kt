@@ -27,7 +27,8 @@ fun CasesModel.toCasesData(
     CasesData(
         new = newCasesData,
         active = QuantityStringPresenter(
-            R.plurals.active_case_label, this.active,
+            R.plurals.active_case_label,
+            this.active,
             numberFormatProvider.format(this.active)
         ),
         total = StringPresenter(

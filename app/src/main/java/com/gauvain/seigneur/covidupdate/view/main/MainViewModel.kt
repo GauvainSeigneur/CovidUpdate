@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
+import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.AllHistoryModel
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
+import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
@@ -29,13 +31,19 @@ class MainViewModel(
     private val numberFormatProvider: NumberFormatProvider
 ) : ViewModel() {
 
+    companion object {
+        const val LONG_DELAY = 400L
+        const val SMALL_DELAY = 350L
+    }
+
     val historyData: MutableLiveData<AllHistoryState> by lazy {
         fetchHistory()
         MutableLiveData<AllHistoryState>()
     }
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
+    val refreshLoadingState: MutableLiveData<RequestState> = MutableLiveData()
     val statistics: MutableLiveData<StatisticsState> by lazy {
-        fetchStatistics( true)
+        fetchStatistics(true)
         MutableLiveData<StatisticsState>()
     }
 
@@ -56,46 +64,71 @@ class MainViewModel(
     }
 
     fun refreshStatistics() {
-        fetchStatistics(false)
+        refreshLoadingState.value = RequestState.IS_LOADING
+        Handler().postDelayed({
+            fetchStatistics(false)
+        }, LONG_DELAY)
     }
 
     private fun fetchStatistics(isInitial: Boolean, country: String? = null) {
         viewModelScope.launch {
+            val result = getStatisticsOutcome(isInitial)
+            val delay: Long
             if (isInitial) {
-                loadingState.value = RequestState.IS_LOADING
+                delay = 0L
+            } else {
+                delay = SMALL_DELAY
             }
-            val result = withContext(Dispatchers.IO) {
-                fetchStatisticsUseCase.invoke(country)
-            }
-            if (isInitial) {
-                loadingState.value = RequestState.IS_LOADED
-            }
-            when (result) {
-                is Outcome.Success -> {
-                    if (result.data.isEmpty()) {
-                        statistics.value = LiveDataState.Error(
-                            ErrorData(
-                                null,
-                                StringPresenter(R.string.empty_list_title),
-                                StringPresenter(R.string.empty_list_description)
+            Handler().postDelayed({
+                manageStatisticsOutcome(result)
+            }, delay)
+        }
+    }
+
+    private suspend fun getStatisticsOutcome(
+        isInitial: Boolean,
+        country: String? = null
+    ): Outcome<List<StatisticsItemModel>, ErrorType> {
+        if (isInitial) {
+            loadingState.value = RequestState.IS_LOADING
+        }
+        val result = withContext(Dispatchers.IO) {
+            fetchStatisticsUseCase.invoke(country)
+        }
+        if (isInitial) {
+            loadingState.value = RequestState.IS_LOADED
+        } else {
+            refreshLoadingState.value = RequestState.IS_LOADED
+        }
+        return result
+    }
+
+    private fun manageStatisticsOutcome(result: Outcome<List<StatisticsItemModel>, ErrorType>) {
+        when (result) {
+            is Outcome.Success -> {
+                if (result.data.isEmpty()) {
+                    statistics.value = LiveDataState.Error(
+                        ErrorData(
+                            null,
+                            StringPresenter(R.string.empty_list_title),
+                            StringPresenter(R.string.empty_list_description)
+                        )
+                    )
+                } else {
+                    val ascendingList = result.data.sortedByDescending { it.casesModel.total }
+                    statistics.value = LiveDataState.Success(
+                        ascendingList.map {
+                            it.toStatisticsItemData(
+                                getCountryCode(it.country),
+                                getNewCasesDate(it.casesModel.new),
+                                numberFormatProvider
                             )
-                        )
-                    } else {
-                        val ascendingList = result.data.sortedByDescending { it.casesModel.total }
-                        statistics.value = LiveDataState.Success(
-                            ascendingList.map {
-                                it.toStatisticsItemData(
-                                    getCountryCode(it.country),
-                                    getNewCasesDate(it.casesModel.new),
-                                    numberFormatProvider
-                                )
-                            }
-                        )
-                    }
+                        }
+                    )
                 }
-                is Outcome.Error -> {
-                    statistics.value = setErrorLiveData(result.error)
-                }
+            }
+            is Outcome.Error -> {
+                statistics.value = setErrorLiveData(result.error)
             }
         }
     }
@@ -120,17 +153,6 @@ class MainViewModel(
 
     private fun setUpAllHistoryData(model: AllHistoryModel): AllHistoryData =
         model.toData(numberFormatProvider)
-
-    /*private fun setUpAllHistoryList(model: AllHistoryModel): List<AllHistoryItemData> {
-        val dataList = mutableListOf<AllHistoryItemData>()
-        for ((index, value) in model.history.reversed().withIndex()) {
-            dataList.add(
-                value.toData(value.day.time.toFloat())
-            )
-        }
-
-        return dataList
-    }*/
 
     private fun getCountryCode(countryName: String): String? =
         countryCodeProvider.getCountryCode(countryName)

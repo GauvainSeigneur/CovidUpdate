@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.view.main.DayAxisValueFormatter
 import com.github.mikephil.charting.components.XAxis
@@ -50,10 +51,11 @@ class AllHistoryChartView @JvmOverloads constructor(
         x.setDrawGridLines(false)
         x.labelCount = 7
         val xValueFormatter = DayAxisValueFormatter()
+        x.typeface = ResourcesCompat.getFont(context, R.font.work_sans_bold)
         x.valueFormatter = xValueFormatter
         x.textColor = ContextCompat.getColor(context, R.color.colorWhite)
 
-        chart.setViewPortOffsets(0f, 16f, 0f, x.textSize+x.xOffset)
+        chart.setViewPortOffsets(0f, 16f, 0f, x.textSize + x.xOffset)
 
         chart.axisRight.isEnabled = false
         chart.axisLeft.isEnabled = false
@@ -63,7 +65,7 @@ class AllHistoryChartView @JvmOverloads constructor(
         // Set the marker to the chart
         mv.chartView = chart
         chart.marker = mv
-
+        //chart.animateXY(500, 500)
         chart.invalidate()
     }
 
@@ -86,6 +88,6 @@ class AllHistoryChartView @JvmOverloads constructor(
         data.setDrawValues(false)
         // set data
         chart.data = data
-        chart.invalidate()
+        chart.animateXY(500, 500)
     }
 }

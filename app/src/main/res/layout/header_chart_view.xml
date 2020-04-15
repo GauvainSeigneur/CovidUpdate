@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/headerChartView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/totalCasesTitleTextView"
+        style="@style/TextAppearance.Chart.Marker.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/space_xs"
+        android:paddingEnd="@dimen/space_m"
+        android:paddingStart="@dimen/space_m"
+        android:paddingTop="@dimen/space_m"
+        android:text="@string/main_header_chart_total_cases_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/allTotalCaseTextview"
+        style="@style/TextAppearance.Chart.Marker.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingEnd="@dimen/space_m"
+        android:paddingStart="@dimen/space_m"
+        android:paddingBottom="@dimen/space_xs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/totalCasesTitleTextView"
+        tools:text="1000" />
+
+    <TextView
+        android:id="@+id/allActiveCasesTextView"
+        style="@style/TextAppearance.Chart.Marker.Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingEnd="@dimen/space_s"
+        android:paddingStart="@null"
+        tools:text="1000 active"
+        app:layout_constraintEnd_toStartOf="@id/allNewCasesTextView"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/allTotalCaseTextview" />
+
+    <TextView
+        android:id="@+id/allNewCasesTextView"
+        style="@style/TextAppearance.Chart.Marker.Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:text="+ 1000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/allActiveCasesTextView"
+        app:layout_constraintTop_toBottomOf="@id/allTotalCaseTextview" />
+
+    <com.gauvain.seigneur.covidupdate.widget.AllHistoryChartView
+        android:id="@+id/allHistoryChartView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_s"
+        android:layout_marginBottom="@dimen/space_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/allActiveCasesTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

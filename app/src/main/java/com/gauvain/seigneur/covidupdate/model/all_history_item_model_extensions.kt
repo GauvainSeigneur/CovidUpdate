@@ -1,6 +1,7 @@
 package com.gauvain.seigneur.covidupdate.model
 
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.AllHistoryItemModel
 import com.gauvain.seigneur.domain.model.AllHistoryModel
@@ -11,23 +12,32 @@ import com.gauvain.seigneur.domain.utils.formatTo
 fun AllHistoryModel.toData(numberFormatProvider: NumberFormatProvider) =
     AllHistoryData(
         totalCases = numberFormatProvider.format(this.totalCases),
-        newActiveCases = getNewActiveCases(this, numberFormatProvider),
+        activeCases = QuantityStringPresenter(
+            R.plurals.main_header_chart_subtitle_active,
+            this.totalActiveCases,
+            numberFormatProvider.format(this.totalActiveCases)
+        ),
+        newCases = getNewCases(this, numberFormatProvider),
         history = setUpAllHistoryList(this.history)
     )
 
-private fun getNewActiveCases(
+private fun getNewCases(
     businessModel: AllHistoryModel,
     numberFormatProvider: NumberFormatProvider
-): StringPresenter =
+): AllHistoryNewCaseData =
     businessModel.totalNewCases?.let {
-        StringPresenter(
-            R.string.main_header_chart_subtitle,
-            numberFormatProvider.format(businessModel.totalActiveCases),
-            numberFormatProvider.format(it)
+        AllHistoryNewCaseData(
+            StringPresenter(
+                R.string.main_header_chart_subtitle_new,
+                numberFormatProvider.format(it)
+            ),
+            R.color.colorDanger
         )
-    } ?: StringPresenter(
-        R.string.main_header_chart_subtitle_no_new_cases,
-        numberFormatProvider.format(businessModel.totalActiveCases)
+    } ?: AllHistoryNewCaseData(
+        StringPresenter(
+            R.string.main_header_chart_subtitle_no_new_cases
+        ),
+        R.color.colorCool
     )
 
 private fun setUpAllHistoryList(list: List<AllHistoryItemModel>): List<AllHistoryItemData> {

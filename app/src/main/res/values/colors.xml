@@ -4,6 +4,7 @@
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="colorWhiteVariant">#fafafa</color>
     <color name="colorWhiteDark">#BFffffff</color>
+    <color name="colorWhiteDarker">#99ffffff</color>
 
 
     <color name="colorSecondaryLineChart">#D90024F4</color>
