@@ -7,6 +7,9 @@
     <string name="no_new_cases_label">No new cases</string>
     <string name="new_cases_label">%s</string>
     <string name="total_case_label">Total: %s</string>
+
+    <string name="main_header_chart_subtitle">%1$s %2$s</string>
+    <string name="main_header_chart_subtitle_no_new_cases">%1$s No new cases</string>
     <plurals name="active_case_label">
         <item quantity="zero">%s active</item>
         <item quantity="one">%s active</item>

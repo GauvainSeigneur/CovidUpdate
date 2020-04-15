@@ -5,6 +5,7 @@ import java.util.*
 data class AllHistoryModel(
     val totalCases: Int,
     val totalNewCases: Int?,
+    val totalActiveCases: Int,
     val history: List<AllHistoryItemModel>
 )
 

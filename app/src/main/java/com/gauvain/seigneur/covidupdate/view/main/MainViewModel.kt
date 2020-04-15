@@ -1,7 +1,6 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
 import android.util.Log
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,7 +35,7 @@ class MainViewModel(
     }
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
     val statistics: MutableLiveData<StatisticsState> by lazy {
-        fetchStatistics()
+        fetchStatistics( true)
         MutableLiveData<StatisticsState>()
     }
 
@@ -56,13 +55,21 @@ class MainViewModel(
         }
     }
 
-    private fun fetchStatistics(country: String? = null) {
+    fun refreshStatistics() {
+        fetchStatistics(false)
+    }
+
+    private fun fetchStatistics(isInitial: Boolean, country: String? = null) {
         viewModelScope.launch {
-            loadingState.value = RequestState.IS_LOADING
+            if (isInitial) {
+                loadingState.value = RequestState.IS_LOADING
+            }
             val result = withContext(Dispatchers.IO) {
                 fetchStatisticsUseCase.invoke(country)
             }
-            loadingState.value = RequestState.IS_LOADED
+            if (isInitial) {
+                loadingState.value = RequestState.IS_LOADED
+            }
             when (result) {
                 is Outcome.Success -> {
                     if (result.data.isEmpty()) {
@@ -102,29 +109,28 @@ class MainViewModel(
             )
         } else {
             NewCasesData(
-                StringPresenter(R.string.new_cases_label, numberFormatProvider.format(totalNewCases)),
+                StringPresenter(
+                    R.string.new_cases_label,
+                    numberFormatProvider.format(totalNewCases)
+                ),
                 R.drawable.ic_new_case_label_icon,
                 R.color.colorDanger
             )
         }
 
     private fun setUpAllHistoryData(model: AllHistoryModel): AllHistoryData =
-        AllHistoryData(
-            totalCases = model.totalCases.toString(),
-            totalNewCases = model.totalNewCases.toString(),
-            history = setUpAllHistoryList(model)
-        )
+        model.toData(numberFormatProvider)
 
-    private fun setUpAllHistoryList(model: AllHistoryModel): List<AllHistoryItemData> {
+    /*private fun setUpAllHistoryList(model: AllHistoryModel): List<AllHistoryItemData> {
         val dataList = mutableListOf<AllHistoryItemData>()
         for ((index, value) in model.history.reversed().withIndex()) {
             dataList.add(
-                value.toData(index.toFloat())
+                value.toData(value.day.time.toFloat())
             )
         }
 
         return dataList
-    }
+    }*/
 
     private fun getCountryCode(countryName: String): String? =
         countryCodeProvider.getCountryCode(countryName)

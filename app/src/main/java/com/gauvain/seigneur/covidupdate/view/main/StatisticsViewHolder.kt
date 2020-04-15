@@ -1,15 +1,13 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.ImageLoader
 import coil.api.load
 import coil.decode.SvgDecoder
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.model.NewCasesData
 import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
 import kotlinx.android.synthetic.main.item_statistics.view.*
 
@@ -20,32 +18,45 @@ class StatisticsViewHolder(
 
     companion object {
         val layout = R.layout.item_statistics
-        const val BASE_FLAG_URL = "https://hatscripts.github.io/circle-flags/flags"
+        const val BASE_FLAG_URL = "https://hatscripts.github.io/circle-flags/flags/"
+        const val FLAG_IMG_FORMAT = ".svg"
     }
 
     fun bind(itemData: StatisticsItemData) {
+        setUpCountryFlag(itemData.countryCode)
         with(itemView) {
-            itemData.countryCode?.let {
+            countryTextView.text = itemData.country
+            totalCasesTextView.text = itemData.casesData.total.getFormattedString(itemView.context)
+            activeCasesTextView.text = itemData.casesData.active.getFormattedString(itemView.context)
+        }
+        setUpNewCases(itemData.casesData.new)
+    }
+
+    private fun setUpCountryFlag(countryCode:String?) {
+        with(itemView) {
+            countryCode?.let {
                 val imageLoader = ImageLoader(context) {
                     componentRegistry {
                         add(SvgDecoder(itemView.context))
                     }
                 }
                 countryFlagView.load(
-                    "$BASE_FLAG_URL/${it}.svg",
+                    "$BASE_FLAG_URL$it$FLAG_IMG_FORMAT",
                     imageLoader
                 )
             }
-            countryTextView.text = itemData.country
-            totalCasesTextView.text = itemData.casesData.total.getFormattedString(itemView.context)
-            newCasesTextView.text = itemData.casesData.new.total.getFormattedString(itemView.context)
+        }
+    }
+
+    private fun setUpNewCases(newCase: NewCasesData) {
+        with(itemView) {
+            newCasesTextView.text = newCase.total.getFormattedString(itemView.context)
             newCasesTextView.setTextColor(
                 ContextCompat.getColor(
-                    itemView.context, itemData
-                        .casesData.new.color
+                    itemView.context, newCase.color
                 )
             )
-            itemData.casesData.new.icon?.let {
+            newCase.icon?.let {
                 val icon = ContextCompat.getDrawable(itemView.context, it)
                 newCasesTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     icon,
@@ -59,8 +70,6 @@ class StatisticsViewHolder(
                 null,
                 null
             )
-
-            activeCasesTextView.text = itemData.casesData.active.getFormattedString(itemView.context)
         }
     }
 

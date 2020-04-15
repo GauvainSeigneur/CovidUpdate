@@ -74,7 +74,7 @@
     </style>
 
     <style name="Typography.TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption">
-        <item name="font">@font/work_sans_italic</item>
+        <item name="font">@font/work_sans_regular</item>
     </style>
 
     <!-- use for  category, breadcrumb above a title for example -->

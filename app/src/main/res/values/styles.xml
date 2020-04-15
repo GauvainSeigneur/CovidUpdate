@@ -31,4 +31,10 @@
         parent="@style/Typography.TextAppearance.Body2">
         <item name="android:textColor">@color/colorWhiteDark</item>
     </style>
+
+    <style name="TextAppearance.Chart.Marker.Body"
+        parent="@style/Typography.TextAppearance.Caption">
+        <item name="android:textColor">@color/colorWhiteDark</item>
+    </style>
+
 </resources>

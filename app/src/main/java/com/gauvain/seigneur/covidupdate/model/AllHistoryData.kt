@@ -1,8 +1,10 @@
 package com.gauvain.seigneur.covidupdate.model
 
+import com.gauvain.seigneur.covidupdate.utils.StringPresenter
+
 data class AllHistoryData(
     val totalCases: String,
-    val totalNewCases: String,
+    val newActiveCases: StringPresenter,
     val history: List<AllHistoryItemData>
 )
 
