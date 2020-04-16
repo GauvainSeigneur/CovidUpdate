@@ -10,7 +10,10 @@ import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
+import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
+import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
 import com.github.mikephil.charting.data.Entry
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,7 +40,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.fetchStatistics()
         setContentView(R.layout.activity_main)
+        bottomAppBar.setNavigationOnClickListener {
+            BottomMenuDialog().show(supportFragmentManager, "BottomMenuDialogTAG")
+        }
         refreshFab.setOnSafeClickListener {
             viewModel.refreshStatistics()
         }
@@ -57,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.statistics.observe(this, Observer {
+        viewModel.statisticsData.observe(this, Observer {
             when (it) {
                 is LiveDataState.Success -> {
                     statisticsListAdapter.updateStatList(it.data)
@@ -69,20 +76,30 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadingState.observe(this, Observer {
             when (it) {
-                RequestState.IS_LOADING -> {
+                RequestState.INITIAL_IS_LOADING -> {
                     refreshFab.isClickable = false
                 }
-                RequestState.IS_LOADED -> {
+                RequestState.INITIAL_IS_LOADED -> {
                     refreshFab.isClickable = true
+                }
+                RequestState.REFRESH_IS_LOADING -> {
+                    refreshFab.isClickable = false
+                    showFabLoader(true)
+                }
+                RequestState.REFRESH_IS_LOADED -> {
+                    refreshFab.isClickable = true
+                    showFabLoader(false)
                 }
             }
         })
 
-        viewModel.refreshLoadingState.observe(this, Observer {
-            when(it) {
-                RequestState.IS_LOADING -> showFabLoader(true)
-                RequestState.IS_LOADED -> showFabLoader(false)
-            }
+        viewModel.refreshDataEvent.observe(this, EventObserver {
+            CustomSnackbar.make(
+                mainActivityParentLayout, it.getFormattedString(this),
+                CustomSnackbar.LENGTH_LONG
+            )
+                .setAnchorView(refreshFab)
+                .show()
         })
     }
 
@@ -114,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFabLoader(isVisible: Boolean) {
-        if(isVisible) {
+        if (isVisible) {
             fabLoadingView.visibility = View.VISIBLE
         } else {
             fabLoadingView.visibility = View.GONE

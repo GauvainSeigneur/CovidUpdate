@@ -23,4 +23,9 @@
         <item quantity="other">%s actives</item>
     </plurals>
 
+
+    <string name="error_refresh_data_label">oops, the data have not been
+        refreshed</string>
+    <string name="data_refreshed_label">Data updated</string>
+
 </resources>

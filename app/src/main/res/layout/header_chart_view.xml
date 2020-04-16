@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/totalCasesTitleTextView"
-        style="@style/TextAppearance.Chart.Marker.Title"
+        style="@style/TextAppearance.Chart.Marker.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/allTotalCaseTextview"
-        style="@style/TextAppearance.Chart.Marker.Subtitle"
+        style="@style/TextAppearance.Chart.Marker.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

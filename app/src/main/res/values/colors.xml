@@ -32,4 +32,6 @@
 
     <color name="colorError">#E56B51</color>
     <color name="colorOnError">#FFFFFF</color>
+
+    <color name="colorBottomSheetBackground">#2F2F2F</color>
 </resources>
