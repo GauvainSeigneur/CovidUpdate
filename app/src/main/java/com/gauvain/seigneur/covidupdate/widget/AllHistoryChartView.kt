@@ -7,7 +7,6 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.view.main.DayAxisValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
@@ -20,11 +19,14 @@ class AllHistoryChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    private val x: XAxis
+
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.view_all_history_chart, this)
         this.orientation = VERTICAL
         initChart()
+        x = chart.xAxis
     }
 
     private fun initChart() {
@@ -49,11 +51,11 @@ class AllHistoryChartView @JvmOverloads constructor(
         x.axisLineColor = ContextCompat.getColor(context, android.R.color.transparent)
         //xAxis.typeface = tfLight
         x.setDrawGridLines(false)
-        x.labelCount = 7
-        val xValueFormatter = DayAxisValueFormatter()
+        x.labelCount = 5
         x.typeface = ResourcesCompat.getFont(context, R.font.work_sans_bold)
-        x.valueFormatter = xValueFormatter
+        x.valueFormatter = DayAxisValueFormatter()
         x.textColor = ContextCompat.getColor(context, R.color.colorWhite)
+        x.removeAllLimitLines()
 
         chart.setViewPortOffsets(0f, 16f, 0f, x.textSize + x.xOffset)
 
@@ -87,7 +89,14 @@ class AllHistoryChartView @JvmOverloads constructor(
         data.setValueTextSize(30f)
         data.setDrawValues(false)
         // set data
+        setXAxisMinMax(entries)
         chart.data = data
         chart.animateXY(500, 500)
+    }
+
+    private fun setXAxisMinMax(entries: List<Entry>) {
+        x.axisMinimum =  entries[2].x
+        //x.axisMaximum = entries[entries.size-3].x
+        chart.invalidate()
     }
 }

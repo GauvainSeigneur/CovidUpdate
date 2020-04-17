@@ -1,12 +1,12 @@
 <resources>
 
+    <string name="app_name">Covid Update</string>
 
     <plurals name="active_case_label">
         <item quantity="zero">%s active</item>
         <item quantity="one">%s active</item>
         <item quantity="other">%s actives</item>
     </plurals>
-    <string name="app_name">CovidUpdate</string>
 
     <string name="empty_list_title">Empty list title</string>
     <string name="empty_list_description">Empty list description</string>
@@ -23,9 +23,12 @@
         <item quantity="other">%s actives</item>
     </plurals>
 
-
-    <string name="error_refresh_data_label">oops, the data have not been
-        refreshed</string>
+    <string name="error_refresh_data_label">oops, the data have not been refreshed</string>
     <string name="data_refreshed_label">Data updated</string>
+    <string name="ok">OK</string>
+
+    <string name="error_fetch_data_title">Oops&#8230; Data not found</string>
+    <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
+    <string name="retry">retry</string>
 
 </resources>

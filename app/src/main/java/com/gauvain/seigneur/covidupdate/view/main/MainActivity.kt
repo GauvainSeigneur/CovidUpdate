@@ -8,16 +8,20 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
+import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
+import com.gauvain.seigneur.covidupdate.utils.AVDUtils
 import com.gauvain.seigneur.covidupdate.utils.RequestState
 import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
+import com.gauvain.seigneur.covidupdate.utils.startVectorAnimation
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
-import com.github.mikephil.charting.data.Entry
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
+import kotlinx.android.synthetic.main.view_content_main.*
+import kotlinx.android.synthetic.main.view_no_data_found.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,10 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val FADE_MAX_VALUE = 1f
         const val SCALE_MAX_VALUE = 1.5f
+        const val BOTTOM_MENU_TAG = "BottomMenuDialogTAG"
+        const val STATE_LOADING = "StateLoading"
+        const val STATE_ERROR = "StateError"
+        const val STATE_GONE = "StateGone"
     }
 
     private val viewModel: MainViewModel by viewModel()
@@ -40,17 +48,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.fetchStatistics()
+        fetchData()
         setContentView(R.layout.activity_main)
+        initView()
+        observe()
+    }
+
+    private fun fetchData() {
+        if (viewModel.statisticsData.value == null ||
+            viewModel.statisticsData.value is LiveDataState.Error
+        ) {
+            viewModel.fetchStatistics()
+        }
+    }
+
+    private fun initView() {
         bottomAppBar.setNavigationOnClickListener {
-            BottomMenuDialog().show(supportFragmentManager, "BottomMenuDialogTAG")
+            BottomMenuDialog().show(supportFragmentManager, BOTTOM_MENU_TAG)
         }
         refreshFab.setOnSafeClickListener {
             viewModel.refreshStatistics()
         }
         initReviewsListAdapter()
         appBarLayout.addOnOffsetChangedListener(appBarOffsetListener)
-        observe()
     }
 
     private fun observe() {
@@ -67,29 +87,20 @@ class MainActivity : AppCompatActivity() {
         viewModel.statisticsData.observe(this, Observer {
             when (it) {
                 is LiveDataState.Success -> {
+                    handleLoadingView(STATE_GONE)
                     statisticsListAdapter.updateStatList(it.data)
                 }
                 is LiveDataState.Error -> {
+                    handleLoadingView(STATE_ERROR, it.errorData)
                 }
             }
         })
 
         viewModel.loadingState.observe(this, Observer {
             when (it) {
-                RequestState.INITIAL_IS_LOADING -> {
-                    refreshFab.isClickable = false
-                }
-                RequestState.INITIAL_IS_LOADED -> {
-                    refreshFab.isClickable = true
-                }
-                RequestState.REFRESH_IS_LOADING -> {
-                    refreshFab.isClickable = false
-                    showFabLoader(true)
-                }
-                RequestState.REFRESH_IS_LOADED -> {
-                    refreshFab.isClickable = true
-                    showFabLoader(false)
-                }
+                RequestState.INITIAL_IS_LOADING -> handleLoadingView(STATE_LOADING)
+                RequestState.REFRESH_IS_LOADING -> handleRefreshLoading(true)
+                RequestState.REFRESH_IS_LOADED -> handleRefreshLoading(false)
             }
         })
 
@@ -98,6 +109,8 @@ class MainActivity : AppCompatActivity() {
                 mainActivityParentLayout, it.getFormattedString(this),
                 CustomSnackbar.LENGTH_LONG
             )
+                .setAction(R.string.ok, View.OnClickListener {
+                })
                 .setAnchorView(refreshFab)
                 .show()
         })
@@ -109,11 +122,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpAllData(data: AllHistoryData) {
-        val entries = mutableListOf<Entry>()
-        data.history.map { item ->
-            entries.add(Entry(item.position, item.total))
-        }
-        allHistoryChartView.setData(entries, "all history")
+        allHistoryChartView.setData(data.chart, "all history")
+        toolbar.title = data.totalCases
+        toolbar.subtitle = data.activeCases.getFormattedString(this)
         allTotalCaseTextview.text = data.totalCases
         allActiveCasesTextView.text = data.activeCases.getFormattedString(this)
         allNewCasesTextView.text = data.newCases.total.getFormattedString(this)
@@ -139,5 +150,42 @@ class MainActivity : AppCompatActivity() {
         refreshFab.shrink(isVisible)
         fabLoadingView.showLoader(isVisible)
         refreshFab.isClickable = !isVisible
+    }
+
+    private fun handleLoadingView(state: String, errorData: ErrorData? = null) {
+        when (state) {
+            STATE_LOADING -> {
+                refreshFab.hide()
+                loadingView.visibility = View.VISIBLE
+                bigLoader.visibility = View.VISIBLE
+                AVDUtils.startLoadingAnimation(bigLoader, true)
+                errorView.visibility = View.GONE
+            }
+            STATE_ERROR -> {
+                refreshFab.hide()
+                loadingView.visibility = View.VISIBLE
+                bigLoader.visibility = View.GONE
+                AVDUtils.startLoadingAnimation(bigLoader, false)
+                errorView.visibility = View.VISIBLE
+                binocularAvdView.startVectorAnimation()
+                errorTitle.text = errorData?.title?.getFormattedString(this)
+                errorDesc.text = errorData?.description?.getFormattedString(this)
+                retryButton.setOnClickListener {
+                    viewModel.fetchStatistics()
+                }
+            }
+            else -> {
+                refreshFab.show()
+                AVDUtils.startLoadingAnimation(bigLoader, false)
+                loadingView.visibility = View.GONE
+                bigLoader.visibility = View.GONE
+                errorView.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun handleRefreshLoading(isVisible: Boolean) {
+        refreshFab.isClickable = !isVisible
+        showFabLoader(isVisible)
     }
 }

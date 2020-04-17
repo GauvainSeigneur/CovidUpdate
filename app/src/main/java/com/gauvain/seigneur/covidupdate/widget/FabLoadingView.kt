@@ -3,15 +3,12 @@ package com.gauvain.seigneur.covidupdate.widget
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.graphics.drawable.AnimatedVectorDrawable
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import androidx.vectordrawable.graphics.drawable.Animatable2Compat
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.utils.AVDUtils
 import kotlinx.android.synthetic.main.view_fab_loading.view.*
 
 class FabLoadingView @JvmOverloads constructor(
@@ -70,18 +67,6 @@ class FabLoadingView @JvmOverloads constructor(
     }
 
     private fun startLoadingAVd(start: Boolean) {
-        val loaderAvd = loadingAvdView.drawable as AnimatedVectorDrawable
-        if (start) {
-            AnimatedVectorDrawableCompat.registerAnimationCallback(
-                loaderAvd,
-                object : Animatable2Compat.AnimationCallback() {
-                    override fun onAnimationEnd(drawable: Drawable?) {
-                        loadingAvdView.post { loaderAvd.start() }
-                    }
-                })
-            loaderAvd.start()
-        } else {
-            loaderAvd.stop()
-        }
+        AVDUtils.startLoadingAnimation(loadingAvdView, start)
     }
 }

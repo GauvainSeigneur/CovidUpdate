@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/errorView"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/binocularAvdView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/binocular_height"
+        android:src="@drawable/avd_binocular"
+        />
+
+    <TextView
+        android:id="@+id/errorTitle"
+        style="@style/Typography.TextAppearance.Headline1"
+        android:paddingStart="@dimen/space_m"
+        android:paddingEnd="@dimen/space_m"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Oops... Data not found"/>
+
+    <TextView
+        android:id="@+id/errorDesc"
+        style="@style/Typography.TextAppearance.Body2"
+        android:padding="@dimen/space_m"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Please check your internet connection and retry" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/retryButton"
+        android:layout_marginTop="@dimen/space_m"
+        android:layout_marginEnd="@dimen/space_xl"
+        android:layout_marginStart="@dimen/space_xl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/vd_refresh_expand"
+        android:text="@string/retry"/>
+
+</LinearLayout>

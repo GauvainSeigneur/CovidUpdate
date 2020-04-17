@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loadingView"
+    android:layout_width="match_parent"
+    android:background="@color/colorBackground"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/bigLoader"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:padding="@dimen/space_m"
+        android:tint="@color/colorSecondary"
+        android:src="@drawable/avd_big_mini_loader"/>
+
+    <include layout="@layout/view_no_data_found"/>
+
+</FrameLayout>

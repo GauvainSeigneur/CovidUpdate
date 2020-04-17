@@ -8,6 +8,7 @@ import com.gauvain.seigneur.domain.model.AllHistoryModel
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.formatTo
+import com.github.mikephil.charting.data.Entry
 
 fun AllHistoryModel.toData(numberFormatProvider: NumberFormatProvider) =
     AllHistoryData(
@@ -18,7 +19,8 @@ fun AllHistoryModel.toData(numberFormatProvider: NumberFormatProvider) =
             numberFormatProvider.format(this.totalActiveCases)
         ),
         newCases = getNewCases(this, numberFormatProvider),
-        history = setUpAllHistoryList(this.history)
+        history = this.history.map { it.toData() },
+        chart = setUpChartEntries(this.history)
     )
 
 private fun getNewCases(
@@ -40,20 +42,22 @@ private fun getNewCases(
         R.color.colorCool
     )
 
-private fun setUpAllHistoryList(list: List<AllHistoryItemModel>): List<AllHistoryItemData> {
-    val dataList = mutableListOf<AllHistoryItemData>()
+private fun setUpChartEntries(list: List<AllHistoryItemModel>): List<Entry> {
+    val entryList = mutableListOf<Entry>()
     for ((index, value) in list.reversed().withIndex()) {
-        dataList.add(
-            value.toData(value.day.time.toFloat())
+        entryList.add(
+            Entry(
+                value.day.time.toFloat(),
+                value.total.toFloat()
+            )
         )
     }
 
-    return dataList
+    return entryList
 }
 
-private fun AllHistoryItemModel.toData(position: Float) =
+private fun AllHistoryItemModel.toData() =
     AllHistoryItemData(
-        total = this.total.toFloat(),
-        day = this.day.formatTo(DATA_DATE_FORMAT),
-        position = position
+        total = this.total,
+        day = this.day.formatTo(DATA_DATE_FORMAT)
     )

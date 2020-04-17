@@ -1,7 +1,6 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
 import android.os.Handler
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +9,6 @@ import com.gauvain.seigneur.covidupdate.model.*
 import com.gauvain.seigneur.covidupdate.utils.RequestState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.covidupdate.utils.event.Event
-import com.gauvain.seigneur.domain.model.AllHistoryModel
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
@@ -38,17 +36,14 @@ class MainViewModel(
         const val NO_DELAY = 0L
     }
 
-    val historyData: MutableLiveData<AllHistoryState> by lazy {
-        fetchHistory()
-        MutableLiveData<AllHistoryState>()
-    }
+    val historyData: MutableLiveData<AllHistoryState> = MutableLiveData()
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
     val statisticsData = MutableLiveData<StatisticsState>()
     val refreshDataEvent = MutableLiveData<Event<StringPresenter>>()
 
     fun fetchStatistics() {
         viewModelScope.launch {
-            val isRefresh = statisticsData.value != null
+            val isRefresh = statisticsData.value != null && statisticsData.value is LiveDataState.Success
             val delay: Long
             when (isRefresh) {
                 true -> {
@@ -63,7 +58,7 @@ class MainViewModel(
             Handler().postDelayed({
                 when (result) {
                     is Outcome.Success -> {
-                        handleStatistiscsOutComeSuccess(result, isRefresh)
+                        handleStatisticsOutComeSuccess(result, isRefresh)
                     }
                     is Outcome.Error -> {
                         handleStatisticsOutcomeError(result, isRefresh)
@@ -71,6 +66,7 @@ class MainViewModel(
                 }
             }, delay)
         }
+        fetchHistory()
     }
 
     fun refreshStatistics() {
@@ -88,10 +84,11 @@ class MainViewModel(
             }
             when (result) {
                 is Outcome.Success -> {
-                    historyData.value = LiveDataState.Success(setUpAllHistoryData(result.data))
+                    historyData.value = LiveDataState.Success(
+                        result.data.toData(numberFormatProvider)
+                    )
                 }
                 is Outcome.Error -> {
-                    Log.d("allhistory", "error ${result.error}")
                 }
             }
         }
@@ -105,14 +102,9 @@ class MainViewModel(
             fetchStatisticsUseCase.invoke(country)
         }
         when (isRefreshing) {
-            true -> {
-                loadingState.value = RequestState.REFRESH_IS_LOADED
-            }
-            else -> {
-                loadingState.value = RequestState.INITIAL_IS_LOADED
-            }
+            true -> loadingState.value = RequestState.REFRESH_IS_LOADED
+            else -> loadingState.value = RequestState.INITIAL_IS_LOADED
         }
-
         return result
     }
 
@@ -121,18 +113,13 @@ class MainViewModel(
         isRefreshing: Boolean
     ) {
         if (isRefreshing) {
-            refreshDataEvent.value = Event(
-                StringPresenter(
-                    R.string
-                        .error_refresh_data_label
-                )
-            )
+            refreshDataEvent.value = Event(StringPresenter(R.string.error_refresh_data_label))
         } else {
             statisticsData.value = setErrorLiveData(result.error)
         }
     }
 
-    private fun handleStatistiscsOutComeSuccess(
+    private fun handleStatisticsOutComeSuccess(
         result: Outcome.Success<List<StatisticsItemModel>>,
         isRefreshing: Boolean
     ) {
@@ -141,7 +128,6 @@ class MainViewModel(
             } else {
                 statisticsData.value = LiveDataState.Error(
                     ErrorData(
-                        null,
                         StringPresenter(R.string.empty_list_title),
                         StringPresenter(R.string.empty_list_description)
                     )
@@ -186,14 +172,16 @@ class MainViewModel(
             )
         }
 
-    private fun setUpAllHistoryData(model: AllHistoryModel): AllHistoryData =
-        model.toData(numberFormatProvider)
-
     private fun getCountryCode(countryName: String): String? =
         countryCodeProvider.getCountryCode(countryName)
 
     private fun setErrorLiveData(errorType: ErrorType): LiveDataState.Error =
         when (errorType) {
-            else -> LiveDataState.Error(ErrorData())
+            else -> LiveDataState.Error(
+                ErrorData(
+                    StringPresenter(R.string.error_fetch_data_title),
+                    StringPresenter(R.string.error_fetch_data_description)
+                )
+            )
         }
 }
