@@ -22,7 +22,7 @@ class CountryCodeAdapter(application: Application) :
             try {
                 populateCountryList()
             } catch (e: JSONException) {
-                return null
+               return null
             }
         }
         return fetchCountryCode(country)

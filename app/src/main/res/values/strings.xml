@@ -1,6 +1,13 @@
 <resources>
 
     <string name="app_name">Covid Update</string>
+    <string name="app_description_one">Covid Update is a simple mobile application based on
+        clean architecture, mvvm and coroutines. It uses Covid-19 free API from Rapid API.</string>
+    <string name="app_description_two">Also, Covid Update is based on Material Design
+        latest guidelines.</string>
+
+    <string name="about_library">About libraries</string>
+    <string name="github_repository">GitHub Repository</string>
 
     <plurals name="active_case_label">
         <item quantity="zero">%s active</item>

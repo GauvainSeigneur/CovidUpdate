@@ -21,6 +21,7 @@
 
     <color name="colorEdge">#0024F4</color>
     <color name="colorBackgroundLight">#222222</color>
+    <color name="colorBackgroundLighter">#3b3b3b</color>
     <color name="colorBackground">#0E0E0E</color>
     <color name="colorOnBackground">@color/colorPrimary</color>
 

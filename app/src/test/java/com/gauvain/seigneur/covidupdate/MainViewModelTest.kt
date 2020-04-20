@@ -5,8 +5,10 @@ import androidx.lifecycle.Observer
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
 import com.gauvain.seigneur.covidupdate.view.main.MainViewModel
 import com.gauvain.seigneur.covidupdate.view.main.StatisticsState
+import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.CountryCodeProvider
+import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import com.nhaarman.mockitokotlin2.given
@@ -33,6 +35,8 @@ class MainViewModelTest {
     private lateinit var historyUseCase: FetchAllHistoryUseCase
     @Mock
     private lateinit var countryCodeProvider: CountryCodeProvider
+    @Mock
+    private lateinit var numberFormatProvider: NumberFormatProvider
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
     @ExperimentalCoroutinesApi
@@ -46,13 +50,15 @@ class MainViewModelTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
+        viewModel.statisticsData.observeForever(statisticsLiveDataObserver)
     }
 
     @ExperimentalCoroutinesApi
     @Test
     fun exampleTest() = runBlockingTest {
-        given(statisticsUseCase.invoke(null)).willReturn(Outcome.Success(listOf()))
-        viewModel.statistics.observeForever(statisticsLiveDataObserver)
+        viewModel.statisticsData.observeForever(statisticsLiveDataObserver)
+        given(statisticsUseCase.invoke(null)).willReturn(Outcome.Error(ErrorType.ERROR_UNKNOWN))
+
         verify(statisticsLiveDataObserver).onChanged(
             LiveDataState.Success(
                 listOf(

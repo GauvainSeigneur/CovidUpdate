@@ -13,10 +13,10 @@
 
     <ImageView
         android:id="@+id/binocularAvdView"
+        android:contentDescription="@null"
         android:layout_width="match_parent"
         android:layout_height="@dimen/binocular_height"
-        android:src="@drawable/avd_binocular"
-        />
+        android:src="@drawable/avd_binocular" />
 
     <TextView
         android:id="@+id/errorTitle"
@@ -44,7 +44,6 @@
         android:layout_marginStart="@dimen/space_xl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@drawable/vd_refresh_expand"
         android:text="@string/retry"/>
 
 </LinearLayout>
