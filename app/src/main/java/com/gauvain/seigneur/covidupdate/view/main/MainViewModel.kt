@@ -16,6 +16,7 @@ import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
 import com.gauvain.seigneur.domain.usecase.FetchCountryCodeUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 typealias StatisticsState = LiveDataState<List<StatisticsItemData>>
 typealias AllHistoryState = LiveDataState<AllHistoryData>
@@ -25,7 +26,7 @@ class MainViewModel(
     private val fetchAllHistoryUseCase: FetchAllHistoryUseCase,
     private val fetchCountryCodeUseCase: FetchCountryCodeUseCase,
     private val numberFormatProvider: NumberFormatProvider
-) : ViewModel() {
+) : ViewModel(), CoroutineScope {
 
     companion object {
         const val LONG_DELAY = 400L
@@ -37,10 +38,16 @@ class MainViewModel(
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
     val statisticsData = MutableLiveData<StatisticsState>()
     val refreshDataEvent = MutableLiveData<Event<StringPresenter>>()
-    val lol = MutableLiveData<String>()
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
+    override fun onCleared() {
+        job.cancel()
+    }
 
     fun fetchData() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             fetchStatistics()
             fetchHistory()
         }
@@ -48,7 +55,7 @@ class MainViewModel(
 
     fun refreshData() {
         loadingState.value = RequestState.REFRESH_IS_LOADING
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Main) {
             delay(LONG_DELAY)
             fetchStatistics()
             fetchHistory()
@@ -90,8 +97,6 @@ class MainViewModel(
                     result.data.toData(numberFormatProvider)
                 )
             }
-            is Outcome.Error -> {
-            }
         }
     }
 
@@ -115,7 +120,6 @@ class MainViewModel(
     ) {
         if (isRefreshing) {
             refreshDataEvent.value = Event(StringPresenter(R.string.error_refresh_data_label))
-            lol.value = "lol"
         } else {
             statisticsData.value = setErrorLiveData(result.error)
         }
@@ -126,19 +130,19 @@ class MainViewModel(
         isRefreshing: Boolean
     ) {
         if (result.data.isEmpty()) {
-            statisticsData.value = LiveDataState.Error(
-                ErrorData(
-                    StringPresenter(R.string.empty_list_title),
-                    StringPresenter(R.string.empty_list_description)
-                )
-            )
-        } else {
             if (isRefreshing) {
-                refreshDataEvent.value = Event(
-                    StringPresenter(
-                        R.string.data_refreshed_label
+                refreshDataEvent.value = Event(StringPresenter(R.string.error_refresh_data_label))
+            } else {
+                statisticsData.value = LiveDataState.Error(
+                    ErrorData(
+                        StringPresenter(R.string.empty_list_title),
+                        StringPresenter(R.string.empty_list_description)
                     )
                 )
+            }
+        } else {
+            if (isRefreshing) {
+                refreshDataEvent.value = Event(StringPresenter(R.string.data_refreshed_label))
             }
             val ascendingList = result.data.sortedByDescending { it.casesModel.total }
             statisticsData.value = LiveDataState.Success(

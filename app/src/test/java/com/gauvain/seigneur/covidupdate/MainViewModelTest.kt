@@ -16,7 +16,13 @@ import com.gauvain.seigneur.domain.usecase.FetchCountryCodeUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import com.nhaarman.mockitokotlin2.given
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,9 +33,9 @@ import org.mockito.MockitoAnnotations
 @ExperimentalCoroutinesApi
 class MainViewModelTest {
 
+    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
     // Run tasks synchronously
-    @Rule
-    @JvmField
+    @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
     // Sets the main coroutines dispatcher to a TestCoroutineScope for unit testing.
     @ExperimentalCoroutinesApi
@@ -53,6 +59,13 @@ class MainViewModelTest {
         given(fetchCountryCodeUseCase.getCountryCode("USA")).willReturn("US")
         given(fetchCountryCodeUseCase.getCountryCode("Spain")).willReturn("ES")
         given(fetchCountryCodeUseCase.getCountryCode("Netherlands")).willReturn("NL")
+        Dispatchers.setMain(mainThreadSurrogate)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
+        mainThreadSurrogate.close()
     }
 
     @Test
@@ -62,6 +75,8 @@ class MainViewModelTest {
             Outcome.Success(StatisticsModelMocks.getStatisticsItemModelList())
         )
         viewModel.fetchData()
+
+        mainCoroutineRule.advanceUntilIdle()
         val value = viewModel.statisticsData.getOrAwaitValue()
         assertEquals(
             value, LiveDataState.Success(
@@ -85,6 +100,24 @@ class MainViewModelTest {
         )
     }
 
+
+    @Test
+    fun
+        given_statistics_livedata_is_success_when_fetch_statistics_return_empty_list_when_fetch_statistics_then_dedicated_event_must_be_set() {
+        viewModel.statisticsData.value = LiveDataState.Success(
+            StatisticsDataMocks.getStatisticsList(numberFormatProvider)
+        )
+        given(statisticsUseCase.invoke(null)).willReturn(Outcome.Success(listOf()))
+        viewModel.fetchData()
+        val event = viewModel.refreshDataEvent.getOrAwaitValue {
+            mainCoroutineRule.advanceUntilIdle()
+        }
+        assertEquals(
+            event,
+            Event(StringPresenter(R.string.error_refresh_data_label))
+        )
+    }
+
     @Test
     fun
         given_statistics_livedata_is_success_when_fetch_statistics_with_error_then_liveData_must_return_event_error() {
@@ -93,15 +126,14 @@ class MainViewModelTest {
         )
         given(statisticsUseCase.invoke(null)).willReturn(Outcome.Error(ErrorType.ERROR_UNKNOWN))
         viewModel.fetchData()
-        val event = viewModel.refreshDataEvent.getOrAwaitValue {
-            // After observing, advance the clock to avoid the delay calls.
-            mainCoroutineRule.advanceUntilIdle()
-        }
+        mainCoroutineRule.advanceUntilIdle()
+        val event = viewModel.refreshDataEvent.getOrAwaitValue()
         assertEquals(
             event,
             Event(StringPresenter(R.string.error_refresh_data_label))
         )
     }
+
 
     @Test
     fun

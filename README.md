@@ -36,7 +36,9 @@ api_key=YOUR_KEY
 
 ## Todo
 * Clean flags
-* update viewModel tests
+* streamLine viewModel
+* remove Kotest - runner not reliable
+
 
 ## Licence
 ```

@@ -12,19 +12,16 @@ import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_UNKNOWN_HOST_DESC
 import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.provider.GetHistoryException
 import com.google.common.truth.Truth.assertThat
-import io.kotest.core.spec.style.StringSpec
+import org.junit.Test
 import java.io.IOException
 import java.lang.Exception
 import java.net.UnknownHostException
 
-class historyAdapterTest : StringSpec({
+class HistoryAdapterTest {
 
-    """Given the HistoryProvider
-        When we get the history
-        And we receive the object from the web service
-        Then it should return list of statistics""" {
-        val serviceSuccessResponse: CovidService =
-            CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createHistoryResponse())
+    @Test
+    fun `Given the HistoryProvider When we get the history And we receive the object from the web service Then it should return list of statistics`() {
+        val serviceSuccessResponse: CovidService = CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createHistoryResponse())
         val provider = HistoryAdapter(serviceSuccessResponse)
         val result = runCatching {
             provider.history("country")
@@ -33,10 +30,8 @@ class historyAdapterTest : StringSpec({
         assertThat(result.getOrNull()).isEqualTo(AdapterOutcomeModelMock.createHistoryStatisticsListSuccess())
     }
 
-    """Given the HistoryProvider
-        When we get the history
-        And we receive an object from the web service which include only a message string
-        Then it should throw an GetHistoryException""" {
+    @Test
+    fun `Given the HistoryProvider When we get the history And we receive an object from the web service which include only a message string Then it should throw an GetHistoryException`() {
         val messageResponse: CovidService =
             CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createMessageResponse())
         val provider = HistoryAdapter(messageResponse)
@@ -52,10 +47,8 @@ class historyAdapterTest : StringSpec({
             "Invalid X-Rapidapi-Key")
     }
 
-    """Given the HistoryProvider
-        When we get the history
-        And we receive a null object
-        Then it should throw an GetHistoryException""" {
+    @Test
+    fun `When we receive null response from provider it must throw a exception`() {
         val messageResponse: CovidService =
             CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createNullBodyResponse())
         val provider = HistoryAdapter(messageResponse)
@@ -68,13 +61,12 @@ class historyAdapterTest : StringSpec({
             RequestExceptionType.BODY_NULL
         )
         assertThat((result.exceptionOrNull() as GetHistoryException).description).isEqualTo(
-            EXCEPTION_BODY_NUL_DESC)
+            EXCEPTION_BODY_NUL_DESC
+        )
     }
 
-    """Given the HistoryProvider
-        When we get the history
-        And there is an UNKNOWN HOST ERROR with the web service
-        Then it should throw an GetHistoryException""" {
+    @Test
+    fun `When we receive UNKNOWN HOST ERROR from provider it must throw a exception`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(UnknownHostException())
         val provider = HistoryAdapter(serviceFailedResponse)
@@ -91,10 +83,8 @@ class historyAdapterTest : StringSpec({
         )
     }
 
-    """Given the HistoryProvider
-        When we get the history
-        And there is an UNKNOWN ERROR with the web service
-        Then it should throw an GetHistoryException""" {
+    @Test
+    fun `When we receive UNKNOWN ERROR from provider it must throw a exception`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(UnknownError())
         val provider = HistoryAdapter(serviceFailedResponse)
@@ -111,10 +101,8 @@ class historyAdapterTest : StringSpec({
         )
     }
 
-    """Given the HistoryProvider
-        When we get the history
-        And there is an IOException with the web service
-        Then it should throw an GetHistoryException""" {
+    @Test
+    fun `When we receive IOException from provider it must throw a exception`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(IOException())
         val provider = HistoryAdapter(serviceFailedResponse)
@@ -131,10 +119,8 @@ class historyAdapterTest : StringSpec({
         )
     }
 
-    """Given the HistoryProvider
-        When we get the history
-        And there is an EXCEPTION with the web service
-        Then it should throw an GetHistoryException""" {
+    @Test
+    fun `When we receive EXCEPTION from provider it must throw a exception`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(Exception())
         val provider = HistoryAdapter(serviceFailedResponse)
@@ -150,4 +136,6 @@ class historyAdapterTest : StringSpec({
             EXCEPTION_ERROR_UNKNOWN_DESC
         )
     }
-})
+}
+
+
