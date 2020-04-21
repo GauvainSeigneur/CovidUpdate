@@ -3,7 +3,7 @@ A mobile application which uses Covid-19 free API to provides daily updates on c
 It is based on clean architecture & Android Architecture components (ViewModel, Livedata) and
 coroutines.
 
-It is also based on latest Material Design guidelines (BottomAPPBar, AnimatedVecrtorDrawable,
+It is also based on latest Material Design guidelines (BottomAppBar, AnimatedVecrtorDrawable,
 font style, dark mode, etc.)
 
 <img src="art/home.jpg" width="25%"></img>
@@ -14,7 +14,7 @@ font style, dark mode, etc.)
 * AndroidX
 * Clean Architecture
 * Android Architecture Components - ViewModel, LiveData, Room, Paging
-* Retrofit - Http client
+* Retrofit/Okhttp - Type-safe HTTP client
 * Gson - Serialization & deserialization
 * Coroutine - Asynchronous and non-blocking programming
 * Coil - Image loading
@@ -28,7 +28,7 @@ WIP
 
 
 ## How to use it ?
-Add Koin.properties" files inside assets foilder and add the two folling lines:
+Add Koin.properties file inside assets folder and add the two following lines:
 ```
 server_url=https://covid-193.p.rapidapi.com
 api_key=YOUR_KEY
