@@ -12,17 +12,22 @@ import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_UNKNOWN_HOST_DESC
 import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.provider.GetStatisticsException
 import com.google.common.truth.Truth.assertThat
-import io.kotest.core.spec.style.StringSpec
+import org.junit.Before
+import org.junit.Test
+import org.mockito.MockitoAnnotations
 import java.io.IOException
 import java.lang.Exception
 import java.net.UnknownHostException
 
-class StatisticsAdapterTest : StringSpec({
+class StatisticsAdapterTest {
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And we receive the object from the web service
-        Then it should return list of statistics""" {
+    @Before
+    fun setup() {
+        MockitoAnnotations.initMocks(this)
+    }
+
+    @Test
+    fun `When we receive object from provider it must return a list of statistics`() {
         val serviceSuccessResponse: CovidService =
             CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createStatisticsResponse())
         val provider = StatisticsAdapter(serviceSuccessResponse)
@@ -33,10 +38,8 @@ class StatisticsAdapterTest : StringSpec({
         assertThat(result.getOrNull()).isEqualTo(AdapterOutcomeModelMock.createStatisticsListSuccess())
     }
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And we receive an object from the web service which include only a message string
-        Then it should throw an GetStatisticsException""" {
+    @Test
+    fun `When we receive only a message from provider it must return GetStatisticsException`() {
         val messageResponse: CovidService =
             CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createMessageResponse())
         val provider = StatisticsAdapter(messageResponse)
@@ -52,10 +55,8 @@ class StatisticsAdapterTest : StringSpec({
             "Invalid X-Rapidapi-Key")
     }
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And we receive a null object
-        Then it should throw an GetStatisticsException""" {
+    @Test
+    fun `When we receive null object from provider it must return GetStatisticsException`() {
         val messageResponse: CovidService =
             CovidUpdateServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createNullBodyResponse())
         val provider = StatisticsAdapter(messageResponse)
@@ -71,10 +72,8 @@ class StatisticsAdapterTest : StringSpec({
             EXCEPTION_BODY_NUL_DESC)
     }
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And there is an UNKNOWN HOST ERROR with the web service
-        Then it should throw an GetStatisticsException""" {
+    @Test
+    fun `When we receive UNKNOWN HOST ERROR from provider it must return GetStatisticsException`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(UnknownHostException())
         val provider = StatisticsAdapter(serviceFailedResponse)
@@ -91,10 +90,8 @@ class StatisticsAdapterTest : StringSpec({
         )
     }
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And there is an UNKNOWN ERROR with the web service
-        Then it should throw an GetStatisticsException""" {
+    @Test
+    fun `When we receive UNKNOWN ERROR from provider it must return GetStatisticsException`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(UnknownError())
         val provider = StatisticsAdapter(serviceFailedResponse)
@@ -111,10 +108,8 @@ class StatisticsAdapterTest : StringSpec({
         )
     }
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And there is an IOException with the web service
-        Then it should throw an GetStatisticsException""" {
+    @Test
+    fun `When we receive IOException from provider it must return GetStatisticsException`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(IOException())
         val provider = StatisticsAdapter(serviceFailedResponse)
@@ -131,10 +126,8 @@ class StatisticsAdapterTest : StringSpec({
         )
     }
 
-    """Given the StatisticsProvider
-        When we get the statistics
-        And there is an EXCEPTION with the web service
-        Then it should throw an GetStatisticsException""" {
+    @Test
+    fun `When we receive EXCEPTION from provider it must return GetStatisticsException`() {
         val serviceFailedResponse: CovidService =
             CovidUpdateServiceMock.createServiceThatFail(Exception())
         val provider = StatisticsAdapter(serviceFailedResponse)
@@ -150,4 +143,4 @@ class StatisticsAdapterTest : StringSpec({
             EXCEPTION_ERROR_UNKNOWN_DESC
         )
     }
-})
+}
