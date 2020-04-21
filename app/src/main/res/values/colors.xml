@@ -4,26 +4,35 @@
     <color name="colorWhite">#FFFFFFFF</color>
     <color name="colorWhiteVariant">#fafafa</color>
     <color name="colorWhiteDark">#BFffffff</color>
+    <color name="colorWhiteDarker">#99ffffff</color>
+
+
+    <color name="colorSecondaryLineChart">#D90024F4</color>
+    <color name="colorSecondaryGradientStart">#000024F4</color>
+    <color name="colorSecondaryGradientEnd">#990024F4</color>
 
     <color name="colorPrimary">@color/colorWhite</color>
     <color name="colorPrimaryVariant">@color/colorWhiteVariant</color>
     <color name="colorOnPrimary">@color/colorBlack</color>
 
-    <color name="colorSecondary">#5569F2</color>
-    <color name="colorSecondaryVariant">#263fee</color>
+    <color name="colorSecondary">#0024F4</color>
+    <color name="colorSecondaryVariant">#0010f4</color>
     <color name="colorOnSecondary">@color/colorWhite</color>
 
-    <color name="colorEdge">#5569F2</color>
+    <color name="colorEdge">#0024F4</color>
     <color name="colorBackgroundLight">#222222</color>
+    <color name="colorBackgroundLighter">#3b3b3b</color>
     <color name="colorBackground">#0E0E0E</color>
     <color name="colorOnBackground">@color/colorPrimary</color>
 
     <color name="colorSurface">#181A1E</color>
     <color name="colorOnSurface">@color/colorWhiteVariant</color>
 
-    <color name="colorCool">#8AEEB5</color>
-    <color name="colorDanger">#EB384B</color>
+    <color name="colorCool">#11fecb</color>
+    <color name="colorDanger">#fe1144</color>
 
     <color name="colorError">#E56B51</color>
     <color name="colorOnError">#FFFFFF</color>
+
+    <color name="colorBottomSheetBackground">#2F2F2F</color>
 </resources>

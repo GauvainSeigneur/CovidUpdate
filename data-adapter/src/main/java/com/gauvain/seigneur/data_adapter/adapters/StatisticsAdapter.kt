@@ -35,7 +35,10 @@ class StatisticsAdapter(val service: CovidService) :
                 it?.stats?.map { stat ->
                     stat.toDomainStatistics()
                 }
-            } ?: throw GetStatisticsException(RequestExceptionType.BODY_NULL, EXCEPTION_BODY_NUL_DESC)
+            } ?: throw GetStatisticsException(
+                RequestExceptionType.BODY_NULL,
+                EXCEPTION_BODY_NUL_DESC
+            )
         }
     }
 }

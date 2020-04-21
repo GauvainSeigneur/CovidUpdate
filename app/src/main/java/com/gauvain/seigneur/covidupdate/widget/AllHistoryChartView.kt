@@ -1,11 +1,11 @@
 package com.gauvain.seigneur.covidupdate.widget
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
@@ -13,78 +13,92 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
 import kotlinx.android.synthetic.main.view_all_history_chart.view.*
 
 class AllHistoryChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
+    private val x: XAxis
+
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.view_all_history_chart, this)
         this.orientation = VERTICAL
         initChart()
+        x = chart.xAxis
     }
 
     private fun initChart() {
-        allHistoryPieChart.setViewPortOffsets(0f, 0f, 0f, 0f)
-        //allHistoryPieChart.setBackgroundColor(Color.rgb(104, 241, 175))
         // no description text
-        allHistoryPieChart.description.isEnabled = false
+        chart.description.isEnabled = false
         // enable touch gestures
-        allHistoryPieChart.setTouchEnabled(true)
+        chart.setTouchEnabled(true)
         // enable scaling and dragging
-        allHistoryPieChart.setDragEnabled(true)
-        allHistoryPieChart.setScaleEnabled(true)
+        chart.isDragEnabled = true
+        chart.setScaleEnabled(false)
         // if disabled, scaling can be done on x- and y-axis separately
-        allHistoryPieChart.setPinchZoom(false)
+        chart.setPinchZoom(false)
+        chart.resetViewPortOffsets()
 
-        allHistoryPieChart.setDrawGridBackground(false)
-        /*allHistoryPieChart.setMaxHighlightDistance(300f)
-        val x: XAxis = allHistoryPieChart.xAxis
+        chart.setDrawGridBackground(false)
+        chart.maxHighlightDistance = 300f
+        val y: YAxis = chart.axisLeft
+        y.setDrawGridLines(false)
+        val x: XAxis = chart.xAxis
         x.isEnabled = true
         x.position = XAxisPosition.BOTTOM
-        val y: YAxis = allHistoryPieChart.axisLeft
-        //y.typeface = tfLight
-        y.setLabelCount(6, false)
-        y.textColor = Color.WHITE
-        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
-        y.setDrawGridLines(false)
-        y.axisLineColor = Color.WHITE
+        x.axisLineColor = ContextCompat.getColor(context, android.R.color.transparent)
+        x.setDrawGridLines(false)
+        x.labelCount = 5
+        x.typeface = ResourcesCompat.getFont(context, R.font.work_sans_bold)
+        x.valueFormatter = DayAxisValueFormatter()
+        x.textColor = ContextCompat.getColor(context, R.color.colorWhite)
+        x.removeAllLimitLines()
 
-        allHistoryPieChart.axisRight.isEnabled = false
-        allHistoryPieChart.axisLeft.isEnabled = false
+        chart.setViewPortOffsets(0f, 16f, 0f, x.textSize + x.xOffset)
 
-        allHistoryPieChart.legend.isEnabled = false*/
-
-        allHistoryPieChart.animateXY(2000, 2000)
+        chart.axisRight.isEnabled = false
+        chart.axisLeft.isEnabled = false
+        chart.legend.isEnabled = false
+        // create marker to display box when values are selected
+        val mv = MyMarkerView(context, R.layout.view_marker)
+        // Set the marker to the chart
+        mv.chartView = chart
+        chart.marker = mv
+        //chart.animateXY(500, 500)
+        chart.invalidate()
     }
 
     fun setData(entries: List<Entry>, label: String) {
-        val set1 = LineDataSet(entries, label)
-        set1.mode = LineDataSet.Mode.CUBIC_BEZIER
-        set1.cubicIntensity = 0.2f
-        set1.setDrawFilled(true)
-        set1.setDrawCircles(false)
-        set1.lineWidth = 1.8f
-        set1.circleRadius = 4f
-        set1.setCircleColor(Color.WHITE)
-        set1.highLightColor = Color.rgb(244, 117, 117)
-        set1.color = Color.WHITE
-        set1.fillColor = ContextCompat.getColor(context, R.color.colorBackgroundLight)
-        set1.fillAlpha = 50
-        set1.setDrawHorizontalHighlightIndicator(false)
-        set1.fillFormatter = IFillFormatter { dataSet, dataProvider ->
-            allHistoryPieChart.getAxisLeft().getAxisMinimum()
-        }
+        val set = LineDataSet(entries, label)
+        set.mode = LineDataSet.Mode.CUBIC_BEZIER
+        set.cubicIntensity = 0.25f
+        set.setDrawFilled(true)
+        set.lineWidth = 4.5f
+        set.setDrawCircles(false)
+        set.highlightLineWidth
+        set.highLightColor = ContextCompat.getColor(context, R.color.colorSecondary)
+        set.color = ContextCompat.getColor(context, R.color.colorSecondaryLineChart)
+        set.fillDrawable = ContextCompat.getDrawable(context, R.drawable.gradient_header_chart)
+        set.setDrawHorizontalHighlightIndicator(false)
         // create a data object with the data sets
-        val data = LineData(set1)
+        val data = LineData(set)
         //data.setValueTypeface(tfLight)
-        data.setValueTextSize(9f)
+        data.setValueTextSize(30f)
         data.setDrawValues(false)
         // set data
-        allHistoryPieChart.setData(data)
-        allHistoryPieChart.invalidate()
+        setXAxisMinMax(entries)
+        chart.data = data
+        chart.animateXY(500, 500)
+    }
+
+    private fun setXAxisMinMax(entries: List<Entry>) {
+        val total = entries.size - 1
+        if (total % 2 == 0) {
+        } else {
+            x.axisMinimum = entries[4].x
+        }
+        chart.invalidate()
     }
 }

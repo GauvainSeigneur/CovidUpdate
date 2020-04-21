@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/mainActivityParentLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,19 +11,39 @@
         android:id="@+id/statsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:layout_marginBottom="?attr/actionBarSize"/>
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+
+    <com.gauvain.seigneur.covidupdate.widget.FabLoadingView
+        android:id="@+id/fabLoadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="16dp"
+        android:visibility="gone"
+        app:layout_anchor="@id/refreshFab"
+        app:layout_anchorGravity="center" />
+
+    <com.gauvain.seigneur.covidupdate.widget.RefreshFab
+        android:id="@+id/refreshFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/asl_refresh_shrink_expand"
+        app:layout_anchor="@id/bottomAppBar" />
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorBackground">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:scrimAnimationDuration="0">
+            app:scrimAnimationDuration="0"
+            app:titleEnabled="false">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -31,27 +52,21 @@
                 android:backgroundTint="@color/colorBackground"
                 app:layout_collapseMode="pin" />
 
-            <com.gauvain.seigneur.covidupdate.widget.AllHistoryChartView
-                android:id="@+id/allHistoryChartView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <include layout="@layout/header_chart_view" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/refreshFab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_refresh_white_24dp"
-        app:layout_anchor="@id/bottomAppBar"/>
+    <include layout="@layout/view_content_main"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        app:fabAlignmentMode="end" />
+        app:fabAlignmentMode="end"
+        app:navigationIcon="@drawable/ic_menu_white_24dp" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

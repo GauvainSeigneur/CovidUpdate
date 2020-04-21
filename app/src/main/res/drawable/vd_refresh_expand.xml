@@ -1,0 +1,18 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="vector"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group
+        android:name="refresh_group"
+        android:pivotX="12"
+        android:pivotY="12">
+        <path
+            android:name="refresh"
+            android:pathData="@string/refresh_path"
+            android:fillColor="@color/colorWhite"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

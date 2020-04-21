@@ -63,6 +63,7 @@ object OutComeModelMock {
         AllHistoryModel(
             totalCases = 107000,
             totalNewCases = 1000,
+            totalActiveCases = 70000,
             history = listOf(
                 AllHistoryItemModel(
                     total = 107000,

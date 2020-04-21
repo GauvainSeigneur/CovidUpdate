@@ -1,16 +1,41 @@
 <resources>
-    <string name="app_name">CovidUpdate</string>
 
-    <string name="empty_list_title">Empty list title</string>
-    <string name="empty_list_description">Empty list description</string>
+    <string name="app_name">Covid Update</string>
+    <string name="app_description_one">Covid Update is a simple mobile application based on
+        clean architecture, mvvm and coroutines. It uses Covid-19 free API from Rapid API.</string>
+    <string name="app_description_two">Also, Covid Update is based on Material Design
+        latest guidelines.</string>
 
-    <string name="no_new_cases_label">No new cases</string>
-    <string name="new_cases_label">%s</string>
-    <string name="total_case_label">Total: %s</string>
+    <string name="about_library">About libraries</string>
+    <string name="github_repository">GitHub Repository</string>
+
     <plurals name="active_case_label">
         <item quantity="zero">%s active</item>
         <item quantity="one">%s active</item>
         <item quantity="other">%s actives</item>
     </plurals>
+
+    <string name="empty_list_title">Empty list title</string>
+    <string name="empty_list_description">Empty list description</string>
+    <string name="no_new_cases_label">No new cases</string>
+
+    <string name="new_cases_label">%s</string>
+    <string name="total_case_label">Total: %s</string>
+    <string name="main_header_chart_total_cases_title">Total cases today</string>
+    <string name="main_header_chart_subtitle_new">(+ %1$s)</string>
+    <string name="main_header_chart_subtitle_no_new_cases">No new cases</string>
+    <plurals name="main_header_chart_subtitle_active">
+        <item quantity="zero">%s active</item>
+        <item quantity="one">%s active</item>
+        <item quantity="other">%s actives</item>
+    </plurals>
+
+    <string name="error_refresh_data_label">oops, the data have not been refreshed</string>
+    <string name="data_refreshed_label">Data updated</string>
+    <string name="ok">OK</string>
+
+    <string name="error_fetch_data_title">Oops&#8230; Data not found</string>
+    <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
+    <string name="retry">retry</string>
 
 </resources>

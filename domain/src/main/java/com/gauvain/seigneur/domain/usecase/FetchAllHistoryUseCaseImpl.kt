@@ -28,6 +28,7 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
             }
             AllHistoryModel(
                 totalCases = this[0].casesModel.total,
+                totalActiveCases = this[0].casesModel.active,
                 totalNewCases = this[0].casesModel.new,
                 history = getSmallHistoryList(historyList)
             )

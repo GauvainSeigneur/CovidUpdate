@@ -3,11 +3,24 @@
     <style name="Widget" parent="CovidUpdateTheme" />
 
     <style name="Widget.Fab" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="android:outlineAmbientShadowColor" tools:targetApi="28">@color/colorSecondary</item>
-        <item name="android:outlineSpotShadowColor" tools:targetApi="28">@color/colorSecondary</item>
+        <item name="android:outlineAmbientShadowColor" tools:targetApi="28">@color/colorSecondary
+        </item>
+        <item name="android:outlineSpotShadowColor" tools:targetApi="28">@color/colorSecondary
+        </item>
     </style>
 
-    <style name="Widget.Button" parent="Widget.MaterialComponents.Button"/>
+    <style name="Widget.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/selector_button_background_secondary</item>
+        <item name="iconTint">@color/selector_button_icon_secondary</item>
+        <item name="android:textColor">@color/selector_button_text_secondary</item>
+    </style>
+
+    <style name="Widget.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconTint">@color/selector_text_button_icon_secondary</item>
+        <item name="android:textColor">@color/selector_text_button_text_secondary</item>
+    </style>
+
+
 
     <style name="Widget.Button.SearchButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:backgroundTint">@color/colorSecondary</item>
@@ -23,12 +36,35 @@
 
     <style name="Widget.Tabs" parent="Widget.MaterialComponents.TabLayout" />
 
-    <style name="TextAppearance.StatisticsItem.Title"
-        parent="@style/Typography.TextAppearance.Subtitle2">
+    <style name="Widget.BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_dialog_background</item>
     </style>
 
-    <style name="TextAppearance.StatisticsItem.subTitle"
-        parent="@style/Typography.TextAppearance.Body2">
+    <style name="Widget.BaseBottomSheetDialog" parent="@style/Theme.Design.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/Widget.BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Widget.BaseBottomSheetDialog" />
+
+    <!-- TextAppearance -->
+
+    <style name="TextAppearance.StatisticsItem.Title" parent="@style/Typography.TextAppearance.Subtitle2"/>
+
+    <style name="TextAppearance.StatisticsItem.subTitle" parent="@style/Typography.TextAppearance.Body2">
         <item name="android:textColor">@color/colorWhiteDark</item>
     </style>
+
+    <style name="TextAppearance.Chart.Marker.Caption" parent="@style/Typography.TextAppearance.Caption">
+        <item name="android:textColor">@color/colorWhiteDark</item>
+    </style>
+
+    <style name="TextAppearance.Chart.Marker.Title" parent="@style/Typography.TextAppearance.Headline1">
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="TextAppearance.Chart.Marker.Body" parent="@style/Typography.TextAppearance.Body2">
+        <item name="android:textColor">@color/colorWhiteDarker</item>
+    </style>
+
 </resources>

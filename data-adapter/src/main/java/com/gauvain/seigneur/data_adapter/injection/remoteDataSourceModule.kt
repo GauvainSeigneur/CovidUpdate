@@ -12,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val remoteDataSourceModule = module {
-
     factory<Interceptor> {
         HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
             Log.d("COVID_REQUEST", it)

@@ -9,7 +9,8 @@ import com.gauvain.seigneur.domain.provider.StatisticsProvider
 import java.util.*
 
 internal class FetchStatisticsUseCaseImpl(
-    private val provider: StatisticsProvider) :
+    private val provider: StatisticsProvider
+) :
     FetchStatisticsUseCase {
 
     companion object {
@@ -35,7 +36,7 @@ internal class FetchStatisticsUseCaseImpl(
         List<StatisticsItemModel> {
         val listWithoutTotalOrWorldData = statList.toMutableList()
         for (item in statList) {
-            val country  = item.country.toLowerCase(Locale.US)
+            val country = item.country.toLowerCase(Locale.US)
             if (country == WORLD_COUNTRY_NAME || country == ALL_COUNTRY_NAME ||
                 country == EUROPE || country == NORTH_AMERICA ||
                 country == ASIA || country == SOUTH_AMERICA ||
@@ -50,7 +51,7 @@ internal class FetchStatisticsUseCaseImpl(
     private fun handleException(e: GetStatisticsException): Outcome.Error<ErrorType> =
         when (e.type) {
             RequestExceptionType.UNKNOWN_HOST -> Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST)
-            RequestExceptionType.CONNECTION_LOST-> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
+            RequestExceptionType.CONNECTION_LOST -> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
             RequestExceptionType.UNAUTHORIZED -> Outcome.Error(ErrorType.ERROR_UNAUTHORIZED)
             RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER)
             else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)

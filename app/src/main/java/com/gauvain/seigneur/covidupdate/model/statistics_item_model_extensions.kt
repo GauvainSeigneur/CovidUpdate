@@ -1,7 +1,5 @@
 package com.gauvain.seigneur.covidupdate.model
 
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
@@ -27,7 +25,8 @@ fun CasesModel.toCasesData(
     CasesData(
         new = newCasesData,
         active = QuantityStringPresenter(
-            R.plurals.active_case_label, this.active,
+            R.plurals.active_case_label,
+            this.active,
             numberFormatProvider.format(this.active)
         ),
         total = StringPresenter(

@@ -18,7 +18,9 @@ data class CasesData(
 )
 
 data class NewCasesData(
-    val total :  StringPresenter,
-    @DrawableRes val icon: Int?=null,
-    @ColorRes val color:Int
+    val total: StringPresenter,
+    @DrawableRes
+    val icon: Int? = null,
+    @ColorRes
+    val color: Int
 )

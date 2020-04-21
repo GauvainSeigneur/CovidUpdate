@@ -1,0 +1,21 @@
+<animated-selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/shrink"
+        android:drawable="@drawable/vd_refresh_shrink"
+        app:state_shrink="true"/>
+
+    <item
+        android:id="@+id/expanded"
+        android:drawable="@drawable/vd_refresh_expand"/>
+
+    <transition
+        android:drawable="@drawable/avd_refresh_expand"
+        android:fromId="@id/shrink"
+        android:toId="@id/expanded"/>
+
+    <transition
+        android:drawable="@drawable/avd_refresh_shrink"
+        android:fromId="@id/expanded"
+        android:toId="@id/shrink"/>
+</animated-selector>
