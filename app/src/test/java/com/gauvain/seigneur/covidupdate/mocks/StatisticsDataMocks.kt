@@ -161,15 +161,15 @@ object AllHistoryDataMock {
                 AllHistoryItemData(400, Date().addDay(2).formatTo(DATA_DATE_FORMAT))
             ),
             chart = listOf(
-                Entry(
+                ChartAllHistoryItem(
                     Date().addDay(2).time.toFloat(),
                     400.toFloat()
                 ),
-                Entry(
+                ChartAllHistoryItem(
                     Date().addDay(1).time.toFloat(),
                     200.toFloat()
                 ),
-                Entry(
+                ChartAllHistoryItem(
                     Date().time.toFloat(),
                     100.toFloat()
                 )

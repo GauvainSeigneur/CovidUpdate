@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.model.ChartAllHistoryItem
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
@@ -14,6 +15,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.android.synthetic.main.view_all_history_chart.view.*
+import org.w3c.dom.EntityReference
 
 class AllHistoryChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -70,7 +72,13 @@ class AllHistoryChartView @JvmOverloads constructor(
         chart.invalidate()
     }
 
-    fun setData(entries: List<Entry>, label: String) {
+    fun setData(values: List<ChartAllHistoryItem>, label: String) {
+        val entries =  values.map {
+            Entry(
+                it.position,
+                it.value
+            )
+        }
         val set = LineDataSet(entries, label)
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
         set.cubicIntensity = 0.25f

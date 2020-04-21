@@ -42,11 +42,11 @@ private fun getNewCases(
         R.color.colorCool
     )
 
-private fun setUpChartEntries(list: List<AllHistoryItemModel>): List<Entry> {
-    val entryList = mutableListOf<Entry>()
+private fun setUpChartEntries(list: List<AllHistoryItemModel>): List<ChartAllHistoryItem> {
+    val entryList = mutableListOf<ChartAllHistoryItem>()
     for ((index, value) in list.reversed().withIndex()) {
         entryList.add(
-            Entry(
+            ChartAllHistoryItem(
                 value.day.time.toFloat(),
                 value.total.toFloat()
             )

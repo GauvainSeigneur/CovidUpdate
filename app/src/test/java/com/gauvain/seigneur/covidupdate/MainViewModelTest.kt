@@ -15,7 +15,6 @@ import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase
 import com.gauvain.seigneur.domain.usecase.FetchCountryCodeUseCase
 import com.gauvain.seigneur.domain.usecase.FetchStatisticsUseCase
 import com.nhaarman.mockitokotlin2.given
-import com.nhaarman.mockitokotlin2.then
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -122,7 +121,7 @@ class MainViewModelTest {
         )
     }
 
-    /*@Test
+    @Test
     fun
         given_hsitory_usecase_return_list_when_fetch_history_then_liveData_must_return_data_list() {
         given(numberFormatProvider.format(10000)).willReturn("10000")
@@ -136,5 +135,5 @@ class MainViewModelTest {
                 AllHistoryDataMock.getAllHistoryDataMock(numberFormatProvider)
             )
         )
-    }*/
+    }
 }
