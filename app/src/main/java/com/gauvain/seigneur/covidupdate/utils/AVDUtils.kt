@@ -6,10 +6,9 @@ import android.widget.ImageView
 import androidx.vectordrawable.graphics.drawable.Animatable2Compat
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 
-
 object AVDUtils {
 
-    fun startLoadingAnimation(imageView: ImageView, start:Boolean) {
+    fun startLoadingAnimation(imageView: ImageView, start: Boolean) {
         val loaderAvd = imageView.drawable as AnimatedVectorDrawable
         if (start) {
             AnimatedVectorDrawableCompat.registerAnimationCallback(
@@ -26,7 +25,6 @@ object AVDUtils {
             imageView.stopVectorAnimation()
         }
     }
-
 }
 
 fun ImageView.startVectorAnimation() {

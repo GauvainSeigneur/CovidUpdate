@@ -18,12 +18,14 @@ class CovidUpdateApplication : Application() {
             androidLogger()
             androidContext(this@CovidUpdateApplication)
             androidFileProperties()
-            modules(listOf(
-                remoteDataSourceModule,
-                adapterModule,
-                useCaseModule,
-                viewModelModule
-            ))
+            modules(
+                listOf(
+                    remoteDataSourceModule,
+                    adapterModule,
+                    useCaseModule,
+                    viewModelModule
+                )
+            )
         }
     }
 }

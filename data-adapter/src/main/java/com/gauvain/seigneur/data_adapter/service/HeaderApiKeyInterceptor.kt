@@ -1,7 +1,6 @@
 package com.gauvain.seigneur.data_adapter.service
 
 import java.io.IOException
-
 import okhttp3.Interceptor
 import okhttp3.Response
 

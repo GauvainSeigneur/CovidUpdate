@@ -9,10 +9,10 @@ class RefreshFab @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FloatingActionButton(context, attrs, defStyleAttr) {
 
-    private val STATE_EXPANDED= intArrayOf(
+    private val STATE_EXPANDED = intArrayOf(
         -R.attr.state_shrink
     )
-    private val STATE_SHRUNK= intArrayOf(
+    private val STATE_SHRUNK = intArrayOf(
         R.attr.state_shrink
     )
 

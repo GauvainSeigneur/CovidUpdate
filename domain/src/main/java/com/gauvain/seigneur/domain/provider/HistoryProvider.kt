@@ -6,7 +6,7 @@ import java.lang.Exception
 
 interface HistoryProvider {
     @Throws(GetHistoryException::class)
-    fun history(country:String): List<StatisticsItemModel>
+    fun history(country: String): List<StatisticsItemModel>
 }
 
 class GetHistoryException(

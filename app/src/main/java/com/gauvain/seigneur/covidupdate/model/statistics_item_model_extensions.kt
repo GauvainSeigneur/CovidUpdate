@@ -1,7 +1,5 @@
 package com.gauvain.seigneur.covidupdate.model
 
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter

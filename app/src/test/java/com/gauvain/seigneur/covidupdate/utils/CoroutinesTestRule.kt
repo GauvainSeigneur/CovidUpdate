@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate
+package com.gauvain.seigneur.covidupdate.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

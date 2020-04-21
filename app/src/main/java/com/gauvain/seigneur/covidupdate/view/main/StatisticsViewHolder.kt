@@ -32,7 +32,7 @@ class StatisticsViewHolder(
         setUpNewCases(itemData.casesData.new)
     }
 
-    private fun setUpCountryFlag(countryCode:String?) {
+    private fun setUpCountryFlag(countryCode: String?) {
         with(itemView) {
             countryCode?.let {
                 val imageLoader = ImageLoader(context) {
@@ -72,5 +72,4 @@ class StatisticsViewHolder(
             )
         }
     }
-
 }

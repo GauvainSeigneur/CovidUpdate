@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         if (viewModel.statisticsData.value == null ||
             viewModel.statisticsData.value is LiveDataState.Error
         ) {
-            viewModel.fetchStatistics()
+            viewModel.fetchData()
         }
     }
 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             BottomMenuDialog().show(supportFragmentManager, BOTTOM_MENU_TAG)
         }
         refreshFab.setOnSafeClickListener {
-            viewModel.refreshStatistics()
+            viewModel.refreshData()
         }
         initReviewsListAdapter()
         appBarLayout.addOnOffsetChangedListener(appBarOffsetListener)
@@ -171,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                 errorTitle.text = errorData?.title?.getFormattedString(this)
                 errorDesc.text = errorData?.description?.getFormattedString(this)
                 retryButton.setOnClickListener {
-                    viewModel.fetchStatistics()
+                    viewModel.fetchData()
                 }
             }
             else -> {

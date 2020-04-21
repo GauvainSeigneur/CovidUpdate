@@ -10,7 +10,7 @@ data class AllHistoryData(
     val activeCases: QuantityStringPresenter,
     val newCases: AllHistoryNewCaseData,
     val history: List<AllHistoryItemData>,
-    val chart : List<Entry>
+    val chart: List<Entry>
 )
 
 data class AllHistoryNewCaseData(

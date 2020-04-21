@@ -14,7 +14,7 @@ import retrofit2.Response
 class HistoryAdapter(val service: CovidService) :
     HistoryProvider {
 
-    override fun history(country:String): List<StatisticsItemModel> {
+    override fun history(country: String): List<StatisticsItemModel> {
         val result = runCatching {
             service.history(country).execute()
         }.onFailure {

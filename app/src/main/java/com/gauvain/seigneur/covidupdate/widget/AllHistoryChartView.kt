@@ -49,7 +49,6 @@ class AllHistoryChartView @JvmOverloads constructor(
         x.isEnabled = true
         x.position = XAxisPosition.BOTTOM
         x.axisLineColor = ContextCompat.getColor(context, android.R.color.transparent)
-        //xAxis.typeface = tfLight
         x.setDrawGridLines(false)
         x.labelCount = 5
         x.typeface = ResourcesCompat.getFont(context, R.font.work_sans_bold)
@@ -95,8 +94,11 @@ class AllHistoryChartView @JvmOverloads constructor(
     }
 
     private fun setXAxisMinMax(entries: List<Entry>) {
-        x.axisMinimum =  entries[2].x
-        //x.axisMaximum = entries[entries.size-3].x
+        val total = entries.size - 1
+        if (total % 2 == 0) {
+        } else {
+            x.axisMinimum = entries[4].x
+        }
         chart.invalidate()
     }
 }

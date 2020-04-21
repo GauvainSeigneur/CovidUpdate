@@ -9,7 +9,6 @@ open class QuantityStringPresenter(
     val key: Int,
     val quantity: Int,
     private vararg val formatArgs: Any
-
 ) {
 
     internal fun getFormattedString(

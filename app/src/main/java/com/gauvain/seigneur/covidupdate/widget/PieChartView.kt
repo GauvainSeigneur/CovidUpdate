@@ -29,21 +29,17 @@ class PieChartView @JvmOverloads constructor(
 
     private fun initPieChart() {
         totalPieChart.setUsePercentValues(true)
-        totalPieChart.description.isEnabled =false
+        totalPieChart.description.isEnabled = false
         //totalPieChart.setExtraOffsets(5f, 10f, 5f, 5f);
-
         // create marker to display box when values are selected
         //val mv = MyMarkerView(this, R.layout.custom_marker_view)
         // Set the marker to the chart
         //mv.setChartView(totalPieChart)
         //totalPieChart.setMarker(mv)
-
         //
-        totalPieChart.dragDecelerationFrictionCoef =0.95f
-
+        totalPieChart.dragDecelerationFrictionCoef = 0.95f
         //totalPieChart.setCenterTextTypeface(tfLight);
         totalPieChart.centerText = "Total"
-
         //do not display data labels inside each part of the pie
         totalPieChart.setDrawEntryLabels(false)
 
@@ -53,14 +49,14 @@ class PieChartView @JvmOverloads constructor(
         totalPieChart.setTransparentCircleColor(Color.WHITE)
         totalPieChart.setTransparentCircleAlpha(110)
 
-        totalPieChart.holeRadius =35f
+        totalPieChart.holeRadius = 35f
         totalPieChart.transparentCircleRadius = 38f
 
         totalPieChart.setDrawCenterText(true);
 
         totalPieChart.rotationAngle = 0f
         // enable rotation of the chart by touch
-        totalPieChart.isRotationEnabled =true
+        totalPieChart.isRotationEnabled = true
         totalPieChart.isHighlightPerTapEnabled = true
         //legend
         val l: Legend = totalPieChart.legend
@@ -72,14 +68,13 @@ class PieChartView @JvmOverloads constructor(
         l.yEntrySpace = 0f
         l.yOffset = 0f
         l.textColor = ContextCompat.getColor(context, R.color.colorWhite)
-
         //make it half
         /*totalPieChart.setMaxAngle(180f)
         totalPieChart.setRotationAngle(180f);
         totalPieChart.setCenterTextOffset(0f, -20f)*/
     }
 
-    fun setData(entries: ArrayList<PieEntry>, label:String) {
+    fun setData(entries: ArrayList<PieEntry>, label: String) {
         val dataSet = PieDataSet(entries, label)
         dataSet.setDrawIcons(false)
         dataSet.sliceSpace = 3f

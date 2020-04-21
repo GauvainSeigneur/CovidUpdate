@@ -12,7 +12,7 @@ interface CovidService {
     @GET("/statistics")
     fun statistics(
         @Query("country")
-        country: String?=null
+        country: String? = null
     ): Call<Statistics>
 
     @GET("/history")

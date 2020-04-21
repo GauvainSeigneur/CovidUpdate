@@ -29,5 +29,4 @@ class MyMarkerView(context: Context?, layoutResource: Int) :
     override fun getOffset(): MPPointF {
         return MPPointF((-(width / 2)).toFloat(), (-height).toFloat())
     }
-
 }
