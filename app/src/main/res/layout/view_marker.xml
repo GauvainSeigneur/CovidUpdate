@@ -5,13 +5,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="@color/colorSecondary">
 
-    <TextView
-        android:id="@+id/tvContent"
-        style="@style/TextAppearance.Chart.Marker.Body"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space_xs"
-        android:ellipsize="end"
-        android:singleLine="true"/>
+        android:gravity="center"
+        android:padding="@dimen/space_xs">
+
+        <TextView
+            android:id="@+id/xValueTextView"
+            style="@style/TextAppearance.Chart.Marker.Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/yValueTextView"
+            style="@style/TextAppearance.Chart.Marker.Body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"/>
+
+    </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -75,7 +75,6 @@ class MainViewModelTest {
             Outcome.Success(StatisticsModelMocks.getStatisticsItemModelList())
         )
         viewModel.fetchData()
-
         mainCoroutineRule.advanceUntilIdle()
         val value = viewModel.statisticsData.getOrAwaitValue()
         assertEquals(

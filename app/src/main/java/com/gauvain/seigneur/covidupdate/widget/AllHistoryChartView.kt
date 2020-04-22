@@ -48,7 +48,7 @@ class AllHistoryChartView @JvmOverloads constructor(
         val y: YAxis = chart.axisLeft
         y.setDrawGridLines(false)
         val x: XAxis = chart.xAxis
-        x.isEnabled = true
+        x.isEnabled = false // set to true if you want to see it again
         x.position = XAxisPosition.BOTTOM
         x.axisLineColor = ContextCompat.getColor(context, android.R.color.transparent)
         x.setDrawGridLines(false)
@@ -58,7 +58,7 @@ class AllHistoryChartView @JvmOverloads constructor(
         x.textColor = ContextCompat.getColor(context, R.color.colorWhite)
         x.removeAllLimitLines()
 
-        chart.setViewPortOffsets(0f, 16f, 0f, x.textSize + x.xOffset)
+        chart.setViewPortOffsets(0f, 16f, 0f,0f /*x.textSize + x.xOffset*/)
 
         chart.axisRight.isEnabled = false
         chart.axisLeft.isEnabled = false

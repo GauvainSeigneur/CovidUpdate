@@ -49,6 +49,8 @@ class MainViewModel(
     fun fetchData() {
         viewModelScope.launch(Dispatchers.Main) {
             fetchStatistics()
+        }
+        viewModelScope.launch(Dispatchers.Main) {
             fetchHistory()
         }
     }
@@ -58,6 +60,9 @@ class MainViewModel(
         viewModelScope.launch(Dispatchers.Main) {
             delay(LONG_DELAY)
             fetchStatistics()
+        }
+        viewModelScope.launch(Dispatchers.Main) {
+            delay(LONG_DELAY)
             fetchHistory()
         }
     }
