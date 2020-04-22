@@ -54,7 +54,6 @@ dependencies {
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kt_version"
-    testImplementation "io.kotest:kotest-assertions-core-jvm:$kotest_version"
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "org.mockito:mockito-inline:3.1.0"
     testImplementation 'android.arch.core:core-testing:2.1.0'

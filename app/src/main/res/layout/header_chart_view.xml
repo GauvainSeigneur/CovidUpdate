@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/totalCasesTitleTextView"
-        style="@style/TextAppearance.Chart.Marker.Caption"
+        style="@style/TextAppearance.Chart.Marker.Overline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/allTotalCaseTextview"
-        style="@style/TextAppearance.Chart.Marker.Title"
+        style="@style/TextAppearance.Chart.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -38,7 +38,7 @@
 
     <TextView
         android:id="@+id/allActiveCasesTextView"
-        style="@style/TextAppearance.Chart.Marker.Body"
+        style="@style/TextAppearance.Chart.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -52,7 +52,7 @@
 
     <TextView
         android:id="@+id/allNewCasesTextView"
-        style="@style/TextAppearance.Chart.Marker.Body"
+        style="@style/TextAppearance.Chart.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"

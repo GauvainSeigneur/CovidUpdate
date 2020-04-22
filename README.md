@@ -18,27 +18,19 @@ font style, dark mode, etc.)
 * Gson - Serialization & deserialization
 * Coroutine - Asynchronous and non-blocking programming
 * Coil - Image loading
-* KoTest - Testing
-* Mockito - Mocking
+* Mockito - Mock dependencies
 * Koin - Dependency injection
 * MPAndroidChart - Chart views
 
 ## State
 WIP
 
-
 ## How to use it ?
-Add Koin.properties file inside assets folder and add the two following lines:
+Add a Koin.properties file inside assets folder and add the two following lines:
 ```
 server_url=https://covid-193.p.rapidapi.com
 api_key=YOUR_KEY
 ```
-
-## Todo
-* Clean flags
-* streamLine viewModel
-* remove Kotest - runner not reliable
-
 
 ## Licence
 ```
