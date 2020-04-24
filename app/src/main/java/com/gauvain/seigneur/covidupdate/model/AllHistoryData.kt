@@ -10,7 +10,6 @@ data class AllHistoryData(
     val totalCases: String,
     val activeCases: QuantityStringPresenter,
     val newCases: AllHistoryNewCaseData,
-    val history: List<AllHistoryItemData>,
     val chart: List<ChartAllHistoryItem>
 )
 
@@ -18,11 +17,6 @@ data class AllHistoryNewCaseData(
     val total: StringPresenter,
     @ColorRes
     val colorRes: Int
-)
-
-data class AllHistoryItemData(
-    val total: Int,
-    val day: String
 )
 
 data class ChartAllHistoryItem(

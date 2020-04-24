@@ -4,7 +4,7 @@ import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import java.text.NumberFormat
 import java.util.*
 
-class NumberFormatAdapter() :
+class NumberFormatAdapter :
     NumberFormatProvider {
 
     override fun format(number: Int): String {

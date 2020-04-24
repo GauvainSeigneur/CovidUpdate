@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpAllData(data: AllHistoryData) {
-        allHistoryChartView.setData(data.chart, "all history")
+        allHistoryChartView.setData(data.chart, getString(R.string.main_header_chart_legend))
         toolbar.title = data.totalCases
         toolbar.subtitle = data.activeCases.getFormattedString(this)
         allTotalCaseTextview.text = data.totalCases

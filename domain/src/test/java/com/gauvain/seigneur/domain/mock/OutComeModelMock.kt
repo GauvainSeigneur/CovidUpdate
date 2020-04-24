@@ -64,13 +64,13 @@ object OutComeModelMock {
             totalCases = 107000,
             totalNewCases = 1000,
             totalActiveCases = 70000,
-            history = listOf(
-                AllHistoryItemModel(
-                    total = 107000,
+            activeActiveHistory = listOf(
+                AllActiveHistoryItemModel(
+                    total = 70000,
                     day = "2020-04-08".toDate(SERVER_DATE_FORMAT)
                 ),
-                AllHistoryItemModel(
-                    total = 64500,
+                AllActiveHistoryItemModel(
+                    total = 60000,
                     day = "2020-04-07".toDate(SERVER_DATE_FORMAT)
                 )
             )

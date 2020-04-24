@@ -99,6 +99,7 @@
     <style name="Typography.TextAppearance.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="fontFamily">@font/default_work_font_family</item>
         <item name="android:fontFamily">@font/default_work_font_family</item>
+        <item name="android:letterSpacing">0.10</item>
     </style>
 
 

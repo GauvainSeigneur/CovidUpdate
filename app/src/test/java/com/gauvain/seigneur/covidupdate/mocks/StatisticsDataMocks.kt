@@ -6,11 +6,7 @@ import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
-import com.gauvain.seigneur.domain.usecase.FetchCountryCodeUseCase
-import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.addDay
-import com.gauvain.seigneur.domain.utils.formatTo
-import com.github.mikephil.charting.data.Entry
 import java.util.*
 
 object StatisticsDataMocks {
@@ -155,11 +151,6 @@ object AllHistoryDataMock {
                 ),
                 R.color.colorDanger
             ),
-            history = listOf(
-                AllHistoryItemData(100, Date().formatTo(DATA_DATE_FORMAT)),
-                AllHistoryItemData(200, Date().addDay(1).formatTo(DATA_DATE_FORMAT)),
-                AllHistoryItemData(400, Date().addDay(2).formatTo(DATA_DATE_FORMAT))
-            ),
             chart = listOf(
                 ChartAllHistoryItem(
                     Date().addDay(2).time.toFloat(),
@@ -184,16 +175,16 @@ object HistoryModelMocks {
             totalCases = 10000,
             totalNewCases = 1000,
             totalActiveCases = 8000,
-            history = listOf(
-                AllHistoryItemModel(
+            activeActiveHistory = listOf(
+                AllActiveHistoryItemModel(
                     100,
                     Date()
                 ),
-                AllHistoryItemModel(
+                AllActiveHistoryItemModel(
                     200,
                     Date().addDay(1)
                 ),
-                AllHistoryItemModel(
+                AllActiveHistoryItemModel(
                     400,
                     Date().addDay(2)
                 )
