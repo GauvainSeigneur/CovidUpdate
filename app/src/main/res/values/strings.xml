@@ -24,6 +24,7 @@
     <string name="main_header_chart_total_cases_title">Total cases today</string>
     <string name="main_header_chart_subtitle_new">(+ %1$s)</string>
     <string name="main_header_chart_subtitle_no_new_cases">No new cases</string>
+    <string name="main_header_chart_legend">Active cases evolution</string>
     <plurals name="main_header_chart_subtitle_active">
         <item quantity="zero">%s active</item>
         <item quantity="one">%s active</item>

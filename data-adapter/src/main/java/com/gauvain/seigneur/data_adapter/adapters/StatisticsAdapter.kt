@@ -11,7 +11,7 @@ import com.gauvain.seigneur.domain.provider.StatisticsProvider
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import retrofit2.Response
 
-class StatisticsAdapter(val service: CovidService) :
+class StatisticsAdapter(private val service: CovidService) :
     StatisticsProvider {
 
     override fun statistics(country: String?): List<StatisticsItemModel> {

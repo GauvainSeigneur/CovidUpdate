@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -12,11 +13,14 @@ import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.AVDUtils
 import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.covidupdate.utils.startVectorAnimation
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
+import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
+import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
@@ -105,15 +109,31 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.refreshDataEvent.observe(this, EventObserver {
-            CustomSnackbar.make(
-                mainActivityParentLayout, it.getFormattedString(this),
-                CustomSnackbar.LENGTH_LONG
-            )
-                .setAction(R.string.ok, View.OnClickListener {
-                })
-                .setAnchorView(refreshFab)
-                .show()
+            displaySnackbar(it)
         })
+
+        viewModel.displayDetailsEvent.observe(this, EventObserver {
+            when (it) {
+                is LiveDataState.Success -> displayDetails(it.data)
+                is LiveDataState.Error -> displaySnackbar(it.errorData.title)
+            }
+        })
+    }
+
+    private fun displayDetails(statisticsItemModel: StatisticsItemModel) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun displaySnackbar(stringPresenter: StringPresenter) {
+        CustomSnackbar.make(
+            mainActivityParentLayout, stringPresenter.getFormattedString(this),
+            CustomSnackbar.LENGTH_LONG
+        )
+            .setAction(R.string.ok, View.OnClickListener {
+            })
+            .setAnchorView(refreshFab)
+            .show()
     }
 
     private fun initReviewsListAdapter() {
@@ -122,7 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpAllData(data: AllHistoryData) {
-        allHistoryChartView.setData(data.chart, "all history")
+        allHistoryChartView.setData(data.chart, getString(R.string.main_header_chart_legend))
         toolbar.title = data.totalCases
         toolbar.subtitle = data.activeCases.getFormattedString(this)
         allTotalCaseTextview.text = data.totalCases
@@ -132,6 +152,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun seeDetails(position: Int) {
+        viewModel.getItemDetails(position)
     }
 
     private fun manageHeaderAspect(vRatio: Float) {

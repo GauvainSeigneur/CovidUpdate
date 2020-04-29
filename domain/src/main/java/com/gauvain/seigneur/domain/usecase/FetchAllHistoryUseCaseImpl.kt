@@ -24,20 +24,20 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
     private fun getAllHistoryModel(result: List<StatisticsItemModel>): AllHistoryModel {
         return result.run {
             val historyList = this.map {
-                it.toAllHistoryItemModel()
+                it.toAllActiveHistoryItemModel()
             }
             AllHistoryModel(
                 totalCases = this[0].casesModel.total,
                 totalActiveCases = this[0].casesModel.active,
                 totalNewCases = this[0].casesModel.new,
-                history = getSmallHistoryList(historyList)
+                activeHistory = getSmallHistoryList(historyList)
             )
         }
     }
 
-    private fun getSmallHistoryList(entry: List<AllHistoryItemModel>): List<AllHistoryItemModel> {
+    private fun getSmallHistoryList(entry: List<AllActiveHistoryItemModel>): List<AllActiveHistoryItemModel> {
         val dates = mutableSetOf<Date>()
-        val smallHistoryList = mutableListOf<AllHistoryItemModel>()
+        val smallHistoryList = mutableListOf<AllActiveHistoryItemModel>()
         entry.map {
             dates.add(it.day)
         }

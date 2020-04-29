@@ -25,11 +25,15 @@ class StatisticsViewHolder(
     fun bind(itemData: StatisticsItemData) {
         setUpCountryFlag(itemData.countryCode)
         with(itemView) {
+            statItemView.setOnClickListener {
+                itemListener(adapterPosition)
+            }
             countryTextView.text = itemData.country
             totalCasesTextView.text = itemData.casesData.total.getFormattedString(itemView.context)
             activeCasesTextView.text = itemData.casesData.active.getFormattedString(itemView.context)
         }
         setUpNewCases(itemData.casesData.new)
+
     }
 
     private fun setUpCountryFlag(countryCode: String?) {

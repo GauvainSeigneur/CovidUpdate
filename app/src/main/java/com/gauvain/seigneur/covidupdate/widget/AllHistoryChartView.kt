@@ -63,6 +63,7 @@ class AllHistoryChartView @JvmOverloads constructor(
         chart.axisRight.isEnabled = false
         chart.axisLeft.isEnabled = false
         chart.legend.isEnabled = false
+        chart.legend.textColor = ContextCompat.getColor(context, R.color.colorWhiteDarker)
         // create marker to display box when values are selected
         val mv = MyMarkerView(context, R.layout.view_marker)
         // Set the marker to the chart
@@ -81,7 +82,7 @@ class AllHistoryChartView @JvmOverloads constructor(
         }
         val set = LineDataSet(entries, label)
         set.mode = LineDataSet.Mode.CUBIC_BEZIER
-        set.cubicIntensity = 0.25f
+        set.cubicIntensity = 0.05f
         set.setDrawFilled(true)
         set.lineWidth = 4.5f
         set.setDrawCircles(false)

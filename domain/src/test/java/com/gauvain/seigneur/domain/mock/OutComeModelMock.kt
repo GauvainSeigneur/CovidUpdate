@@ -7,7 +7,7 @@ import com.gauvain.seigneur.domain.utils.toDate
 
 object OutComeModelMock {
 
-    fun createStatisticsModelListWithoutWorldAndAll():List<StatisticsItemModel> =
+    fun createStatisticsModelListWithoutWorldAndAll(): List<StatisticsItemModel> =
         listOf(
             StatisticsItemModel(
                 country = "China",
@@ -64,16 +64,38 @@ object OutComeModelMock {
             totalCases = 107000,
             totalNewCases = 1000,
             totalActiveCases = 70000,
-            history = listOf(
-                AllHistoryItemModel(
-                    total = 107000,
+            activeHistory = listOf(
+                AllActiveHistoryItemModel(
+                    total = 70000,
                     day = "2020-04-08".toDate(SERVER_DATE_FORMAT)
                 ),
-                AllHistoryItemModel(
-                    total = 64500,
+                AllActiveHistoryItemModel(
+                    total = 60000,
                     day = "2020-04-07".toDate(SERVER_DATE_FORMAT)
                 )
             )
+        )
 
+    fun createCountryHistoryModel(): CountryHistoryModel =
+        CountryHistoryModel(
+            country = "France",
+            history = listOf(
+                CountryHistoryItemModel(
+                    date = "2020-04-08".toDate(SERVER_DATE_FORMAT),
+                    total = 107000,
+                    new = 1000,
+                    active = 70000,
+                    recovered = 35000,
+                    critical = 1000
+                ),
+                CountryHistoryItemModel(
+                    date = "2020-04-07".toDate(SERVER_DATE_FORMAT),
+                    total = 64500,
+                    new = 800,
+                    active = 60000,
+                    recovered = 3500,
+                    critical = 200
+                )
+            )
         )
 }

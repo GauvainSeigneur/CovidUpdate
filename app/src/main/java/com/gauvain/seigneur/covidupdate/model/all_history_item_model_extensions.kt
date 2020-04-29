@@ -3,12 +3,9 @@ package com.gauvain.seigneur.covidupdate.model
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
-import com.gauvain.seigneur.domain.model.AllHistoryItemModel
+import com.gauvain.seigneur.domain.model.AllActiveHistoryItemModel
 import com.gauvain.seigneur.domain.model.AllHistoryModel
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
-import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
-import com.gauvain.seigneur.domain.utils.formatTo
-import com.github.mikephil.charting.data.Entry
 
 fun AllHistoryModel.toData(numberFormatProvider: NumberFormatProvider) =
     AllHistoryData(
@@ -19,8 +16,7 @@ fun AllHistoryModel.toData(numberFormatProvider: NumberFormatProvider) =
             numberFormatProvider.format(this.totalActiveCases)
         ),
         newCases = getNewCases(this, numberFormatProvider),
-        history = this.history.map { it.toData() },
-        chart = setUpChartEntries(this.history)
+        chart = setUpChartEntries(this.activeHistory)
     )
 
 private fun getNewCases(
@@ -42,7 +38,7 @@ private fun getNewCases(
         R.color.colorCool
     )
 
-private fun setUpChartEntries(list: List<AllHistoryItemModel>): List<ChartAllHistoryItem> {
+private fun setUpChartEntries(list: List<AllActiveHistoryItemModel>): List<ChartAllHistoryItem> {
     val entryList = mutableListOf<ChartAllHistoryItem>()
     for ((index, value) in list.reversed().withIndex()) {
         entryList.add(
@@ -55,9 +51,3 @@ private fun setUpChartEntries(list: List<AllHistoryItemModel>): List<ChartAllHis
 
     return entryList
 }
-
-private fun AllHistoryItemModel.toData() =
-    AllHistoryItemData(
-        total = this.total,
-        day = this.day.formatTo(DATA_DATE_FORMAT)
-    )

@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import coil.api.load
 import com.gauvain.seigneur.covidupdate.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.dialog_bottom_menu.*
 
 class BottomMenuDialog : BottomSheetDialogFragment() {
 
