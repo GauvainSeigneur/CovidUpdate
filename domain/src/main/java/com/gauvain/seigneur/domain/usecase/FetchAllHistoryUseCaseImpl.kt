@@ -24,7 +24,7 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
     private fun getAllHistoryModel(result: List<StatisticsItemModel>): AllHistoryModel {
         return result.run {
             val historyList = this.map {
-                it.toAllHistoryItemModel()
+                it.toAllActiveHistoryItemModel()
             }
             AllHistoryModel(
                 totalCases = this[0].casesModel.total,

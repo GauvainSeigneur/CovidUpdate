@@ -20,6 +20,7 @@ import kotlin.coroutines.CoroutineContext
 
 typealias StatisticsState = LiveDataState<List<StatisticsItemData>>
 typealias AllHistoryState = LiveDataState<AllHistoryData>
+typealias DisplayEventState = Event<LiveDataState<StatisticsItemModel>>
 
 class MainViewModel(
     private val fetchStatisticsUseCase: FetchStatisticsUseCase,
@@ -34,6 +35,8 @@ class MainViewModel(
         const val NO_DELAY = 0L
     }
 
+    private val ascendingStatList = mutableListOf<StatisticsItemModel>()
+    val displayDetailsEvent = MutableLiveData<DisplayEventState>()
     val historyData: MutableLiveData<AllHistoryState> = MutableLiveData()
     val loadingState: MutableLiveData<RequestState> = MutableLiveData()
     val statisticsData = MutableLiveData<StatisticsState>()
@@ -65,6 +68,17 @@ class MainViewModel(
             delay(LONG_DELAY)
             fetchHistory()
         }
+    }
+
+    fun getItemDetails(position: Int) {
+        val list = (statisticsData.value as LiveDataState.Success).data
+        //get country from list of livedata
+        val country = list[position].country
+        //now get the right item in liqst from usecase (more info)
+        val item = ascendingStatList.firstOrNull { it.country == country }
+        item?.let {
+            displayDetailsEvent.value = Event(LiveDataState.Success(it))
+        } ?: Event(LiveDataState.Error(ErrorData(StringPresenter(R.string.error_fetch_data_title))))
     }
 
     private suspend fun fetchStatistics() {
@@ -149,9 +163,10 @@ class MainViewModel(
             if (isRefreshing) {
                 refreshDataEvent.value = Event(StringPresenter(R.string.data_refreshed_label))
             }
-            val ascendingList = result.data.sortedByDescending { it.casesModel.total }
+            ascendingStatList.clear()
+            ascendingStatList.addAll(result.data.sortedByDescending { it.casesModel.total })
             statisticsData.value = LiveDataState.Success(
-                ascendingList.map {
+                ascendingStatList.map {
                     it.toStatisticsItemData(
                         getCountryCode(it.country),
                         getNewCasesDate(it.casesModel.new),

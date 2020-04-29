@@ -11,7 +11,7 @@ import com.gauvain.seigneur.domain.provider.GetHistoryException
 import com.gauvain.seigneur.domain.provider.HistoryProvider
 import retrofit2.Response
 
-class HistoryAdapter(val service: CovidService) :
+class HistoryAdapter(private val service: CovidService) :
     HistoryProvider {
 
     override fun history(country: String): List<StatisticsItemModel> {
