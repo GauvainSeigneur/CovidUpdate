@@ -63,7 +63,7 @@
     <com.gauvain.seigneur.covidupdate.widget.AllHistoryChartView
         android:id="@+id/allHistoryChartView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginBottom="@dimen/space_m"
         android:layout_marginTop="@dimen/space_s"
         app:layout_constraintBottom_toBottomOf="parent"

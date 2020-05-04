@@ -4,7 +4,7 @@ import java.util.*
 
 data class CountryHistoryModel(
     val country: String,
-    val history:List<CountryHistoryItemModel>
+    val history: List<CountryHistoryItemModel>
 )
 
 data class CountryHistoryItemModel(
@@ -13,5 +13,6 @@ data class CountryHistoryItemModel(
     val new: Int,
     val active: Int,
     val recovered: Int,
-    val critical: Int
-)
+    val critical: Int,
+    val dead: Int
+    )

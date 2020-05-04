@@ -78,7 +78,14 @@ class MainViewModel(
         val item = ascendingStatList.firstOrNull { it.country == country }
         item?.let {
             displayDetailsEvent.value = Event(LiveDataState.Success(it))
-        } ?: Event(LiveDataState.Error(ErrorData(StringPresenter(R.string.error_fetch_data_title))))
+        } ?: Event(
+            LiveDataState.Error(
+                ErrorData(
+                    ErrorDataType.INFORMATIVE,
+                    StringPresenter(R.string.error_fetch_data_title)
+                )
+            )
+        )
     }
 
     private suspend fun fetchStatistics() {
@@ -154,8 +161,10 @@ class MainViewModel(
             } else {
                 statisticsData.value = LiveDataState.Error(
                     ErrorData(
+                        ErrorDataType.NOT_RECOVERABLE,
                         StringPresenter(R.string.empty_list_title),
-                        StringPresenter(R.string.empty_list_description)
+                        StringPresenter(R.string.empty_list_description),
+                        StringPresenter(R.string.ok)
                     )
                 )
             }
@@ -202,6 +211,7 @@ class MainViewModel(
         when (errorType) {
             else -> LiveDataState.Error(
                 ErrorData(
+                    ErrorDataType.RECOVERABLE,
                     StringPresenter(R.string.error_fetch_data_title),
                     StringPresenter(R.string.error_fetch_data_description)
                 )

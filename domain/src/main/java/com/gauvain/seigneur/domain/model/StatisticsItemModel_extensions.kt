@@ -11,5 +11,6 @@ fun StatisticsItemModel.toCountryHistoryItemModel() = CountryHistoryItemModel(
     new = this.casesModel.new ?: 0,
     active = this.casesModel.active,
     recovered = this.casesModel.recovered,
-    critical = this.casesModel.critical
+    critical = this.casesModel.critical,
+    dead = this.deathsModel.total
 )

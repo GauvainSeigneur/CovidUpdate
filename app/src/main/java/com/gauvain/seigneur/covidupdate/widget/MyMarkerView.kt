@@ -21,8 +21,7 @@ class MyMarkerView(context: Context?, layoutResource: Int) :
     // runs every time the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     override fun refreshContent(e: Entry, highlight: Highlight?) {
-        yValueTextView.text =
-            Utils.formatNumber(e.y, 0, true)
+        yValueTextView.text = Utils.formatNumber(e.y, 0, true)
         val xFormatted = Date(e.x.toLong()).formatTo(DATA_DATE_FORMAT)
         xValueTextView.text = xFormatted
 

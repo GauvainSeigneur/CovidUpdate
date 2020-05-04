@@ -24,7 +24,7 @@ import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
-import kotlinx.android.synthetic.main.view_content_main.*
+import kotlinx.android.synthetic.main.view_initial_loading.*
 import kotlinx.android.synthetic.main.view_no_data_found.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -121,8 +121,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayDetails(statisticsItemModel: StatisticsItemModel) {
-        val intent = Intent(this, DetailsActivity::class.java)
-        startActivity(intent)
+        startActivity(DetailsActivity.newIntent(this, statisticsItemModel.country))
     }
 
     private fun displaySnackbar(stringPresenter: StringPresenter) {
@@ -177,30 +176,20 @@ class MainActivity : AppCompatActivity() {
         when (state) {
             STATE_LOADING -> {
                 refreshFab.hide()
-                loadingView.visibility = View.VISIBLE
-                bigLoader.visibility = View.VISIBLE
-                AVDUtils.startLoadingAnimation(bigLoader, true)
-                errorView.visibility = View.GONE
+                initialLoadingView.setLoading()
             }
             STATE_ERROR -> {
                 refreshFab.hide()
-                loadingView.visibility = View.VISIBLE
-                bigLoader.visibility = View.GONE
-                AVDUtils.startLoadingAnimation(bigLoader, false)
-                errorView.visibility = View.VISIBLE
-                binocularAvdView.startVectorAnimation()
-                errorTitle.text = errorData?.title?.getFormattedString(this)
-                errorDesc.text = errorData?.description?.getFormattedString(this)
-                retryButton.setOnClickListener {
-                    viewModel.fetchData()
-                }
+                initialLoadingView.setError(
+                    errorData?.title?.getFormattedString(this),
+                    errorData?.description?.getFormattedString(this),
+                    errorData?.buttonText?.getFormattedString(this),
+                    { viewModel.fetchData() }
+                )
             }
             else -> {
                 refreshFab.show()
-                AVDUtils.startLoadingAnimation(bigLoader, false)
-                loadingView.visibility = View.GONE
-                bigLoader.visibility = View.GONE
-                errorView.visibility = View.GONE
+                initialLoadingView.hide()
             }
         }
     }
