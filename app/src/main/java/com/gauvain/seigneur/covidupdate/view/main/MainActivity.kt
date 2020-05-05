@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +10,10 @@ import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
 import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
-import com.gauvain.seigneur.covidupdate.utils.AVDUtils
-import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.gauvain.seigneur.covidupdate.utils.LoadingState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
-import com.gauvain.seigneur.covidupdate.utils.startVectorAnimation
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
@@ -24,8 +21,6 @@ import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
-import kotlinx.android.synthetic.main.view_initial_loading.*
-import kotlinx.android.synthetic.main.view_no_data_found.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -102,14 +97,17 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadingState.observe(this, Observer {
             when (it) {
-                RequestState.INITIAL_IS_LOADING -> handleLoadingView(STATE_LOADING)
-                RequestState.REFRESH_IS_LOADING -> handleRefreshLoading(true)
-                RequestState.REFRESH_IS_LOADED -> handleRefreshLoading(false)
+                LoadingState.INITIAL_IS_LOADING -> handleLoadingView(STATE_LOADING)
+                LoadingState.REFRESH_IS_LOADING -> handleRefreshLoading(true)
+                LoadingState.REFRESH_IS_LOADED -> handleRefreshLoading(false)
             }
         })
 
         viewModel.refreshDataEvent.observe(this, EventObserver {
-            displaySnackbar(it)
+            when (it) {
+                is LiveDataState.Success -> displaySnackbar(it.data)
+                is LiveDataState.Error -> displaySnackbar(it.errorData.title)
+            }
         })
 
         viewModel.displayDetailsEvent.observe(this, EventObserver {

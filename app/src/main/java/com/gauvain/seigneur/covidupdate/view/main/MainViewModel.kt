@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.*
-import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.gauvain.seigneur.covidupdate.utils.LoadingState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.covidupdate.utils.event.Event
 import com.gauvain.seigneur.domain.model.ErrorType
@@ -21,6 +21,7 @@ import kotlin.coroutines.CoroutineContext
 typealias StatisticsState = LiveDataState<List<StatisticsItemData>>
 typealias AllHistoryState = LiveDataState<AllHistoryData>
 typealias DisplayEventState = Event<LiveDataState<StatisticsItemModel>>
+typealias RefreshEventState = Event<LiveDataState<StringPresenter>>
 
 class MainViewModel(
     private val fetchStatisticsUseCase: FetchStatisticsUseCase,
@@ -36,11 +37,14 @@ class MainViewModel(
     }
 
     private val ascendingStatList = mutableListOf<StatisticsItemModel>()
-    val displayDetailsEvent = MutableLiveData<DisplayEventState>()
+    //LiveData
+    val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
     val historyData: MutableLiveData<AllHistoryState> = MutableLiveData()
-    val loadingState: MutableLiveData<RequestState> = MutableLiveData()
     val statisticsData = MutableLiveData<StatisticsState>()
-    val refreshDataEvent = MutableLiveData<Event<StringPresenter>>()
+    //Event (LiveData which can be consumed only once)
+    val displayDetailsEvent = MutableLiveData<DisplayEventState>()
+    val refreshDataEvent = MutableLiveData<RefreshEventState>()
+    //Define coroutine context
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -59,7 +63,7 @@ class MainViewModel(
     }
 
     fun refreshData() {
-        loadingState.value = RequestState.REFRESH_IS_LOADING
+        loadingState.value = LoadingState.REFRESH_IS_LOADING
         viewModelScope.launch(Dispatchers.Main) {
             delay(LONG_DELAY)
             fetchStatistics()
@@ -72,9 +76,9 @@ class MainViewModel(
 
     fun getItemDetails(position: Int) {
         val list = (statisticsData.value as LiveDataState.Success).data
-        //get country from list of livedata
+        //get country from list of liveData
         val country = list[position].country
-        //now get the right item in liqst from usecase (more info)
+        //now get the right item in list from useCase (more info)
         val item = ascendingStatList.firstOrNull { it.country == country }
         item?.let {
             displayDetailsEvent.value = Event(LiveDataState.Success(it))
@@ -97,7 +101,7 @@ class MainViewModel(
                 resultDelay = SMALL_DELAY
             }
             else -> {
-                loadingState.value = RequestState.INITIAL_IS_LOADING
+                loadingState.value = LoadingState.INITIAL_IS_LOADING
                 resultDelay = NO_DELAY
             }
         }
@@ -134,8 +138,8 @@ class MainViewModel(
             fetchStatisticsUseCase.invoke(country)
         }
         when (isRefreshing) {
-            true -> loadingState.value = RequestState.REFRESH_IS_LOADED
-            else -> loadingState.value = RequestState.INITIAL_IS_LOADED
+            true -> loadingState.value = LoadingState.REFRESH_IS_LOADED
+            else -> loadingState.value = LoadingState.INITIAL_IS_LOADED
         }
         return result
     }
@@ -145,7 +149,15 @@ class MainViewModel(
         isRefreshing: Boolean
     ) {
         if (isRefreshing) {
-            refreshDataEvent.value = Event(StringPresenter(R.string.error_refresh_data_label))
+            refreshDataEvent.value = Event(
+                LiveDataState.Error(
+                    ErrorData(
+                        ErrorDataType.INFORMATIVE, StringPresenter(
+                            R.string.error_refresh_data_label
+                        )
+                    )
+                )
+            )
         } else {
             statisticsData.value = setErrorLiveData(result.error)
         }
@@ -157,7 +169,16 @@ class MainViewModel(
     ) {
         if (result.data.isEmpty()) {
             if (isRefreshing) {
-                refreshDataEvent.value = Event(StringPresenter(R.string.error_refresh_data_label))
+                refreshDataEvent.value =
+                    Event(
+                        LiveDataState.Error(
+                            ErrorData(
+                                ErrorDataType.INFORMATIVE, StringPresenter(
+                                    R.string.error_refresh_data_label
+                                )
+                            )
+                        )
+                    )
             } else {
                 statisticsData.value = LiveDataState.Error(
                     ErrorData(
@@ -170,7 +191,13 @@ class MainViewModel(
             }
         } else {
             if (isRefreshing) {
-                refreshDataEvent.value = Event(StringPresenter(R.string.data_refreshed_label))
+                refreshDataEvent.value =
+                    Event(
+                        LiveDataState.Success(
+                            StringPresenter(R.string.data_refreshed_label)
+                        )
+                    )
+
             }
             ascendingStatList.clear()
             ascendingStatList.addAll(result.data.sortedByDescending { it.casesModel.total })

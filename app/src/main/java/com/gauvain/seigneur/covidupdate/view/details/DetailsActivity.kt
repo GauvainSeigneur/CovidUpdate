@@ -3,14 +3,12 @@ package com.gauvain.seigneur.covidupdate.view.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.ErrorDataType
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
-import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.gauvain.seigneur.covidupdate.utils.LoadingState
 import kotlinx.android.synthetic.main.activity_details.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -62,8 +60,8 @@ class DetailsActivity : AppCompatActivity() {
 
         viewModel.loadingData.observe(this, Observer {
             when (it) {
-                RequestState.INITIAL_IS_LOADING -> initialLoadingView.setLoading()
-                RequestState.INITIAL_IS_LOADED -> initialLoadingView.hide()
+                LoadingState.INITIAL_IS_LOADING -> initialLoadingView.setLoading()
+                LoadingState.INITIAL_IS_LOADED -> initialLoadingView.hide()
             }
         })
     }
