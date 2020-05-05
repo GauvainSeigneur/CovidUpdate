@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +10,10 @@ import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
 import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
-import com.gauvain.seigneur.covidupdate.utils.AVDUtils
-import com.gauvain.seigneur.covidupdate.utils.RequestState
+import com.gauvain.seigneur.covidupdate.utils.LoadingState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
-import com.gauvain.seigneur.covidupdate.utils.startVectorAnimation
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
@@ -24,8 +21,6 @@ import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
-import kotlinx.android.synthetic.main.view_content_main.*
-import kotlinx.android.synthetic.main.view_no_data_found.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -102,14 +97,17 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadingState.observe(this, Observer {
             when (it) {
-                RequestState.INITIAL_IS_LOADING -> handleLoadingView(STATE_LOADING)
-                RequestState.REFRESH_IS_LOADING -> handleRefreshLoading(true)
-                RequestState.REFRESH_IS_LOADED -> handleRefreshLoading(false)
+                LoadingState.INITIAL_IS_LOADING -> handleLoadingView(STATE_LOADING)
+                LoadingState.REFRESH_IS_LOADING -> handleRefreshLoading(true)
+                LoadingState.REFRESH_IS_LOADED -> handleRefreshLoading(false)
             }
         })
 
         viewModel.refreshDataEvent.observe(this, EventObserver {
-            displaySnackbar(it)
+            when (it) {
+                is LiveDataState.Success -> displaySnackbar(it.data)
+                is LiveDataState.Error -> displaySnackbar(it.errorData.title)
+            }
         })
 
         viewModel.displayDetailsEvent.observe(this, EventObserver {
@@ -121,8 +119,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayDetails(statisticsItemModel: StatisticsItemModel) {
-        val intent = Intent(this, DetailsActivity::class.java)
-        startActivity(intent)
+        startActivity(DetailsActivity.newIntent(this, statisticsItemModel.country))
     }
 
     private fun displaySnackbar(stringPresenter: StringPresenter) {
@@ -177,30 +174,20 @@ class MainActivity : AppCompatActivity() {
         when (state) {
             STATE_LOADING -> {
                 refreshFab.hide()
-                loadingView.visibility = View.VISIBLE
-                bigLoader.visibility = View.VISIBLE
-                AVDUtils.startLoadingAnimation(bigLoader, true)
-                errorView.visibility = View.GONE
+                initialLoadingView.setLoading()
             }
             STATE_ERROR -> {
                 refreshFab.hide()
-                loadingView.visibility = View.VISIBLE
-                bigLoader.visibility = View.GONE
-                AVDUtils.startLoadingAnimation(bigLoader, false)
-                errorView.visibility = View.VISIBLE
-                binocularAvdView.startVectorAnimation()
-                errorTitle.text = errorData?.title?.getFormattedString(this)
-                errorDesc.text = errorData?.description?.getFormattedString(this)
-                retryButton.setOnClickListener {
-                    viewModel.fetchData()
-                }
+                initialLoadingView.setError(
+                    errorData?.title?.getFormattedString(this),
+                    errorData?.description?.getFormattedString(this),
+                    errorData?.buttonText?.getFormattedString(this),
+                    { viewModel.fetchData() }
+                )
             }
             else -> {
                 refreshFab.show()
-                AVDUtils.startLoadingAnimation(bigLoader, false)
-                loadingView.visibility = View.GONE
-                bigLoader.visibility = View.GONE
-                errorView.visibility = View.GONE
+                initialLoadingView.hide()
             }
         }
     }

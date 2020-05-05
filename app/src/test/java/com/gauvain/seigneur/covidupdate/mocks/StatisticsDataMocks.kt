@@ -175,7 +175,7 @@ object HistoryModelMocks {
             totalCases = 10000,
             totalNewCases = 1000,
             totalActiveCases = 8000,
-            activeActiveHistory = listOf(
+            activeHistory = listOf(
                 AllActiveHistoryItemModel(
                     100,
                     Date()

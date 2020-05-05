@@ -20,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -92,13 +91,14 @@ class MainViewModelTest {
         assertEquals(
             result, LiveDataState.Error(
                 ErrorData(
+                    ErrorDataType.NOT_RECOVERABLE,
                     StringPresenter(R.string.empty_list_title),
-                    StringPresenter(R.string.empty_list_description)
+                    StringPresenter(R.string.empty_list_description),
+                    StringPresenter(R.string.ok)
                 )
             )
         )
     }
-
 
     @Test
     fun
@@ -113,7 +113,14 @@ class MainViewModelTest {
         }
         assertEquals(
             event,
-            Event(StringPresenter(R.string.error_refresh_data_label))
+            Event(
+                LiveDataState.Error(
+                    ErrorData(
+                        ErrorDataType.INFORMATIVE,
+                        StringPresenter(R.string.error_refresh_data_label)
+                    )
+                )
+            )
         )
     }
 
@@ -129,10 +136,18 @@ class MainViewModelTest {
         val event = viewModel.refreshDataEvent.getOrAwaitValue()
         assertEquals(
             event,
-            Event(StringPresenter(R.string.error_refresh_data_label))
+            Event(
+                LiveDataState.Error(
+                    ErrorData(
+                        ErrorDataType.INFORMATIVE,
+                        StringPresenter(
+                            R.string.error_refresh_data_label
+                        )
+                    )
+                )
+            )
         )
     }
-
 
     @Test
     fun
@@ -148,7 +163,7 @@ class MainViewModelTest {
         }
         assertEquals(
             event,
-            Event(StringPresenter(R.string.data_refreshed_label))
+            Event(LiveDataState.Success(StringPresenter(R.string.data_refreshed_label)))
         )
     }
 

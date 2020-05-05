@@ -27,5 +27,6 @@ class CovidUpdateApplication : Application() {
                 )
             )
         }
+
     }
 }

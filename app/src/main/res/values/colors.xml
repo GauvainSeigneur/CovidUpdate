@@ -34,5 +34,12 @@
     <color name="colorError">#E56B51</color>
     <color name="colorOnError">#FFFFFF</color>
 
+    <color name="colorOrangeLineChart">#f45600</color>
+    <color name="colorOrangeSplitSecondary">#ff6c1c</color>
+    <color name="colorOrangeGradientStart">#00ff6c1c</color>
+    <color name="colorOrangeGradientEnd">#99ff6c1c</color>
+
     <color name="colorBottomSheetBackground">#2F2F2F</color>
+
+    <color name="colorMarkerDark">#0E0E0E</color>
 </resources>

@@ -86,7 +86,8 @@ object OutComeModelMock {
                     new = 1000,
                     active = 70000,
                     recovered = 35000,
-                    critical = 1000
+                    critical = 1000,
+                    dead = 1200
                 ),
                 CountryHistoryItemModel(
                     date = "2020-04-07".toDate(SERVER_DATE_FORMAT),
@@ -94,7 +95,8 @@ object OutComeModelMock {
                     new = 800,
                     active = 60000,
                     recovered = 3500,
-                    critical = 200
+                    critical = 200,
+                    dead = 900
                 )
             )
         )

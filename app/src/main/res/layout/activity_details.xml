@@ -7,6 +7,81 @@
     android:layout_height="match_parent"
     tools:context=".view.details.DetailsActivity">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Typography.TextAppearance.Subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/space_m"
+                android:paddingStart="@dimen/space_m"
+                android:paddingTop="@dimen/space_m"
+                android:text="Active and critical evolution" />
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_m">
+
+                <com.gauvain.seigneur.covidupdate.widget.CountryActiveHistoryChartView
+                    android:id="@+id/activeChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Typography.TextAppearance.Subtitle1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/space_m"
+                android:paddingStart="@dimen/space_m"
+                android:paddingTop="@dimen/space_m"
+                android:text="Répartion des cas actifs" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_m">
+
+                <com.gauvain.seigneur.covidupdate.widget.CasesDistributionBarChartView
+                    android:id="@+id/distributionChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Typography.TextAppearance.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/space_m"
+                android:paddingStart="@dimen/space_m"
+                android:paddingTop="@dimen/space_m"
+                android:text="évolution critique et mort en % sur le total actif" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.gauvain.seigneur.covidupdate.widget.InitialLoadingView
+        android:id="@+id/initialLoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -18,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:backgroundTint="@color/colorBackground"
-            app:layout_collapseMode="pin" />
+            app:navigationIcon="@drawable/ic_keyboard_backspace_white_24dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
