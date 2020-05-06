@@ -1,6 +1,7 @@
 package com.gauvain.seigneur.covidupdate
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.gauvain.seigneur.covidupdate.mocks.CountryHistoryMocks
 import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.ErrorDataType
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
@@ -55,6 +56,23 @@ class DetailsViewModelTest {
     fun tearDown() {
         Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
         mainThreadSurrogate.close()
+    }
+
+    @Test
+    fun given_usecase_return_valid_data_view_model_must_return_data() {
+        mainCoroutineRule.runBlockingTest {
+            given(usecase.invoke("france")).willReturn(
+                Outcome.Success(CountryHistoryMocks.getUseCaseCountryHistoryModel())
+            )
+            viewModel.getHistory()
+            val value = viewModel.historyData.getOrAwaitValue()
+            mainCoroutineRule.advanceUntilIdle()
+            assertEquals(
+                value, LiveDataState.Success(
+                    CountryHistoryMocks.getCountryHistoryData()
+                )
+            )
+        }
     }
 
     @Test
@@ -174,5 +192,4 @@ class DetailsViewModelTest {
             )
         )
     }
-
 }
