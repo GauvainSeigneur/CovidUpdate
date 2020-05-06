@@ -26,11 +26,13 @@
         android:layout_height="match_parent"/>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/detailsNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
+            android:id="@+id/detailsNestedLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -46,6 +48,7 @@
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/firstCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_m">
