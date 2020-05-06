@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.animation.makeSceneTransitionAnimation
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
 import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
 
     companion object {
         const val FADE_MAX_VALUE = 1f
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel()
     private val statisticsListAdapter by lazy {
-        StatisticsListAdapter { position -> seeDetails(position) }
+        StatisticsListAdapter(this)
     }
     private val appBarOffsetListener: AppBarLayout.OnOffsetChangedListener =
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -51,6 +53,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initView()
         observe()
+    }
+
+    override fun onClick(countryName: String, rootView: View) {
+        val options = makeSceneTransitionAnimation(
+            this@MainActivity,
+            Pair(rootView, getString(R.string.transition_root))
+        )
+        startActivity(DetailsActivity.newIntent(this, countryName), options.toBundle())
     }
 
     private fun fetchData() {
@@ -110,16 +120,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.displayDetailsEvent.observe(this, EventObserver {
-            when (it) {
-                is LiveDataState.Success -> displayDetails(it.data)
-                is LiveDataState.Error -> displaySnackbar(it.errorData.title)
-            }
-        })
-    }
-
-    private fun displayDetails(statisticsItemModel: StatisticsItemModel) {
-        startActivity(DetailsActivity.newIntent(this, statisticsItemModel.country))
     }
 
     private fun displaySnackbar(stringPresenter: StringPresenter) {
@@ -146,10 +146,6 @@ class MainActivity : AppCompatActivity() {
         allActiveCasesTextView.text = data.activeCases.getFormattedString(this)
         allNewCasesTextView.text = data.newCases.total.getFormattedString(this)
         allNewCasesTextView.setTextColor(ContextCompat.getColor(this, data.newCases.colorRes))
-    }
-
-    private fun seeDetails(position: Int) {
-        viewModel.getItemDetails(position)
     }
 
     private fun manageHeaderAspect(vRatio: Float) {

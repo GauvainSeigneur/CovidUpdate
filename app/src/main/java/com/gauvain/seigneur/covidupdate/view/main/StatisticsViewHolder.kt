@@ -12,8 +12,7 @@ import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
 import kotlinx.android.synthetic.main.item_statistics.view.*
 
 class StatisticsViewHolder(
-    itemView: View,
-    private val itemListener: (position: Int) -> Unit
+    itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
 
     companion object {
@@ -22,18 +21,17 @@ class StatisticsViewHolder(
         const val FLAG_IMG_FORMAT = ".svg"
     }
 
-    fun bind(itemData: StatisticsItemData) {
+    fun bind(itemData: StatisticsItemData, listener: StatisticsListAdapter.Listener) {
         setUpCountryFlag(itemData.countryCode)
         with(itemView) {
             statItemView.setOnClickListener {
-                itemListener(adapterPosition)
+                listener.onClick(itemData.country, it.itemStatBackground)
             }
             countryTextView.text = itemData.country
             totalCasesTextView.text = itemData.casesData.total.getFormattedString(itemView.context)
             activeCasesTextView.text = itemData.casesData.active.getFormattedString(itemView.context)
         }
         setUpNewCases(itemData.casesData.new)
-
     }
 
     private fun setUpCountryFlag(countryCode: String?) {

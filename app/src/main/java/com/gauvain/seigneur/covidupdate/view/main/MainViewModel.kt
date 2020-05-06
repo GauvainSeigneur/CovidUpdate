@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,7 +21,7 @@ import kotlin.coroutines.CoroutineContext
 
 typealias StatisticsState = LiveDataState<List<StatisticsItemData>>
 typealias AllHistoryState = LiveDataState<AllHistoryData>
-typealias DisplayEventState = Event<LiveDataState<StatisticsItemModel>>
+//typealias DisplayEventState = Event<LiveDataState<StatisticsItemModel>>
 typealias RefreshEventState = Event<LiveDataState<StringPresenter>>
 
 class MainViewModel(
@@ -42,7 +43,6 @@ class MainViewModel(
     val historyData: MutableLiveData<AllHistoryState> = MutableLiveData()
     val statisticsData = MutableLiveData<StatisticsState>()
     //Event (LiveData which can be consumed only once)
-    val displayDetailsEvent = MutableLiveData<DisplayEventState>()
     val refreshDataEvent = MutableLiveData<RefreshEventState>()
     //Define coroutine context
     private val job = Job()
@@ -72,24 +72,6 @@ class MainViewModel(
             delay(LONG_DELAY)
             fetchHistory()
         }
-    }
-
-    fun getItemDetails(position: Int) {
-        val list = (statisticsData.value as LiveDataState.Success).data
-        //get country from list of liveData
-        val country = list[position].country
-        //now get the right item in list from useCase (more info)
-        val item = ascendingStatList.firstOrNull { it.country == country }
-        item?.let {
-            displayDetailsEvent.value = Event(LiveDataState.Success(it))
-        } ?: Event(
-            LiveDataState.Error(
-                ErrorData(
-                    ErrorDataType.INFORMATIVE,
-                    StringPresenter(R.string.error_fetch_data_title)
-                )
-            )
-        )
     }
 
     private suspend fun fetchStatistics() {
@@ -197,7 +179,6 @@ class MainViewModel(
                             StringPresenter(R.string.data_refreshed_label)
                         )
                     )
-
             }
             ascendingStatList.clear()
             ascendingStatList.addAll(result.data.sortedByDescending { it.casesModel.total })
