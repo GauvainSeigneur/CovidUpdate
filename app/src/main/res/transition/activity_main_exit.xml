@@ -19,4 +19,27 @@
                 app:endAlpha="0.3"/>
     </transitionSet>
 
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/bottomAppBar" />
+            <target android:targetId="@id/refreshFab" />
+            <target android:targetId="@id/fabLoadingView" />
+        </targets>
+        <transition
+            class="com.gauvain.seigneur.covidupdate.animation.FadeTransition"
+            app:startAlpha="1.0"
+            app:endAlpha="0.3"/>
+        <slide/>
+    </transitionSet>
+
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/appBarLayout" />
+        </targets>
+        <transition
+            class="com.gauvain.seigneur.covidupdate.animation.FadeTransition"
+            app:startAlpha="1.0"
+            app:endAlpha="0.3"/>
+    </transitionSet>
+
 </transitionSet>

@@ -36,19 +36,13 @@ class StatisticsViewHolder(
 
     private fun setUpCountryFlag(countryCode: String?) {
         with(itemView) {
-            val imageLoader = ImageLoader(context) {
-                componentRegistry {
-                    add(SvgDecoder(itemView.context))
-                }
-                crossfade(true)
+            countryFlagView.load(
+                "$BASE_FLAG_URL$countryCode$FLAG_IMG_FORMAT"
+            ) {
                 placeholder(R.drawable.ic_flag_place_holder)
                 error(R.drawable.ic_flag_place_holder)
                 fallback(R.drawable.ic_flag_place_holder)
             }
-            countryFlagView.load(
-                "$BASE_FLAG_URL$countryCode$FLAG_IMG_FORMAT",
-                imageLoader
-            )
         }
     }
 
