@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:id="@+id/parentLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.details.DetailsActivity">
@@ -16,19 +15,21 @@
         android:id="@+id/activityDetailsBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/shared_details_background"
         android:importantForAccessibility="no"
-        android:background="@color/colorBackground"
-        android:transitionName="@string/transition_root"/>
+        android:transitionName="@string/transition_root" />
 
     <com.gauvain.seigneur.covidupdate.widget.InitialLoadingView
         android:id="@+id/initialLoadingView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/detailsNestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -47,19 +48,6 @@
                 android:text="Active and critical evolution" />
 
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/firstCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_m">
-
-                <com.gauvain.seigneur.covidupdate.widget.CountryActiveHistoryChartView
-                    android:id="@+id/activeChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-
-            </com.google.android.material.card.MaterialCardView>
-
             <TextView
                 style="@style/Typography.TextAppearance.Subtitle1"
                 android:layout_width="match_parent"
@@ -68,6 +56,15 @@
                 android:paddingStart="@dimen/space_m"
                 android:paddingTop="@dimen/space_m"
                 android:text="Répartion des cas actifs" />
+
+            <TextView
+                style="@style/Typography.TextAppearance.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/space_m"
+                android:paddingStart="@dimen/space_m"
+                android:paddingTop="@dimen/space_m"
+                android:text="évolution critique et mort en % sur le total actif" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -81,14 +78,18 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                style="@style/Typography.TextAppearance.Headline6"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/firstCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/space_m"
-                android:paddingStart="@dimen/space_m"
-                android:paddingTop="@dimen/space_m"
-                android:text="évolution critique et mort en % sur le total actif" />
+                android:layout_margin="@dimen/space_m">
+
+                <com.gauvain.seigneur.covidupdate.widget.CountryActiveHistoryChartView
+                    android:id="@+id/activeChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -104,13 +105,81 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorBackground">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:backgroundTint="@color/colorBackground"
-            app:navigationIcon="@drawable/ic_keyboard_backspace_white_24dp" />
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:backgroundTint="@color/colorBackground"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_keyboard_backspace_white_24dp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="80dp"
+                android:paddingStart="@dimen/space_xxl"
+                android:paddingEnd="@dimen/space_xl">
+
+                <ImageView
+                    android:id="@+id/collapsingCountryFlagImageView"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_flag_place_holder"
+                    android:transitionName="@string/transition_country_flag"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/bigCoutryNameTextView"
+                    style="@style/Typography.TextAppearance.Headline1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/space_m"
+                    android:paddingEnd="@null"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/BottomSpaceView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/collapsingCountryFlagImageView"/>
+
+                <View
+                    android:id="@+id/BottomSpaceView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_xl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/collapsingCountryFlagImageView"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <!--
+        As we can't use windowSharedElementsUseOverlay=true for activity theme because of the
+        shared transition of the background and the fact that the image inside collapsing toolbar
+        will not be shown until the border of the appbar (because of
+        windowSharedElementsUseOverlay set to false) here's a workaround. This is imageView is in the
+        root layout, so the sharedTransition will work even with windowSharedElementsUseOverlay set
+        to false. We use this to perform the animation and make it disappear when the shared
+        transition is finished. -->
+    <ImageView
+        android:id="@+id/detailsCountryFlagImageView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginStart="@dimen/space_xxl"
+        android:animateLayoutChanges="true"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_flag_place_holder"
+        android:transitionName="@string/transition_country_flag" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

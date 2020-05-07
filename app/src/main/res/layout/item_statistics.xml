@@ -7,10 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
-    android:layout_marginStart="@dimen/space_m"
-    android:layout_marginEnd="@dimen/space_m"
-    android:layout_marginTop="@dimen/space_s"
-    android:layout_marginBottom="@dimen/space_s">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingStart="@dimen/space_m"
+    android:paddingEnd="@dimen/space_m"
+    android:paddingTop="@dimen/space_s"
+    android:paddingBottom="@dimen/space_s">
 
     <!-- Use a separate view for the background, rather than on the root view because it is a
         shared element. Otherwise it interferes with the window enter transition i.e. as it is
@@ -34,6 +35,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@null"
+            android:transitionName="@string/transition_country_flag"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

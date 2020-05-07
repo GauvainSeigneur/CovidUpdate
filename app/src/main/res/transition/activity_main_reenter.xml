@@ -8,6 +8,7 @@
     <transitionSet>
         <targets>
             <target android:targetId="@id/statsRecyclerView" />
+            <target android:targetId="@id/appBarLayout"/>
         </targets>
         <transition
                 class="com.gauvain.seigneur.covidupdate.animation.PopTransition"
@@ -30,16 +31,6 @@
             class="com.gauvain.seigneur.covidupdate.animation.FadeTransition"
             app:startAlpha="0.3"
             app:endAlpha="1.0"/>
-    </transitionSet>
-
-    <transitionSet>
-        <targets>
-            <target android:targetId="@id/appBarLayout" />
-        </targets>
-        <transition
-            class="com.gauvain.seigneur.covidupdate.animation.FadeTransition"
-            app:startAlpha="0.3"
-            app:endAlpha="1"/>
     </transitionSet>
 
 </transitionSet>

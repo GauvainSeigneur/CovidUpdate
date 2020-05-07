@@ -12,9 +12,11 @@ class StatisticsListAdapter(
 ) : RecyclerView.Adapter<StatisticsViewHolder>() {
 
     interface Listener {
-        fun onClick(countryName:String, rootView: View)
+        fun onClick(countryName: String,
+                    countryCode: String?,
+                    rootView: View,
+                    flagImageView: View)
     }
-
 
     private val statisticsList = mutableListOf<StatisticsItemData>()
 

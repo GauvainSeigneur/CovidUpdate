@@ -9,6 +9,7 @@ import coil.decode.SvgDecoder
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.NewCasesData
 import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
+import com.gauvain.seigneur.covidupdate.utils.loadCountry
 import kotlinx.android.synthetic.main.item_statistics.view.*
 
 class StatisticsViewHolder(
@@ -17,15 +18,18 @@ class StatisticsViewHolder(
 
     companion object {
         val layout = R.layout.item_statistics
-        const val BASE_FLAG_URL = "https://hatscripts.github.io/circle-flags/flags/"
-        const val FLAG_IMG_FORMAT = ".svg"
+
     }
 
     fun bind(itemData: StatisticsItemData, listener: StatisticsListAdapter.Listener) {
         setUpCountryFlag(itemData.countryCode)
         with(itemView) {
             statItemView.setOnClickListener {
-                listener.onClick(itemData.country, it.itemStatBackground)
+                listener.onClick(
+                    itemData.country,
+                    itemData.countryCode,
+                    it.itemStatBackground,
+                    it.countryFlagView)
             }
             countryTextView.text = itemData.country
             totalCasesTextView.text = itemData.casesData.total.getFormattedString(itemView.context)
@@ -36,13 +40,7 @@ class StatisticsViewHolder(
 
     private fun setUpCountryFlag(countryCode: String?) {
         with(itemView) {
-            countryFlagView.load(
-                "$BASE_FLAG_URL$countryCode$FLAG_IMG_FORMAT"
-            ) {
-                placeholder(R.drawable.ic_flag_place_holder)
-                error(R.drawable.ic_flag_place_holder)
-                fallback(R.drawable.ic_flag_place_holder)
-            }
+            countryFlagView.loadCountry(countryCode)
         }
     }
 

@@ -55,12 +55,14 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         observe()
     }
 
-    override fun onClick(countryName: String, rootView: View) {
+    override fun onClick(countryName: String,
+                         countryCode: String?, rootView: View, flagView: View) {
         val options = makeSceneTransitionAnimation(
             this@MainActivity,
-            Pair(rootView, getString(R.string.transition_root))
+            Pair(rootView, getString(R.string.transition_root)),
+            Pair(flagView, getString(R.string.transition_country_flag))
         )
-        startActivity(DetailsActivity.newIntent(this, countryName), options.toBundle())
+        startActivity(DetailsActivity.newIntent(this, countryName, countryCode), options.toBundle())
     }
 
     private fun fetchData() {
@@ -119,7 +121,6 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
                 is LiveDataState.Error -> displaySnackbar(it.errorData.title)
             }
         })
-
     }
 
     private fun displaySnackbar(stringPresenter: StringPresenter) {
@@ -170,6 +171,7 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         when (state) {
             STATE_LOADING -> {
                 refreshFab.hide()
+                initialLoadingView.visibility = View.VISIBLE
                 initialLoadingView.setLoading()
             }
             STATE_ERROR -> {
@@ -177,13 +179,13 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
                 initialLoadingView.setError(
                     errorData?.title?.getFormattedString(this),
                     errorData?.description?.getFormattedString(this),
-                    errorData?.buttonText?.getFormattedString(this),
-                    { viewModel.fetchData() }
-                )
+                    errorData?.buttonText?.getFormattedString(this)
+                ) { viewModel.fetchData() }
             }
             else -> {
                 refreshFab.show()
                 initialLoadingView.hide()
+                initialLoadingView.visibility = View.GONE
             }
         }
     }

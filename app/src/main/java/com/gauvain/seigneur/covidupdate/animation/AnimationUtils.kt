@@ -2,6 +2,7 @@ package com.gauvain.seigneur.covidupdate.animation
 
 import android.app.Activity
 import android.os.Build
+import android.transition.Transition
 import android.view.View
 import android.view.Window
 import androidx.core.app.ActivityOptionsCompat
@@ -20,4 +21,21 @@ fun makeSceneTransitionAnimation(activity: Activity, vararg pairs: Pair<View, St
         }
     }
     return ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *updatedPairs.toTypedArray())
+}
+
+abstract class TransitionListenerAdapter : Transition.TransitionListener {
+    override fun onTransitionStart(transition: Transition) {
+    }
+
+    override fun onTransitionPause(transition: Transition) {
+    }
+
+    override fun onTransitionResume(transition: Transition) {
+    }
+
+    override fun onTransitionEnd(transition: Transition) {
+    }
+
+    override fun onTransitionCancel(transition: Transition) {
+    }
 }

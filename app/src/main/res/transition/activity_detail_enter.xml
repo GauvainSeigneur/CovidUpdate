@@ -10,9 +10,9 @@
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />
             <target android:excludeId="@id/activityDetailsBackground" />
+            <target android:excludeId="@id/detailsCountryFlagImageView" />
         </targets>
-        <transition
-                class="android.transition.Slide"/>
+        <transition class="android.transition.Slide"/>
 
         <!-- We start fade in animation later to fake that views appear in middle of screen -->
         <fade

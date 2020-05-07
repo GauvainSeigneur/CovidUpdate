@@ -21,7 +21,6 @@
     </style>
 
 
-
     <style name="Widget.Button.SearchButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:backgroundTint">@color/colorSecondary</item>
     </style>

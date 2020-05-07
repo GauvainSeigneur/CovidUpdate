@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +20,6 @@ import kotlin.coroutines.CoroutineContext
 
 typealias StatisticsState = LiveDataState<List<StatisticsItemData>>
 typealias AllHistoryState = LiveDataState<AllHistoryData>
-//typealias DisplayEventState = Event<LiveDataState<StatisticsItemModel>>
 typealias RefreshEventState = Event<LiveDataState<StringPresenter>>
 
 class MainViewModel(
@@ -37,7 +35,6 @@ class MainViewModel(
         const val NO_DELAY = 0L
     }
 
-    private val ascendingStatList = mutableListOf<StatisticsItemModel>()
     //LiveData
     val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
     val historyData: MutableLiveData<AllHistoryState> = MutableLiveData()
@@ -180,10 +177,9 @@ class MainViewModel(
                         )
                     )
             }
-            ascendingStatList.clear()
-            ascendingStatList.addAll(result.data.sortedByDescending { it.casesModel.total })
+           
             statisticsData.value = LiveDataState.Success(
-                ascendingStatList.map {
+                result.data.sortedByDescending { it.casesModel.total }.map {
                     it.toStatisticsItemData(
                         getCountryCode(it.country),
                         getNewCasesDate(it.casesModel.new),

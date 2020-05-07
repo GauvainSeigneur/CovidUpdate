@@ -10,6 +10,7 @@
         <targets>
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />
+            <target android:excludeId="@id/detailsCountryFlagImageView" />
         </targets>
     </slide>
 
