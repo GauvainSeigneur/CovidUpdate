@@ -58,8 +58,8 @@ dependencies {
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
 
-    implementation "io.coil-kt:coil:0.9.5"
-    implementation "io.coil-kt:coil-svg:0.9.5"
+    implementation "io.coil-kt:coil:0.10.1"
+    implementation "io.coil-kt:coil-svg:0.10.1"
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 
     implementation 'com.google.android.gms:play-services:12.0.1'

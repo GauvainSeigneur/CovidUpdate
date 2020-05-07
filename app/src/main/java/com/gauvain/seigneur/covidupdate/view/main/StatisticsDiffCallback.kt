@@ -22,8 +22,7 @@ class StatisticsDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldStats[oldItemPosition].country ===
-            newStats[newItemPosition].country
+        return oldStats[oldItemPosition].country === newStats[newItemPosition].country
     }
 
     @Nullable

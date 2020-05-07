@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.*
 import com.gauvain.seigneur.covidupdate.utils.LoadingState
+import com.gauvain.seigneur.covidupdate.utils.SharedTransitionState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
@@ -29,6 +30,7 @@ class DetailsViewModel(
     }
 
     var countryName: String? = null
+    val sharedTransitionData = MutableLiveData<SharedTransitionState>()
     val loadingData = MutableLiveData<LoadingState>()
     val historyData: MutableLiveData<HistoryState> by lazy {
         getHistory()
@@ -44,6 +46,14 @@ class DetailsViewModel(
         }
     }
 
+    fun onSharedTransitionStart() {
+        sharedTransitionData.value = SharedTransitionState.STARTED
+    }
+
+    fun onSharedTransitionEnd() {
+        sharedTransitionData.value = SharedTransitionState.ENDED
+    }
+
     private suspend fun fetchHistory(countryName: String) {
         val result = withContext(Dispatchers.IO) {
             fetchCountryHistoryUseCase.invoke(countryName)
@@ -51,6 +61,7 @@ class DetailsViewModel(
 
         when (result) {
             is Outcome.Success -> {
+                delay(150)
                 loadingData.value = LoadingState.INITIAL_IS_LOADED
                 historyData.value = LiveDataState.Success(result.data.toData())
             }

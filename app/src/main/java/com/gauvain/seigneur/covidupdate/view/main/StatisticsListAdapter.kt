@@ -1,14 +1,22 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
 
 class StatisticsListAdapter(
-    private val itemListener: (position: Int) -> Unit
+    private val listener: Listener
 ) : RecyclerView.Adapter<StatisticsViewHolder>() {
+
+    interface Listener {
+        fun onClick(countryName: String,
+                    countryCode: String?,
+                    rootView: View,
+                    flagImageView: View)
+    }
 
     private val statisticsList = mutableListOf<StatisticsItemData>()
 
@@ -18,12 +26,11 @@ class StatisticsListAdapter(
                 StatisticsViewHolder.layout,
                 parent,
                 false
-            ),
-            itemListener
+            )
         )
 
     override fun onBindViewHolder(holder: StatisticsViewHolder, position: Int) {
-        holder.bind(statisticsList[position])
+        holder.bind(statisticsList[position], listener)
     }
 
     override fun getItemCount(): Int {

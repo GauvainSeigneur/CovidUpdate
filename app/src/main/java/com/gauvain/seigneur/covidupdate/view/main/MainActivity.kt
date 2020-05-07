@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.util.Pair
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.animation.makeSceneTransitionAnimation
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
 import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.LiveDataState
@@ -17,13 +19,12 @@ import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
-import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
 
     companion object {
         const val FADE_MAX_VALUE = 1f
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModel()
     private val statisticsListAdapter by lazy {
-        StatisticsListAdapter { position -> seeDetails(position) }
+        StatisticsListAdapter(this)
     }
     private val appBarOffsetListener: AppBarLayout.OnOffsetChangedListener =
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
@@ -51,6 +52,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initView()
         observe()
+    }
+
+    override fun onClick(countryName: String,
+                         countryCode: String?, rootView: View, flagView: View) {
+        val options = makeSceneTransitionAnimation(
+            this@MainActivity,
+            Pair(rootView, getString(R.string.transition_root)),
+            Pair(flagView, getString(R.string.transition_country_flag))
+        )
+        startActivity(DetailsActivity.newIntent(this, countryName, countryCode), options.toBundle())
     }
 
     private fun fetchData() {
@@ -109,17 +120,6 @@ class MainActivity : AppCompatActivity() {
                 is LiveDataState.Error -> displaySnackbar(it.errorData.title)
             }
         })
-
-        viewModel.displayDetailsEvent.observe(this, EventObserver {
-            when (it) {
-                is LiveDataState.Success -> displayDetails(it.data)
-                is LiveDataState.Error -> displaySnackbar(it.errorData.title)
-            }
-        })
-    }
-
-    private fun displayDetails(statisticsItemModel: StatisticsItemModel) {
-        startActivity(DetailsActivity.newIntent(this, statisticsItemModel.country))
     }
 
     private fun displaySnackbar(stringPresenter: StringPresenter) {
@@ -148,10 +148,6 @@ class MainActivity : AppCompatActivity() {
         allNewCasesTextView.setTextColor(ContextCompat.getColor(this, data.newCases.colorRes))
     }
 
-    private fun seeDetails(position: Int) {
-        viewModel.getItemDetails(position)
-    }
-
     private fun manageHeaderAspect(vRatio: Float) {
         headerChartView.alpha = (vRatio * FADE_MAX_VALUE)
         val scale = vRatio + (SCALE_MAX_VALUE - SCALE_MAX_VALUE * vRatio)
@@ -174,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         when (state) {
             STATE_LOADING -> {
                 refreshFab.hide()
+                initialLoadingView.visibility = View.VISIBLE
                 initialLoadingView.setLoading()
             }
             STATE_ERROR -> {
@@ -181,13 +178,13 @@ class MainActivity : AppCompatActivity() {
                 initialLoadingView.setError(
                     errorData?.title?.getFormattedString(this),
                     errorData?.description?.getFormattedString(this),
-                    errorData?.buttonText?.getFormattedString(this),
-                    { viewModel.fetchData() }
-                )
+                    errorData?.buttonText?.getFormattedString(this)
+                ) { viewModel.fetchData() }
             }
             else -> {
                 refreshFab.show()
                 initialLoadingView.hide()
+                initialLoadingView.visibility = View.GONE
             }
         }
     }

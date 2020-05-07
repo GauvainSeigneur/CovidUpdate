@@ -37,11 +37,11 @@
         <item name="chipStyle">@style/ChipStyle</item>-->
 
         <!-- transition and overlay-->
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <!--<item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementsUseOverlay">true</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item> -->
 
         <!--Typography -->
         <item name="textAppearanceHeadline1">@style/Typography.TextAppearance.Headline1</item>
@@ -57,6 +57,30 @@
         <item name="textAppearanceButton">@style/Typography.TextAppearance.Button</item>
         <item name="textAppearanceCaption">@style/Typography.TextAppearance.Caption</item>
         <item name="textAppearanceOverline">@style/Typography.TextAppearance.Overline</item>
+    </style>
+
+    <style name="CovidUpdateTheme.Transparent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <!-- Theme for ActivityDetail (applying some transition) -->
+    <style name="CovidUpdateTheme.Transparent.ActivityDetail">
+        <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/activity_detail_s_e_enter</item>
+        <item name="android:windowSharedElementReturnTransition">@transition/activity_detail_s_e_return</item>
+        <item name="android:windowEnterTransition">@transition/activity_detail_enter</item>
+        <item name="android:windowReturnTransition">@transition/activity_detail_return</item>
+    </style>
+
+    <!-- Theme for ActivityMain (applying some transition) -->
+    <style name="CovidUpdateTheme.ActivityMain">
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowSharedElementsUseOverlay">false</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowExitTransition">@transition/activity_main_exit</item>
+        <item name="android:windowReenterTransition">@transition/activity_main_reenter</item>
     </style>
 
 </resources>
