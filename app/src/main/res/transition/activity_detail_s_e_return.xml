@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:duration="@integer/animation_duration">
+
+    <!-- Change bounds of all shared elements -->
+    <transitionSet>
+        <targets>
+            <target android:targetId="@id/detailsCountryFlagImageView" />
+            <target android:targetId="@+id/activityDetailsBackground" />
+        </targets>
+        <changeBounds/>
+    </transitionSet>
+
+
+    <!-- Start fading background of activity -->
+    <transition
+            class="com.gauvain.seigneur.covidupdate.animation.FadeTransition"
+            app:startAlpha="1.0"
+            app:endAlpha="0.0">
+        <targets>
+            <target android:targetId="@id/activityDetailsBackground" />
+        </targets>
+    </transition>
+
+</transitionSet>

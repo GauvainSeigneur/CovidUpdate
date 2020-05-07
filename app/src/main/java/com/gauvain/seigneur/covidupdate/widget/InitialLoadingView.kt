@@ -21,11 +21,10 @@ class InitialLoadingView @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.view_initial_loading, this)
-        this.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground))
+        //this.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground))
     }
 
     fun hide() {
-        this.visibility = View.GONE
         showError(false)
         showLoader(false)
     }

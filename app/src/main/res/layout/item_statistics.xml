@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/statItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/space_m"
-    android:layout_marginEnd="@dimen/space_m"
-    android:layout_marginTop="@dimen/space_s"
-    android:layout_marginBottom="@dimen/space_s">
+    android:background="@color/colorBackground"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingStart="@dimen/space_m"
+    android:paddingEnd="@dimen/space_m"
+    android:paddingTop="@dimen/space_s"
+    android:paddingBottom="@dimen/space_s">
+
+    <!-- Use a separate view for the background, rather than on the root view because it is a
+        shared element. Otherwise it interferes with the window enter transition i.e. as it is
+        resized for the shared element transition, many views are considered 'off-screen' so
+        visibility transitions are not run. -->
+    <View
+        android:id="@+id/itemStatBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:transitionName="@string/transition_root"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,6 +35,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@null"
+            android:transitionName="@string/transition_country_flag"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -78,4 +92,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</com.google.android.material.card.MaterialCardView>
+</FrameLayout>
