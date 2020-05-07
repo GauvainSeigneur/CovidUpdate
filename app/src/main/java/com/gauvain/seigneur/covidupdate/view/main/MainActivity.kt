@@ -19,7 +19,6 @@ import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
-import com.gauvain.seigneur.domain.model.StatisticsItemModel
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*

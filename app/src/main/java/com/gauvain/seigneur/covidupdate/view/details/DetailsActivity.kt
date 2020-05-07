@@ -45,7 +45,6 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
         collapsingCountryFlagImageView.loadCountry(countryCode)
         initViews()
         listenSharedEnterTransition()
-
     }
 
     private fun listenSharedEnterTransition() {
@@ -84,8 +83,12 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
                     detailsCountryFlagImageView.visibility = View.VISIBLE
                 }
                 SharedTransitionState.ENDED -> {
-                    activityDetailsBackground.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.colorBackground))
+                    activityDetailsBackground.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.colorBackground
+                        )
+                    )
                     collapsingCountryFlagImageView.visibility = View.VISIBLE
                     detailsCountryFlagImageView.visibility = View.GONE
                 }

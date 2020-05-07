@@ -30,7 +30,6 @@ class DetailsViewModel(
     }
 
     var countryName: String? = null
-
     val sharedTransitionData = MutableLiveData<SharedTransitionState>()
     val loadingData = MutableLiveData<LoadingState>()
     val historyData: MutableLiveData<HistoryState> by lazy {

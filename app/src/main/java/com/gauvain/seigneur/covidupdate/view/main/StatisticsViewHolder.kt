@@ -3,9 +3,6 @@ package com.gauvain.seigneur.covidupdate.view.main
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import coil.ImageLoader
-import coil.api.load
-import coil.decode.SvgDecoder
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.NewCasesData
 import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
@@ -18,7 +15,6 @@ class StatisticsViewHolder(
 
     companion object {
         val layout = R.layout.item_statistics
-
     }
 
     fun bind(itemData: StatisticsItemData, listener: StatisticsListAdapter.Listener) {
@@ -29,7 +25,8 @@ class StatisticsViewHolder(
                     itemData.country,
                     itemData.countryCode,
                     it.itemStatBackground,
-                    it.countryFlagView)
+                    it.countryFlagView
+                )
             }
             countryTextView.text = itemData.country
             totalCasesTextView.text = itemData.casesData.total.getFormattedString(itemView.context)
