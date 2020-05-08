@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gauvain.seigneur.covidupdate.mocks.CountryHistoryMocks
 import com.gauvain.seigneur.covidupdate.model.ErrorData
 import com.gauvain.seigneur.covidupdate.model.ErrorDataType
-import com.gauvain.seigneur.covidupdate.model.LiveDataState
+import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.*
 import com.gauvain.seigneur.covidupdate.view.details.DetailsViewModel
 import com.gauvain.seigneur.domain.model.ErrorType

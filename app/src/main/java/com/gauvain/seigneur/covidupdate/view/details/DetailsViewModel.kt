@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.*
-import com.gauvain.seigneur.covidupdate.utils.LoadingState
-import com.gauvain.seigneur.covidupdate.utils.SharedTransitionState
+import com.gauvain.seigneur.covidupdate.model.LoadingState
+import com.gauvain.seigneur.covidupdate.model.SharedTransitionState
+import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider

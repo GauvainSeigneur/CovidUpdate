@@ -16,7 +16,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.android.synthetic.main.view_all_history_chart.view.*
 
-class AllHistoryChartView @JvmOverloads constructor(
+class ActiveHistoryChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
@@ -64,7 +64,7 @@ class AllHistoryChartView @JvmOverloads constructor(
         chart.legend.isEnabled = false
         chart.legend.textColor = ContextCompat.getColor(context, R.color.colorWhiteDarker)
         // create marker to display box when values are selected
-        val mv = MyMarkerView(context, R.layout.view_marker)
+        val mv = ActiveHistoryMarkerView(context, R.layout.view_marker)
         // Set the marker to the chart
         mv.chartView = chart
         chart.marker = mv

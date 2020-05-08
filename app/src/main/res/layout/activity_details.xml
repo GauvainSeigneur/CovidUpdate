@@ -38,33 +38,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/Typography.TextAppearance.Subtitle1"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/space_m"
-                android:paddingStart="@dimen/space_m"
-                android:paddingTop="@dimen/space_m"
-                android:text="Active and critical evolution" />
+                android:layout_margin="@dimen/space_m">
 
+                <com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
+                    android:id="@+id/activeChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
 
-            <TextView
-                style="@style/Typography.TextAppearance.Subtitle1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/space_m"
-                android:paddingStart="@dimen/space_m"
-                android:paddingTop="@dimen/space_m"
-                android:text="Répartion des cas actifs" />
-
-            <TextView
-                style="@style/Typography.TextAppearance.Headline6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/space_m"
-                android:paddingStart="@dimen/space_m"
-                android:paddingTop="@dimen/space_m"
-                android:text="évolution critique et mort en % sur le total actif" />
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -77,23 +61,6 @@
                     android:layout_height="200dp" />
 
             </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/firstCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/space_m">
-
-                <com.gauvain.seigneur.covidupdate.widget.CountryActiveHistoryChartView
-                    android:id="@+id/activeChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -120,44 +87,7 @@
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_keyboard_backspace_white_24dp" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="80dp"
-                android:paddingStart="@dimen/space_xxl"
-                android:paddingEnd="@dimen/space_xl">
-
-                <ImageView
-                    android:id="@+id/collapsingCountryFlagImageView"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:src="@drawable/ic_flag_place_holder"
-                    android:transitionName="@string/transition_country_flag"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/bigCoutryNameTextView"
-                    style="@style/Typography.TextAppearance.Headline1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/space_m"
-                    android:paddingEnd="@null"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/BottomSpaceView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/collapsingCountryFlagImageView"/>
-
-                <View
-                    android:id="@+id/BottomSpaceView"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/space_xl"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/collapsingCountryFlagImageView"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include layout="@layout/view_details_header_content"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -177,7 +107,6 @@
         android:layout_height="56dp"
         android:layout_marginTop="80dp"
         android:layout_marginStart="@dimen/space_xxl"
-        android:animateLayoutChanges="true"
         android:contentDescription="@null"
         android:src="@drawable/ic_flag_place_holder"
         android:transitionName="@string/transition_country_flag" />

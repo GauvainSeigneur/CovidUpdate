@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.countryActiveHistoryChart
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
+import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
@@ -105,7 +106,9 @@ class CountryActiveHistoryChartView @JvmOverloads constructor(
         dataSets.add(criticalSet)
         //custom it
         customSet(activeSet, -1)
-        customSet(criticalSet, CRITICAL_TYPE)
+        customSet(criticalSet,
+            CRITICAL_TYPE
+        )
         // create a data object with the data sets
         val data = LineData(dataSets)
         //data.setValueTypeface(tfLight)

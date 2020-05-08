@@ -7,22 +7,26 @@ import android.transition.Transition
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.animation.TransitionListenerAdapter
 import com.gauvain.seigneur.covidupdate.model.ErrorDataType
-import com.gauvain.seigneur.covidupdate.model.LiveDataState
-import com.gauvain.seigneur.covidupdate.utils.LoadingState
-import com.gauvain.seigneur.covidupdate.utils.SharedTransitionState
+import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
+import com.gauvain.seigneur.covidupdate.model.LoadingState
+import com.gauvain.seigneur.covidupdate.model.SharedTransitionState
+import com.gauvain.seigneur.covidupdate.utils.convertDpToPixel
 import com.gauvain.seigneur.covidupdate.utils.loadCountry
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.view_details_header_content.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailsActivity : AppCompatActivity(), LifecycleObserver {
 
     companion object {
-
+        private const val FADE_MAX_VALUE = 1f
         private const val COUNTRY_NAME = "country_name"
         private const val COUNTRY_CODE = "country_code"
         fun newIntent(
@@ -34,15 +38,22 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
             .putExtra(COUNTRY_CODE, countryCode)
     }
 
+    private val appBarOffsetListener: AppBarLayout.OnOffsetChangedListener =
+        AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val vTotalScrollRange = appBarLayout.totalScrollRange
+            val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
+            manageHeaderAspect(vRatio)
+            detailsCountryFlagImageView.y = collapsingCountryPlaceHolder.y +  verticalOffset
+            detailsCountryFlagImageView.alpha = (vRatio * FADE_MAX_VALUE)
+        }
+
     private val viewModel: DetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.countryName = intent.getStringExtra(COUNTRY_NAME)
-        val countryCode = intent.getStringExtra(COUNTRY_CODE)
         setContentView(R.layout.activity_details)
-        detailsCountryFlagImageView.loadCountry(countryCode)
-        collapsingCountryFlagImageView.loadCountry(countryCode)
+        loadCountryFlag(intent.getStringExtra(COUNTRY_CODE))
         initViews()
         listenSharedEnterTransition()
     }
@@ -68,6 +79,11 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+        appBarLayout.addOnOffsetChangedListener(appBarOffsetListener)
+    }
+
+    private fun loadCountryFlag(countryCode: String?) {
+        detailsCountryFlagImageView.loadCountry(countryCode)
     }
 
     override fun onBackPressed() {
@@ -79,18 +95,14 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
         viewModel.sharedTransitionData.observe(this, Observer {
             when (it) {
                 SharedTransitionState.STARTED -> {
-                    collapsingCountryFlagImageView.visibility = View.GONE
-                    detailsCountryFlagImageView.visibility = View.VISIBLE
+                    detailsCountryFlagImageView.alpha = 1f
                 }
                 SharedTransitionState.ENDED -> {
-                    activityDetailsBackground.setBackgroundColor(
-                        ContextCompat.getColor(
-                            this,
+                    activityDetailsBackground.setBackgroundColor(ContextCompat.getColor(
+                        this,
                             R.color.colorBackground
                         )
                     )
-                    collapsingCountryFlagImageView.visibility = View.VISIBLE
-                    detailsCountryFlagImageView.visibility = View.GONE
                 }
             }
         })
@@ -135,4 +147,8 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
             ErrorDataType.RECOVERABLE -> viewModel.getHistory()
             else -> finish()
         }
+
+    private fun manageHeaderAspect(vRatio: Float) {
+        detailsHeaderContentView.alpha = (vRatio * FADE_MAX_VALUE)
+    }
 }

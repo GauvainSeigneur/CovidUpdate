@@ -64,6 +64,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="CovidUpdateTheme.SlpashActivityTheme">
+        <item name="android:windowBackground">@drawable/background_splash_screen</item>
+    </style>
+
     <!-- Theme for ActivityDetail (applying some transition) -->
     <style name="CovidUpdateTheme.Transparent.ActivityDetail">
         <item name="android:windowSharedElementsUseOverlay">false</item>

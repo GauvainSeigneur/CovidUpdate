@@ -6,6 +6,7 @@ import com.gauvain.seigneur.covidupdate.mocks.HistoryModelMocks
 import com.gauvain.seigneur.covidupdate.mocks.StatisticsDataMocks
 import com.gauvain.seigneur.covidupdate.mocks.StatisticsModelMocks
 import com.gauvain.seigneur.covidupdate.model.*
+import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.*
 import com.gauvain.seigneur.covidupdate.utils.event.Event
 import com.gauvain.seigneur.covidupdate.view.main.MainViewModel

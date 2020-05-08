@@ -8,12 +8,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
+import com.gauvain.seigneur.covidupdate.widget.activeHistoryChart.ActiveHistoryMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.StackedValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import kotlinx.android.synthetic.main.view_cases_distribution_bar_chart.view.*
@@ -71,7 +71,10 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         chart.setDrawValueAboveBar(false)
         chart.setHighlightFullBarEnabled(false)
         // create marker to display box when values are selected
-        val mv = MyMarkerView(context, R.layout.view_marker)
+        val mv = ActiveHistoryMarkerView(
+            context,
+            R.layout.view_marker
+        )
         // Set the marker to the chart
         mv.chartView = chart
         chart.marker = mv
