@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget.countryActiveHistoryChart
+package com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart
 
 import android.content.Context
 import android.util.AttributeSet
@@ -18,7 +18,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import kotlinx.android.synthetic.main.view_all_history_chart.view.*
 
-class CountryActiveHistoryChartView @JvmOverloads constructor(
+class CriticalActiveHistoryChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
@@ -87,7 +87,7 @@ class CountryActiveHistoryChartView @JvmOverloads constructor(
             )
         }
         // create marker to display box when values are selected
-        val mv = CountryActiveHistoryMarkerView(
+        val mv = CriticalActiveHistoryMarkerView(
             context,
             R.layout
                 .view_country_active_history_marker,

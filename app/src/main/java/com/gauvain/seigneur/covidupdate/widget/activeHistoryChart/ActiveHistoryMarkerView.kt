@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.activeHistoryChart
 
 import android.annotation.SuppressLint
 import android.content.Context

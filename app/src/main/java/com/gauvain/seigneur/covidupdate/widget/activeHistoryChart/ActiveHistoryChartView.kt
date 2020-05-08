@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.activeHistoryChart
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.ChartAllHistoryItem
+import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
@@ -64,7 +65,10 @@ class ActiveHistoryChartView @JvmOverloads constructor(
         chart.legend.isEnabled = false
         chart.legend.textColor = ContextCompat.getColor(context, R.color.colorWhiteDarker)
         // create marker to display box when values are selected
-        val mv = ActiveHistoryMarkerView(context, R.layout.view_marker)
+        val mv = ActiveHistoryMarkerView(
+            context,
+            R.layout.view_marker
+        )
         // Set the marker to the chart
         mv.chartView = chart
         chart.marker = mv
