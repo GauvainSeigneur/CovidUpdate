@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.casesDristributionChart
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
+import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
 import com.gauvain.seigneur.covidupdate.widget.activeHistoryChart.ActiveHistoryMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -23,6 +24,12 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val x: XAxis
+    private val casesColor = intArrayOf(
+        ContextCompat.getColor(context, R.color.colorSecondary),
+        ContextCompat.getColor(context, R.color.colorOrangeSplitSecondary),
+        ContextCompat.getColor(context, R.color.colorDanger),
+        ContextCompat.getColor(context, R.color.colorCool)
+    )
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -70,15 +77,6 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         chart.setDrawBarShadow(false)
         chart.setDrawValueAboveBar(false)
         chart.setHighlightFullBarEnabled(false)
-        // create marker to display box when values are selected
-        val mv = ActiveHistoryMarkerView(
-            context,
-            R.layout.view_marker
-        )
-        // Set the marker to the chart
-        mv.chartView = chart
-        chart.marker = mv
-        chart.invalidate()
     }
 
     fun setData(values: List<CaseStateDistributionItem>, label: String) {
@@ -91,12 +89,8 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         val set = BarDataSet(entries, label)
         set.highLightColor = ContextCompat.getColor(context, R.color.colorSecondary)
         set.setDrawIcons(false)
-        set.setColors(
-            ContextCompat.getColor(context, R.color.colorSecondary),
-            ContextCompat.getColor(context, R.color.colorOrangeSplitSecondary),
-            ContextCompat.getColor(context, R.color.colorDanger),
-            ContextCompat.getColor(context, R.color.colorCool)
-        )
+        set.setColors(*casesColor)
+
         set.setStackLabels(arrayOf("Births", "Divorces", "Marriages"))
         // create a data object with the data sets
         val dataSets: ArrayList<IBarDataSet> = ArrayList()
@@ -108,10 +102,25 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         data.setDrawValues(false)
         data.setValueFormatter(StackedValueFormatter(false, "", 1))
         // set data
-        //setXAxisMinMax(entries)
         chart.data = data
+        //setMarker
+        setMarker(values)
         chart.setFitBars(true)
         chart.animateXY(500, 500)
+        chart.invalidate()
+    }
+
+    private fun setMarker(values: List<CaseStateDistributionItem>) {
+        // create marker to display box when values are selected
+        val mv = CasesDistributionMarkerView(
+            context,
+            R.layout.view_cases_distribution_marker,
+            values,
+            casesColor
+        )
+        // Set the marker to the chart
+        mv.chartView = chart
+        chart.marker = mv
         chart.invalidate()
     }
 }

@@ -12,6 +12,8 @@ data class CountryChartHistoryItem(
 )
 
 data class CaseStateDistributionItem(
+    val startDate: String,
+    val enDate: String,
     val position: Float,
     val nonCritical: Float,
     val critical: Float,

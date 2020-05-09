@@ -42,5 +42,7 @@
     <string name="error_no_country_name_title">Oops&#8230; we can\'t found the name of the
         country</string>
     <string name="error_no_country_name_desc">Please go back and retry</string>
+    <string name="period_start_end">From %1$s to %2$s</string>
+    <string name="percentage_value">%s %%</string>
 
 </resources>

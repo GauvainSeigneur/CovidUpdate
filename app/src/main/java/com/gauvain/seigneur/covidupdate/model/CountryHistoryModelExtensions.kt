@@ -2,6 +2,8 @@ package com.gauvain.seigneur.covidupdate.model
 
 import com.gauvain.seigneur.domain.model.CountryHistoryItemModel
 import com.gauvain.seigneur.domain.model.CountryHistoryModel
+import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
+import com.gauvain.seigneur.domain.utils.formatTo
 import kotlin.math.ceil
 
 private const val ACTIVE_TYPE = 0
@@ -21,6 +23,8 @@ private fun setUpDistributionChart(list: List<CountryHistoryItemModel>):
     val distributedCasesByWeek = mutableListOf<CaseStateDistributionItem>()
     list.reversed().chunked(getChunkedList(list)) {
         distributedCasesByWeek.add(CaseStateDistributionItem(
+            startDate = it[0].date.formatTo(DATA_DATE_FORMAT),
+            enDate = it[it.size-1].date.formatTo(DATA_DATE_FORMAT),
             position = index.toFloat(),
             nonCritical = percent((
                 it.sumBy { item -> item.active } - it.sumBy { item -> item.critical }),

@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_m">
 
-                <com.gauvain.seigneur.covidupdate.widget.CasesDistributionBarChartView
+                <com.gauvain.seigneur.covidupdate.widget.casesDristributionChart.CasesDistributionBarChartView
                     android:id="@+id/distributionChart"
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
