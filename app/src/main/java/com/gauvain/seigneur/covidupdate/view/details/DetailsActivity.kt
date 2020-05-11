@@ -112,8 +112,8 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
             when (it) {
                 is LiveDataState.Success -> {
                     detailsNestedScrollView.visibility = View.VISIBLE
-                    activeChart.setData(it.data, "active")
-                    distributionChart.setData(it.data.caseDistributionChart, "Distribution")
+                    activeCriticalEvolutionBlock.setData(it.data, null)
+                    casesDistributionBlock.setData(it.data.caseDistributionChart, null)
                 }
                 is LiveDataState.Error -> {
                     detailsNestedScrollView.visibility = View.INVISIBLE

@@ -3,11 +3,13 @@ package com.gauvain.seigneur.covidupdate.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.content.res.TypedArrayUtils.getString
 import com.gauvain.seigneur.covidupdate.R
+import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
+import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
 import com.gauvain.seigneur.covidupdate.utils.use
+import com.gauvain.seigneur.covidupdate.widget.casesDristributionChart.CasesDistributionBarChartView
+import com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
 import kotlinx.android.synthetic.main.view_details_stat_block.view.*
 
 class DetailsStatBlockView @JvmOverloads constructor(
@@ -15,8 +17,6 @@ class DetailsStatBlockView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-
-    private var chartLayout: Int? = null
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -31,14 +31,27 @@ class DetailsStatBlockView @JvmOverloads constructor(
 
         typedArray.use {
             title.text = getString(R.styleable.DetailsStatBlockView_title)
-            chartLayout = getResourceId(R.styleable.DetailsStatBlockView_chart, 0)
+            inflateChart(getResourceId(R.styleable.DetailsStatBlockView_chart, 0))
         }
-        inflateChart()
     }
 
-    private fun inflateChart() {
-        if (chartLayout != null && chartLayout != 0) {
-            LayoutInflater.from(context).inflate(chartLayout!!, chartRootLayout, true)
+    private fun inflateChart(chartLayoutId: Int?) {
+        if (chartLayoutId != null && chartLayoutId != 0) {
+            LayoutInflater.from(context).inflate(chartLayoutId, chartRootLayout, true)
         }
+    }
+
+    /**
+     * Set data for CriticalActiveHistoryChartView
+     */
+    fun setData(value: CountryHistoryData, label: String?) {
+        (chartRootLayout.getChildAt(0) as? CriticalActiveHistoryChartView)?.setData(value, label)
+    }
+
+    /**
+     * Set data for CasesDistributionBarChartView
+     */
+    fun setData(value: List<CaseStateDistributionItem>, label: String?) {
+        (chartRootLayout.getChildAt(0) as? CasesDistributionBarChartView)?.setData(value, label)
     }
 }

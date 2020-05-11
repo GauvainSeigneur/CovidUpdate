@@ -73,7 +73,7 @@ class CriticalActiveHistoryChartView @JvmOverloads constructor(
         chart.invalidate()
     }
 
-    fun setData(value: CountryHistoryData, label: String) {
+    fun setData(value: CountryHistoryData, label: String?) {
         val activesEntries = value.activeChart.map {
             Entry(
                 it.position,

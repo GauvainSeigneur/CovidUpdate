@@ -79,7 +79,7 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         chart.setHighlightFullBarEnabled(false)
     }
 
-    fun setData(values: List<CaseStateDistributionItem>, label: String) {
+    fun setData(values: List<CaseStateDistributionItem>, label: String?) {
         val entries = values.map {
             BarEntry(
                 it.position,

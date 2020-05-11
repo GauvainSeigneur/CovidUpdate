@@ -18,53 +18,19 @@
         android:orientation="vertical">
 
         <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
+            android:id="@+id/activeCriticalEvolutionBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="lol"
-            app:chart="@layout/critical_active_chart"/>
+            app:title="@string/active_critical_evolution_title"
+            app:chart="@layout/details_block_critical_active_chart"/>
 
-        <TextView
-            style="@style/Typography.TextAppearance.Subtitle1"
+        <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
+            android:id="@+id/casesDistributionBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/space_m"
-            android:paddingEnd="@dimen/space_m"
-            android:paddingStart="@dimen/space_m"
-            android:text="@string/active_critical_evolution_title"/>
+            app:title="@string/active_critical_evolution_title"
+            app:chart="@layout/details_block_cases_distribution_chart"/>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_m"
-            app:cardCornerRadius="@dimen/space_s">
-
-            <com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
-                android:id="@+id/activeChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            style="@style/Typography.TextAppearance.Subtitle1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/space_m"
-            android:paddingEnd="@dimen/space_m"
-            android:paddingStart="@dimen/space_m"
-            android:text="@string/active_critical_evolution_title"/>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_m">
-
-            <com.gauvain.seigneur.covidupdate.widget.casesDristributionChart.CasesDistributionBarChartView
-                android:id="@+id/distributionChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
