@@ -1,19 +1,21 @@
 package com.gauvain.seigneur.data_adapter.adapters
 
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
+import java.text.DecimalFormat
 import java.text.NumberFormat
-import java.util.*
 
-class NumberFormatAdapter :
-    NumberFormatProvider {
+class NumberFormatAdapter : NumberFormatProvider {
 
     override fun format(number: Int): String {
-        val locale = Locale(Locale.US.language)
-        return NumberFormat.getInstance(locale).format(number)
+        return NumberFormat.getInstance().format(number)
     }
 
     override fun format(number: Double): String {
-        val locale = Locale(Locale.US.language)
-        return NumberFormat.getInstance(locale).format(number)
+        return NumberFormat.getInstance().format(number)
+    }
+
+    override fun formatToPercentage(number: Double): String {
+        val formatter = DecimalFormat("00.##")
+        return formatter.format(number)
     }
 }

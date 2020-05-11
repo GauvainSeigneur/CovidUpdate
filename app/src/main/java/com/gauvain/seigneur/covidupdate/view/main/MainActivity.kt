@@ -1,5 +1,7 @@
 package com.gauvain.seigneur.covidupdate.view.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +13,8 @@ import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.animation.makeSceneTransitionAnimation
 import com.gauvain.seigneur.covidupdate.model.AllHistoryData
 import com.gauvain.seigneur.covidupdate.model.ErrorData
-import com.gauvain.seigneur.covidupdate.model.LiveDataState
-import com.gauvain.seigneur.covidupdate.utils.LoadingState
+import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
+import com.gauvain.seigneur.covidupdate.model.LoadingState
 import com.gauvain.seigneur.covidupdate.utils.StringPresenter
 import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         const val STATE_LOADING = "StateLoading"
         const val STATE_ERROR = "StateError"
         const val STATE_GONE = "StateGone"
+
+        fun newIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
     }
 
     private val viewModel: MainViewModel by viewModel()
@@ -55,11 +59,13 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
     }
 
     override fun onClick(countryName: String,
-                         countryCode: String?, rootView: View, flagView: View) {
+                         countryCode: String?,
+                         rootView: View,
+                         flagImageView: View) {
         val options = makeSceneTransitionAnimation(
             this@MainActivity,
             Pair(rootView, getString(R.string.transition_root)),
-            Pair(flagView, getString(R.string.transition_country_flag))
+            Pair(flagImageView, getString(R.string.transition_country_flag))
         )
         startActivity(DetailsActivity.newIntent(this, countryName, countryCode), options.toBundle())
     }

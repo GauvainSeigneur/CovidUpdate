@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
+import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
@@ -17,7 +18,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import kotlinx.android.synthetic.main.view_all_history_chart.view.*
 
-class CountryActiveHistoryChartView @JvmOverloads constructor(
+class CriticalActiveHistoryChartView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
@@ -86,7 +87,7 @@ class CountryActiveHistoryChartView @JvmOverloads constructor(
             )
         }
         // create marker to display box when values are selected
-        val mv = CountryActiveHistoryMarkerView(
+        val mv = CriticalActiveHistoryMarkerView(
             context,
             R.layout
                 .view_country_active_history_marker,
@@ -105,7 +106,9 @@ class CountryActiveHistoryChartView @JvmOverloads constructor(
         dataSets.add(criticalSet)
         //custom it
         customSet(activeSet, -1)
-        customSet(criticalSet, CRITICAL_TYPE)
+        customSet(criticalSet,
+            CRITICAL_TYPE
+        )
         // create a data object with the data sets
         val data = LineData(dataSets)
         //data.setValueTypeface(tfLight)

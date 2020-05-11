@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.view_country_active_history_marker.view.*
 import java.util.*
 
 @SuppressLint("ViewConstructor")
-class CountryActiveHistoryMarkerView(
+class CriticalActiveHistoryMarkerView(
     context: Context?,
     layoutResource: Int,
     private val activeEntries: List<Entry>,

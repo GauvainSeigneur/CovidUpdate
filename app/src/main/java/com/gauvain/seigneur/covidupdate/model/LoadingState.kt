@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.utils
+package com.gauvain.seigneur.covidupdate.model
 
 enum class LoadingState {
     INITIAL_IS_LOADING,

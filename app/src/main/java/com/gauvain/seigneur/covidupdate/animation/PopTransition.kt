@@ -14,7 +14,6 @@ import android.view.View
 import androidx.core.animation.doOnEnd
 import com.gauvain.seigneur.covidupdate.R
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class PopTransition(context: Context, attrs: AttributeSet) : Visibility(context, attrs) {
 
     private var startScale: Float = 0.0f

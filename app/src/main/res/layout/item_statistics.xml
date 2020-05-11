@@ -8,8 +8,6 @@
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
     android:foreground="?android:attr/selectableItemBackground"
-    android:paddingStart="@dimen/space_m"
-    android:paddingEnd="@dimen/space_m"
     android:paddingTop="@dimen/space_s"
     android:paddingBottom="@dimen/space_s">
 
@@ -43,18 +41,19 @@
         <TextView
             android:id="@+id/countryTextView"
             style="@style/TextAppearance.StatisticsItem.Title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/space_m"
             android:paddingEnd="@null"
             app:layout_constraintStart_toEndOf="@id/countryFlagView"
+            app:layout_constraintEnd_toStartOf="@id/activeCasesTextView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="France"/>
+            tools:text="Country name here"/>
 
         <TextView
             android:id="@+id/totalCasesTextView"
             style="@style/TextAppearance.StatisticsItem.subTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/space_m"
             android:paddingEnd="@null"

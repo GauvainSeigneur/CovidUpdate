@@ -2,7 +2,6 @@
 <manifest package="com.gauvain.seigneur.covidupdate"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".CovidUpdateApplication"
         android:allowBackup="true"
@@ -11,17 +10,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CovidUpdateTheme">
-        <activity android:name="com.gauvain.seigneur.covidupdate.view.main.MainActivity"
-            android:theme="@style/CovidUpdateTheme.ActivityMain">
+        <activity android:name=".view.SplashActivity"
+            android:theme="@style/CovidUpdateTheme.SlpashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gauvain.seigneur.covidupdate.view.details.DetailsActivity"
+            android:name=".view.main.MainActivity"
+            android:theme="@style/CovidUpdateTheme.ActivityMain">
+        </activity>
+        <activity
+            android:name=".view.details.DetailsActivity"
             android:theme="@style/CovidUpdateTheme.Transparent.ActivityDetail" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

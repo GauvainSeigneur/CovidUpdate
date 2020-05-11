@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.covidupdate.widget
+package com.gauvain.seigneur.covidupdate.widget.activeHistoryChart
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.view_marker.view.*
 import java.util.*
 
 @SuppressLint("ViewConstructor")
-class MyMarkerView(context: Context?, layoutResource: Int) :
+class ActiveHistoryMarkerView(context: Context?, layoutResource: Int) :
     MarkerView(context, layoutResource) {
 
     // runs every time the MarkerView is redrawn, can be used to update the
