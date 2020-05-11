@@ -45,4 +45,9 @@
     <string name="period_start_end">From %1$s to %2$s</string>
     <string name="percentage_value">%s %%</string>
 
+    <string name="uncritical">uncritical</string>
+    <string name="critical">critical</string>
+    <string name="dead">dead</string>
+    <string name="recovered">recovered</string>
+
 </resources>

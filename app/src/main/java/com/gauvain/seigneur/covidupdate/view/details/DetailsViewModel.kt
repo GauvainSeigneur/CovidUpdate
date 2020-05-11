@@ -62,7 +62,6 @@ class DetailsViewModel(
 
         when (result) {
             is Outcome.Success -> {
-                delay(150)
                 loadingData.value = LoadingState.INITIAL_IS_LOADED
                 historyData.value = LiveDataState.Success(result.data.toData())
             }

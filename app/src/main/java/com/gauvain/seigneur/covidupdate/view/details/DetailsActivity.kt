@@ -20,6 +20,7 @@ import com.gauvain.seigneur.covidupdate.utils.convertDpToPixel
 import com.gauvain.seigneur.covidupdate.utils.loadCountry
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_details.*
+import kotlinx.android.synthetic.main.content_details.*
 import kotlinx.android.synthetic.main.view_details_header_content.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -42,8 +43,9 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
         AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val vTotalScrollRange = appBarLayout.totalScrollRange
             val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
-            manageHeaderAspect(vRatio)
-            detailsCountryFlagImageView.y = collapsingCountryPlaceHolder.y +  verticalOffset
+            detailsHeaderContentView.alpha = (vRatio * FADE_MAX_VALUE)
+            //*0.75 because we set the layout_collapseParallaxMultiplier to 0.25 for detailsHeaderContentView
+            detailsCountryFlagImageView.y = collapsingCountryPlaceHolder.y + (verticalOffset*0.75f)
             detailsCountryFlagImageView.alpha = (vRatio * FADE_MAX_VALUE)
         }
 
@@ -148,7 +150,4 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
             else -> finish()
         }
 
-    private fun manageHeaderAspect(vRatio: Float) {
-        detailsHeaderContentView.alpha = (vRatio * FADE_MAX_VALUE)
-    }
 }

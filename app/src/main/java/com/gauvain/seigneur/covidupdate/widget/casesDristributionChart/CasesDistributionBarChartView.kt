@@ -91,7 +91,14 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         set.setDrawIcons(false)
         set.setColors(*casesColor)
 
-        set.setStackLabels(arrayOf("Births", "Divorces", "Marriages"))
+        set.setStackLabels(
+            arrayOf(
+                context.getString(R.string.uncritical),
+                context.getString(R.string.critical),
+                context.getString(R.string.dead),
+                context.getString(R.string.recovered)
+            )
+        )
         // create a data object with the data sets
         val dataSets: ArrayList<IBarDataSet> = ArrayList()
         dataSets.add(set)

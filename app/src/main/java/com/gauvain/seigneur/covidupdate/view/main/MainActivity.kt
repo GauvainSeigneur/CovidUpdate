@@ -59,11 +59,13 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
     }
 
     override fun onClick(countryName: String,
-                         countryCode: String?, rootView: View, flagView: View) {
+                         countryCode: String?,
+                         rootView: View,
+                         flagImageView: View) {
         val options = makeSceneTransitionAnimation(
             this@MainActivity,
             Pair(rootView, getString(R.string.transition_root)),
-            Pair(flagView, getString(R.string.transition_country_flag))
+            Pair(flagImageView, getString(R.string.transition_country_flag))
         )
         startActivity(DetailsActivity.newIntent(this, countryName, countryCode), options.toBundle())
     }
