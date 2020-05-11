@@ -17,6 +17,45 @@
         android:nestedScrollingEnabled="false"
         android:orientation="vertical">
 
+        <com.google.android.material.chip.ChipGroup
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_m">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:shadowColor="#4E1"
+                android:elevation="@dimen/space_m"
+                android:text="First chip"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorCaseActive"
+                android:text="First chip"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorCaseCritical"
+                android:text="First chip"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorCaseRecovered"
+                android:text="First chip"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorCaseDead"
+                android:text="First chip"/>
+
+        </com.google.android.material.chip.ChipGroup>
+
         <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
             android:id="@+id/activeCriticalEvolutionBlock"
             android:layout_width="match_parent"
@@ -28,7 +67,7 @@
             android:id="@+id/casesDistributionBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/active_critical_evolution_title"
+            app:title="@string/cases_distribution_title"
             app:chart="@layout/details_block_cases_distribution_chart"/>
 
 

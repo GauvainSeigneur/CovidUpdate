@@ -51,5 +51,6 @@
     <string name="recovered">recovered</string>
 
     <string name="active_critical_evolution_title">Active with critical cases evolution</string>
+    <string name="cases_distribution_title">Cases distribution</string>
 
 </resources>

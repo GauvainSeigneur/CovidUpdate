@@ -7,7 +7,6 @@ import android.widget.LinearLayout
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
 import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
-import com.gauvain.seigneur.covidupdate.utils.use
 import com.gauvain.seigneur.covidupdate.widget.casesDristributionChart.CasesDistributionBarChartView
 import com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
 import kotlinx.android.synthetic.main.view_details_stat_block.view.*
@@ -22,17 +21,15 @@ class DetailsStatBlockView @JvmOverloads constructor(
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.view_details_stat_block, this)
         orientation = VERTICAL
-        val typedArray = context.obtainStyledAttributes(
+        context.obtainStyledAttributes(
             attrs,
             R.styleable.DetailsStatBlockView,
             0,
             0
-        )
-
-        typedArray.use {
+        ).apply {
             title.text = getString(R.styleable.DetailsStatBlockView_title)
             inflateChart(getResourceId(R.styleable.DetailsStatBlockView_chart, 0))
-        }
+        }.recycle()
     }
 
     private fun inflateChart(chartLayoutId: Int?) {

@@ -42,4 +42,9 @@
     <color name="colorBottomSheetBackground">#2F2F2F</color>
 
     <color name="colorMarkerDark">#0E0E0E</color>
+
+    <color name="colorCaseCritical">#ff6c1c</color>
+    <color name="colorCaseActive">@color/colorSecondary</color>
+    <color name="colorCaseDead">#ff1c3d</color>
+    <color name="colorCaseRecovered">#35d197</color>
 </resources>
