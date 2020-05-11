@@ -16,7 +16,6 @@ import com.gauvain.seigneur.covidupdate.model.ErrorDataType
 import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
 import com.gauvain.seigneur.covidupdate.model.LoadingState
 import com.gauvain.seigneur.covidupdate.model.SharedTransitionState
-import com.gauvain.seigneur.covidupdate.utils.convertDpToPixel
 import com.gauvain.seigneur.covidupdate.utils.loadCountry
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_details.*

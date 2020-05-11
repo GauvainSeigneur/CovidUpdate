@@ -2,10 +2,12 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/detailsNestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="invisible"
+    tools:visibility="visible"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
     <LinearLayout
@@ -15,10 +17,26 @@
         android:nestedScrollingEnabled="false"
         android:orientation="vertical">
 
+        <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="lol"
+            app:chart="@layout/critical_active_chart"/>
+
+        <TextView
+            style="@style/Typography.TextAppearance.Subtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m"
+            android:paddingStart="@dimen/space_m"
+            android:text="@string/active_critical_evolution_title"/>
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_m">
+            android:layout_margin="@dimen/space_m"
+            app:cardCornerRadius="@dimen/space_s">
 
             <com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
                 android:id="@+id/activeChart"
@@ -26,6 +44,15 @@
                 android:layout_height="200dp" />
 
         </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            style="@style/Typography.TextAppearance.Subtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m"
+            android:paddingStart="@dimen/space_m"
+            android:text="@string/active_critical_evolution_title"/>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

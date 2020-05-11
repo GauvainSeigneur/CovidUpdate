@@ -50,4 +50,6 @@
     <string name="dead">dead</string>
     <string name="recovered">recovered</string>
 
+    <string name="active_critical_evolution_title">Active with critical cases evolution</string>
+
 </resources>
