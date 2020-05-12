@@ -1,12 +1,15 @@
 package com.gauvain.seigneur.covidupdate.mocks
 
+import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
+import com.gauvain.seigneur.covidupdate.model.CountryCasesData
 import com.gauvain.seigneur.covidupdate.model.CountryChartHistoryItem
 import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
 import com.gauvain.seigneur.domain.model.CountryHistoryItemModel
 import com.gauvain.seigneur.domain.model.CountryHistoryModel
 import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.toDate
+import java.util.*
 
 object CountryHistoryMocks {
 
@@ -40,6 +43,12 @@ object CountryHistoryMocks {
     )
 
     fun getCountryHistoryData(): CountryHistoryData = CountryHistoryData(
+        casesList = listOf(
+            CountryCasesData("6", R.color.colorCaseActive),
+            CountryCasesData("2", R.color.colorCaseCritical),
+            CountryCasesData("2", R.color.colorCaseRecovered),
+            CountryCasesData("0", R.color.colorCaseDead)
+        ),
         activeChart = listOf(
             getChartHistoryItemData("2020-01-07", 8),
             getChartHistoryItemData("2020-01-06", 8),
@@ -59,13 +68,13 @@ object CountryHistoryMocks {
             getChartHistoryItemData("2020-01-01", 2)
         ),
         caseDistributionChart = listOf(
-            getCaseStateDistributionItem(0f, 60.0f, 20.0f, 20.0f, 0.0f),
-            getCaseStateDistributionItem(1f, 60.0f, 20.0f, 20.0f, 0.0f),
-            getCaseStateDistributionItem(2f, 60.0f, 20.0f, 20.0f, 0.0f),
-            getCaseStateDistributionItem(3f, 20.0f, 40.0f, 40.0f, 0.0f),
-            getCaseStateDistributionItem(4f, 60.0f, 20.0f, 20.0f, 0.0f),
-            getCaseStateDistributionItem(5f, 60.0f, 20.0f, 20.0f, 0.0f),
-            getCaseStateDistributionItem(6f, 60.0f, 20.0f, 20.0f, 0.0f)
+            getCaseStateDistributionItem("07/01/2020", "07/01/2020",0f, 60.0f, 20.0f, 20.0f, 0.0f),
+            getCaseStateDistributionItem("06/01/2020", "06/01/2020",1f, 60.0f, 20.0f, 20.0f, 0.0f),
+            getCaseStateDistributionItem("05/01/2020", "05/01/2020",2f, 60.0f, 20.0f, 20.0f, 0.0f),
+            getCaseStateDistributionItem("04/01/2020", "04/01/2020",3f, 20.0f, 40.0f, 40.0f, 0.0f),
+            getCaseStateDistributionItem("03/01/2020", "03/01/2020",4f, 60.0f, 20.0f, 20.0f, 0.0f),
+            getCaseStateDistributionItem("02/01/2020", "02/01/2020",5f, 60.0f, 20.0f, 20.0f, 0.0f),
+            getCaseStateDistributionItem("01/01/2020", "01/01/2020",6f, 60.0f, 20.0f, 20.0f, 0.0f)
         )
     )
 
@@ -76,11 +85,15 @@ object CountryHistoryMocks {
         )
 
     private fun getCaseStateDistributionItem(
+        startDate : String,
+        endDate:String,
         pos: Float, nonCriticalV: Float, criticalV: Float,
         recoV: Float, deadV: Float
     ):
         CaseStateDistributionItem =
         CaseStateDistributionItem(
+            startDate = startDate,
+            enDate = endDate,
             position = pos,
             nonCritical = nonCriticalV,
             critical = criticalV,

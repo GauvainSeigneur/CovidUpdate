@@ -60,6 +60,11 @@ class DetailsViewModelTest {
 
     @Test
     fun given_usecase_return_valid_data_view_model_must_return_data() {
+        given(numberFormatProvider.format(0)).willReturn("0")
+        given(numberFormatProvider.format(2)).willReturn("2")
+        given(numberFormatProvider.format(8)).willReturn("8")
+        given(numberFormatProvider.format(10)).willReturn("10")
+        given(numberFormatProvider.format(8-2)).willReturn("6")
         mainCoroutineRule.runBlockingTest {
             given(usecase.invoke("france")).willReturn(
                 Outcome.Success(CountryHistoryMocks.getUseCaseCountryHistoryModel())

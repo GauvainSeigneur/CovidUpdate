@@ -25,7 +25,7 @@ private fun setUpCasesList(list: List<CountryHistoryItemModel>,
     val item = list[0]
     return listOf(
         CountryCasesData(
-           numberFormatProvider.format(item.active - item.critical),
+            numberFormatProvider.format(item.active - item.critical),
             R.color.colorCaseActive
         ),
         CountryCasesData(

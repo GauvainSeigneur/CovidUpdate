@@ -24,7 +24,7 @@ object StatisticsDataMocks {
                             numberFormatProvider.format(10000)
                         ),
                         R.drawable.ic_new_case_label_icon,
-                        R.color.colorDanger
+                        R.color.colorCaseActive
                     ),
                     QuantityStringPresenter(
                         R.plurals.active_case_label,
@@ -44,7 +44,7 @@ object StatisticsDataMocks {
                             R.string.no_new_cases_label
                         ),
                         null,
-                        R.color.colorCool
+                        R.color.colorCaseNoNew
                     ),
                     QuantityStringPresenter(
                         R.plurals.active_case_label,
@@ -65,7 +65,7 @@ object StatisticsDataMocks {
                             numberFormatProvider.format(100)
                         ),
                         R.drawable.ic_new_case_label_icon,
-                        R.color.colorDanger
+                        R.color.colorCaseActive
                     ),
                     QuantityStringPresenter(
                         R.plurals.active_case_label,
@@ -85,7 +85,7 @@ object StatisticsDataMocks {
                             R.string.no_new_cases_label
                         ),
                         null,
-                        R.color.colorCool
+                        R.color.colorCaseNoNew
                     ),
                     QuantityStringPresenter(
                         R.plurals.active_case_label,
@@ -149,7 +149,7 @@ object AllHistoryDataMock {
                     R.string.main_header_chart_subtitle_new,
                     numberFormatProvider.format(1000)
                 ),
-                R.color.colorDanger
+                R.color.colorCaseActive
             ),
             chart = listOf(
                 ChartAllHistoryItem(
