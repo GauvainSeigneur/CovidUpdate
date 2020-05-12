@@ -29,13 +29,13 @@ private fun getNewCases(
                 R.string.main_header_chart_subtitle_new,
                 numberFormatProvider.format(it)
             ),
-            R.color.colorDanger
+            R.color.colorCaseActive
         )
     } ?: AllHistoryNewCaseData(
         StringPresenter(
             R.string.main_header_chart_subtitle_no_new_cases
         ),
-        R.color.colorCool
+        R.color.colorCaseNoNew
     )
 
 private fun setUpChartEntries(list: List<AllActiveHistoryItemModel>): List<ChartAllHistoryItem> {

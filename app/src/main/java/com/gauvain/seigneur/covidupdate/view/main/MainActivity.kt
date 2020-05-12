@@ -58,16 +58,27 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         observe()
     }
 
-    override fun onClick(countryName: String,
-                         countryCode: String?,
-                         rootView: View,
-                         flagImageView: View) {
+    override fun onClick(
+        countryName: String,
+        countryCode: String?,
+        rootView: View,
+        flagImageView: View,
+        totalCases: StringPresenter
+    ) {
         val options = makeSceneTransitionAnimation(
             this@MainActivity,
             Pair(rootView, getString(R.string.transition_root)),
             Pair(flagImageView, getString(R.string.transition_country_flag))
         )
-        startActivity(DetailsActivity.newIntent(this, countryName, countryCode), options.toBundle())
+        startActivity(
+            DetailsActivity.newIntent(
+                this, countryName,
+                totalCases.getFormattedString(this),
+                countryCode
+            ),
+            options
+                .toBundle()
+        )
     }
 
     private fun fetchData() {

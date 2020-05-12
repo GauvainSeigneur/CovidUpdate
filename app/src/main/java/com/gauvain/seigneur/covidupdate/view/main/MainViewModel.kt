@@ -196,7 +196,7 @@ class MainViewModel(
             NewCasesData(
                 StringPresenter(R.string.no_new_cases_label),
                 null,
-                R.color.colorCool
+                R.color.colorCaseNoNew
             )
         } else {
             NewCasesData(
@@ -205,7 +205,7 @@ class MainViewModel(
                     numberFormatProvider.format(totalNewCases)
                 ),
                 R.drawable.ic_new_case_label_icon,
-                R.color.colorDanger
+                R.color.colorCaseActive
             )
         }
 

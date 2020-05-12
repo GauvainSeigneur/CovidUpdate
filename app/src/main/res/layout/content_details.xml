@@ -18,43 +18,49 @@
         android:orientation="vertical">
 
         <com.google.android.material.chip.ChipGroup
-            android:visibility="gone"
+            android:id="@+id/casesChipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/space_m">
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m"/>
+
+            <!--<com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_circle"
+                android:text="1 000 000 actives"/>
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:shadowColor="#4E1"
-                android:elevation="@dimen/space_m"
-                android:text="First chip"/>
+                app:chipIcon="@drawable/ic_circle"
+                app:chipIconTint="@color/colorCaseCritical"
+                app:chipCornerRadius="8dp"
+                app:chipIconSize="16dp"
+                android:textAppearance="@style/Typography.TextAppearance.Overline"
+                android:text="100 000 critical"/>
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorCaseActive"
-                android:text="First chip"/>
+                app:chipIcon="@drawable/ic_circle"
+                app:chipIconTint="@color/colorCaseRecovered"
+                app:chipCornerRadius="8dp"
+                app:chipIconSize="16dp"
+                android:textAppearance="@style/Typography.TextAppearance.Overline"
+                android:text="100 000 recovered"/>
 
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorCaseCritical"
-                android:text="First chip"/>
+                app:chipIcon="@drawable/ic_circle"
+                app:chipIconTint="@color/colorCaseDead"
+                app:chipCornerRadius="8dp"
+                app:chipIconSize="16dp"
+                android:textAppearance="@style/Typography.TextAppearance.Overline"
+                android:text="10 000 dead"/>
 
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorCaseRecovered"
-                android:text="First chip"/>
-
-            <com.google.android.material.chip.Chip
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorCaseDead"
-                android:text="First chip"/>
-
-        </com.google.android.material.chip.ChipGroup>
+        </com.google.android.material.chip.ChipGroup> -->
 
         <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
             android:id="@+id/activeCriticalEvolutionBlock"

@@ -41,9 +41,7 @@ class DetailsViewModel(
     fun getHistory() {
         viewModelScope.launch(Dispatchers.Main) {
             loadingData.value = LoadingState.INITIAL_IS_LOADING
-            countryName?.let {
-                fetchHistory(it)
-            } ?: manageEmptyName()
+            countryName?.let { fetchHistory(it) } ?: manageEmptyName()
         }
     }
 
@@ -62,8 +60,8 @@ class DetailsViewModel(
 
         when (result) {
             is Outcome.Success -> {
+                historyData.value = LiveDataState.Success(result.data.toData(numberFormatProvider))
                 loadingData.value = LoadingState.INITIAL_IS_LOADED
-                historyData.value = LiveDataState.Success(result.data.toData())
             }
             is Outcome.Error -> {
                 historyData.value = LiveDataState.Error(

@@ -1,9 +1,17 @@
 package com.gauvain.seigneur.covidupdate.model
 
+import androidx.annotation.ColorRes
+
 data class CountryHistoryData(
+    val casesList : List<CountryCasesData>,
     val activeChart: List<CountryChartHistoryItem>,
     val criticalChart: List<CountryChartHistoryItem>,
     val caseDistributionChart: List<CaseStateDistributionItem>
+)
+
+data class CountryCasesData(
+    val value: String,
+    @ColorRes val color: Int
 )
 
 data class CountryChartHistoryItem(

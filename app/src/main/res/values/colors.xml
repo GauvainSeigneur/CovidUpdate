@@ -28,23 +28,25 @@
     <color name="colorSurface">#181A1E</color>
     <color name="colorOnSurface">@color/colorWhiteVariant</color>
 
+    <!--
     <color name="colorCool">#11fecb</color>
     <color name="colorDanger">#fe1144</color>
+    <color name="colorOrangeSplitSecondary">#ff6c1c</color>
+     -->
 
     <color name="colorError">#E56B51</color>
     <color name="colorOnError">#FFFFFF</color>
 
     <color name="colorOrangeLineChart">#f45600</color>
-    <color name="colorOrangeSplitSecondary">#ff6c1c</color>
     <color name="colorOrangeGradientStart">#00ff6c1c</color>
     <color name="colorOrangeGradientEnd">#99ff6c1c</color>
 
     <color name="colorBottomSheetBackground">#2F2F2F</color>
-
     <color name="colorMarkerDark">#0E0E0E</color>
 
+    <color name="colorCaseNoNew">@color/colorWhiteDarker</color>
     <color name="colorCaseCritical">#ff6c1c</color>
     <color name="colorCaseActive">@color/colorSecondary</color>
     <color name="colorCaseDead">#ff1c3d</color>
-    <color name="colorCaseRecovered">#35d197</color>
+    <color name="colorCaseRecovered">#00e752</color>
 </resources>

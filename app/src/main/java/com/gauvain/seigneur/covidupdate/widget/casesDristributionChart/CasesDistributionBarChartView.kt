@@ -25,10 +25,10 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
 
     private val x: XAxis
     private val casesColor = intArrayOf(
-        ContextCompat.getColor(context, R.color.colorSecondary),
-        ContextCompat.getColor(context, R.color.colorOrangeSplitSecondary),
-        ContextCompat.getColor(context, R.color.colorDanger),
-        ContextCompat.getColor(context, R.color.colorCool)
+        ContextCompat.getColor(context, R.color.colorCaseActive),
+        ContextCompat.getColor(context, R.color.colorCaseCritical),
+        ContextCompat.getColor(context, R.color.colorCaseDead),
+        ContextCompat.getColor(context, R.color.colorCaseRecovered)
     )
 
     init {

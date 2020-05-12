@@ -1,7 +1,9 @@
 package com.gauvain.seigneur.covidupdate.model
 
+import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.domain.model.CountryHistoryItemModel
 import com.gauvain.seigneur.domain.model.CountryHistoryModel
+import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.formatTo
 import kotlin.math.ceil
@@ -10,12 +12,36 @@ private const val ACTIVE_TYPE = 0
 private const val CRITICAL_TYPE = 1
 private const val DISTRIBUTION_CASE_COL_NUMBER = 7.0f
 
-fun CountryHistoryModel.toData() =
+fun CountryHistoryModel.toData(numberFormatProvider: NumberFormatProvider) =
     CountryHistoryData(
+        casesList = setUpCasesList(this.history, numberFormatProvider),
         activeChart = setUpChartEntries(this.history, ACTIVE_TYPE),
         criticalChart = setUpChartEntries(this.history, CRITICAL_TYPE),
         caseDistributionChart = setUpDistributionChart(this.history)
     )
+
+private fun setUpCasesList(list: List<CountryHistoryItemModel>,
+                           numberFormatProvider: NumberFormatProvider): List<CountryCasesData> {
+    val item = list[0]
+    return listOf(
+        CountryCasesData(
+           numberFormatProvider.format(item.active - item.critical),
+            R.color.colorCaseActive
+        ),
+        CountryCasesData(
+            numberFormatProvider.format(item.critical),
+            R.color.colorCaseCritical
+        ),
+        CountryCasesData(
+            numberFormatProvider.format(item.recovered),
+            R.color.colorCaseRecovered
+        ),
+        CountryCasesData(
+            numberFormatProvider.format(item.dead),
+            R.color.colorCaseDead
+        )
+    )
+}
 
 private fun setUpDistributionChart(list: List<CountryHistoryItemModel>):
     List<CaseStateDistributionItem> {
@@ -24,7 +50,7 @@ private fun setUpDistributionChart(list: List<CountryHistoryItemModel>):
     list.reversed().chunked(getChunkedList(list)) {
         distributedCasesByWeek.add(CaseStateDistributionItem(
             startDate = it[0].date.formatTo(DATA_DATE_FORMAT),
-            enDate = it[it.size-1].date.formatTo(DATA_DATE_FORMAT),
+            enDate = it[it.size - 1].date.formatTo(DATA_DATE_FORMAT),
             position = index.toFloat(),
             nonCritical = percent((
                 it.sumBy { item -> item.active } - it.sumBy { item -> item.critical }),

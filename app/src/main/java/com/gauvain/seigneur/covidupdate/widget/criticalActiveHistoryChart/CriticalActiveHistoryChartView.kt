@@ -94,7 +94,7 @@ class CriticalActiveHistoryChartView @JvmOverloads constructor(
             activesEntries,
             R.color.colorSecondary,
             criticalEntries,
-            R.color.colorOrangeSplitSecondary
+            R.color.colorCaseCritical
         )
         // Set the marker to the chart
         mv.chartView = chart
@@ -135,7 +135,7 @@ class CriticalActiveHistoryChartView @JvmOverloads constructor(
         when (type) {
             CRITICAL_TYPE -> {
                 set.isHighlightEnabled = false // disable marker for this line.
-                set.color = ContextCompat.getColor(context, R.color.colorOrangeSplitSecondary)
+                set.color = ContextCompat.getColor(context, R.color.colorCaseCritical)
                 set.fillDrawable = ContextCompat.getDrawable(
                     context,
                     R.drawable.grandient_orange_chart

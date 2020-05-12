@@ -30,7 +30,7 @@
             class="com.gauvain.seigneur.covidupdate.animation.FadeTransition"
             app:startAlpha="1.0"
             app:endAlpha="0.3"/>
-        <slide android:interpolator="@android:interpolator/linear_out_slow_in"/>
+        <slide/>
     </transitionSet>
 
 </transitionSet>

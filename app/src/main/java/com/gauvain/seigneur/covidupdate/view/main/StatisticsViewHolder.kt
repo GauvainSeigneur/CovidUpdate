@@ -25,7 +25,8 @@ class StatisticsViewHolder(
                     itemData.country,
                     itemData.countryCode,
                     it.itemStatBackground,
-                    it.countryFlagView
+                    it.countryFlagView,
+                    itemData.casesData.total
                 )
             }
             countryTextView.text = itemData.country
