@@ -14,12 +14,13 @@ import androidx.lifecycle.Observer
 import coil.request.Request
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.animation.TransitionListenerAdapter
-import com.gauvain.seigneur.covidupdate.model.CountryCasesData
-import com.gauvain.seigneur.covidupdate.model.ErrorDataType
-import com.gauvain.seigneur.covidupdate.model.LoadingState
-import com.gauvain.seigneur.covidupdate.model.SharedTransitionState
-import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
+import com.gauvain.seigneur.presentation.model.CountryCasesData
+import com.gauvain.seigneur.presentation.model.ErrorDataType
+import com.gauvain.seigneur.presentation.model.LoadingState
+import com.gauvain.seigneur.presentation.model.SharedTransitionState
+import com.gauvain.seigneur.presentation.model.base.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.loadCountry
+import com.gauvain.seigneur.presentation.DetailsViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.activity_details.*
@@ -69,6 +70,7 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
     }
 
     private fun initViews() {
+
         bigCountryNameTextView.text = viewModel.countryName
         bigTotalCasesTextView.text = intent.getStringExtra(TOTAL_CASES)
         toolbar.setNavigationOnClickListener { onBackPressed() }

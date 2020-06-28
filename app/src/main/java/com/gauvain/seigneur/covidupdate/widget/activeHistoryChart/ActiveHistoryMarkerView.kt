@@ -2,11 +2,9 @@ package com.gauvain.seigneur.covidupdate.widget.activeHistoryChart
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.gauvain.seigneur.domain.utils.CHART_DATE_FORMAT
-import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
-import com.gauvain.seigneur.domain.utils.formatTo
+import com.gauvain.seigneur.common.DATA_DATE_FORMAT
+import com.gauvain.seigneur.common.formatTo
 import com.github.mikephil.charting.components.MarkerView
-import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF

@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
-import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
+import com.gauvain.seigneur.presentation.model.CaseStateDistributionItem
+import com.gauvain.seigneur.presentation.model.CountryHistoryData
 import com.gauvain.seigneur.covidupdate.widget.casesDristributionChart.CasesDistributionBarChartView
 import com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
 import kotlinx.android.synthetic.main.view_details_stat_block.view.*

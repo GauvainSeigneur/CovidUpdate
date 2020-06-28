@@ -1,9 +1,7 @@
 package com.gauvain.seigneur.covidupdate.mocks
 
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.*
-import com.gauvain.seigneur.covidupdate.utils.QuantityStringPresenter
-import com.gauvain.seigneur.covidupdate.utils.StringPresenter
+import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.utils.addDay

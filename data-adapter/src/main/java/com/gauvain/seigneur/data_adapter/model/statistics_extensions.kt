@@ -1,9 +1,9 @@
 package com.gauvain.seigneur.data_adapter.model
 
+import com.gauvain.seigneur.common.SERVER_DATE_FORMAT
+import com.gauvain.seigneur.common.SERVER_TIME_FORMAT
+import com.gauvain.seigneur.common.toDate
 import com.gauvain.seigneur.domain.model.*
-import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
-import com.gauvain.seigneur.domain.utils.SERVER_TIME_FORMAT
-import com.gauvain.seigneur.domain.utils.toDate
 
 fun Stat.toDomainStatistics() = StatisticsItemModel(
     country = this.country,

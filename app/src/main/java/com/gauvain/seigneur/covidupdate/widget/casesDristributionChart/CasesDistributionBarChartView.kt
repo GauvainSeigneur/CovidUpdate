@@ -7,9 +7,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
+import com.gauvain.seigneur.presentation.model.CaseStateDistributionItem
 import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
-import com.gauvain.seigneur.covidupdate.widget.activeHistoryChart.ActiveHistoryMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData

@@ -1,15 +1,14 @@
 package com.gauvain.seigneur.covidupdate.mocks
 
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
-import com.gauvain.seigneur.covidupdate.model.CountryCasesData
-import com.gauvain.seigneur.covidupdate.model.CountryChartHistoryItem
-import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
+import com.gauvain.seigneur.presentation.model.CaseStateDistributionItem
+import com.gauvain.seigneur.presentation.model.CountryCasesData
+import com.gauvain.seigneur.presentation.model.CountryChartHistoryItem
+import com.gauvain.seigneur.presentation.model.CountryHistoryData
 import com.gauvain.seigneur.domain.model.CountryHistoryItemModel
 import com.gauvain.seigneur.domain.model.CountryHistoryModel
 import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.toDate
-import java.util.*
 
 object CountryHistoryMocks {
 

@@ -7,9 +7,9 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.graphics.drawable.DrawableCompat
+import com.gauvain.seigneur.common.DATA_DATE_FORMAT
+import com.gauvain.seigneur.common.formatTo
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
-import com.gauvain.seigneur.domain.utils.formatTo
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight

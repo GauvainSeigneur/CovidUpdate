@@ -2,11 +2,11 @@ package com.gauvain.seigneur.covidupdate
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.gauvain.seigneur.covidupdate.mocks.CountryHistoryMocks
-import com.gauvain.seigneur.covidupdate.model.ErrorData
-import com.gauvain.seigneur.covidupdate.model.ErrorDataType
-import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
+import com.gauvain.seigneur.presentation.model.ErrorData
+import com.gauvain.seigneur.presentation.model.ErrorDataType
+import com.gauvain.seigneur.presentation.model.base.LiveDataState
 import com.gauvain.seigneur.covidupdate.utils.*
-import com.gauvain.seigneur.covidupdate.view.details.DetailsViewModel
+import com.gauvain.seigneur.presentation.DetailsViewModel
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
