@@ -7,8 +7,8 @@ import coil.decode.SvgDecoder
 import coil.util.CoilUtils
 import com.gauvain.seigneur.presentation.injection.useCaseModule
 import com.gauvain.seigneur.presentation.injection.viewModelModule
-import com.gauvain.seigneur.data_adapter.injection.adapterModule
-import com.gauvain.seigneur.data_adapter.injection.remoteDataSourceModule
+import com.gauvain.seigneur.presentation.injection.adapterModule
+import com.gauvain.seigneur.presentation.injection.remoteDataSourceModule
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
