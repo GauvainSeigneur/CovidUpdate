@@ -2,7 +2,6 @@ package com.gauvain.seigneur.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.presentation.model.SharedTransitionState
@@ -11,23 +10,14 @@ import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.usecase.FetchCountryHistoryUseCase
 import com.gauvain.seigneur.presentation.utils.StringPresenter
-import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
+import com.gauvain.seigneur.presentation.utils.ioJob
 
 typealias HistoryState = LiveDataState<CountryHistoryData>
 
 class DetailsViewModel(
     private val fetchCountryHistoryUseCase: FetchCountryHistoryUseCase,
     private val numberFormatProvider: NumberFormatProvider
-) : ViewModel(), CoroutineScope {
-
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
-
-    override fun onCleared() {
-        job.cancel()
-    }
+) : ViewModel() {
 
     var countryName: String? = null
     val sharedTransitionData = MutableLiveData<SharedTransitionState>()
@@ -38,8 +28,8 @@ class DetailsViewModel(
     }
 
     fun getHistory() {
-        viewModelScope.launch(Dispatchers.Main) {
-            loadingData.value = LoadingState.INITIAL_IS_LOADING
+        ioJob {
+            loadingData.postValue(LoadingState.INITIAL_IS_LOADING)
             countryName?.let { fetchHistory(it) } ?: manageEmptyName()
         }
     }
@@ -53,22 +43,21 @@ class DetailsViewModel(
     }
 
     private suspend fun fetchHistory(countryName: String) {
-        val result = withContext(Dispatchers.IO) {
-            fetchCountryHistoryUseCase.invoke(countryName)
-        }
-
+        val result = fetchCountryHistoryUseCase.invoke(countryName)
         when (result) {
             is Outcome.Success -> {
-                historyData.value = LiveDataState.Success(result.data.toData(numberFormatProvider))
-                loadingData.value = LoadingState.INITIAL_IS_LOADED
+                historyData.postValue(LiveDataState.Success(result.data.toData(numberFormatProvider)))
+                loadingData.postValue(LoadingState.INITIAL_IS_LOADED)
             }
             is Outcome.Error -> {
-                historyData.value = LiveDataState.Error(
-                    ErrorData(
-                        ErrorDataType.RECOVERABLE,
-                        StringPresenter(R.string.error_fetch_data_title),
-                        StringPresenter(R.string.error_fetch_data_description),
-                        StringPresenter(R.string.retry)
+                historyData.postValue(
+                    LiveDataState.Error(
+                        ErrorData(
+                            ErrorDataType.RECOVERABLE,
+                            StringPresenter(R.string.error_fetch_data_title),
+                            StringPresenter(R.string.error_fetch_data_description),
+                            StringPresenter(R.string.retry)
+                        )
                     )
                 )
             }
@@ -76,8 +65,8 @@ class DetailsViewModel(
     }
 
     private fun manageEmptyName() {
-        loadingData.value = LoadingState.INITIAL_IS_LOADED
-        historyData.value =
+        loadingData.postValue(LoadingState.INITIAL_IS_LOADED)
+        historyData.postValue(
             LiveDataState.Error(
                 ErrorData(
                     ErrorDataType.NOT_RECOVERABLE,
@@ -86,5 +75,6 @@ class DetailsViewModel(
                     StringPresenter(R.string.ok)
                 )
             )
+        )
     }
 }
