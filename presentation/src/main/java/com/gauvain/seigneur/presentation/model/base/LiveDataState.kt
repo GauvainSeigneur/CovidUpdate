@@ -1,6 +1,6 @@
-package com.gauvain.seigneur.covidupdate.model.base
+package com.gauvain.seigneur.presentation.model.base
 
-import com.gauvain.seigneur.covidupdate.model.ErrorData
+import com.gauvain.seigneur.presentation.model.ErrorData
 
 sealed class LiveDataState<out T : Any> {
     data class Success<out T : Any>(val data: T) : LiveDataState<T>()
