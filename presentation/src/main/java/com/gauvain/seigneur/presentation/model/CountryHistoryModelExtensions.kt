@@ -3,7 +3,7 @@ package com.gauvain.seigneur.presentation.model
 import com.gauvain.seigneur.domain.model.CountryHistoryItemModel
 import com.gauvain.seigneur.domain.model.CountryHistoryModel
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
-import com.gauvain.seigneur.common.formatTo
+import com.gauvain.seigneur.presentation.utils.formatTo
 import com.gauvain.seigneur.presentation.R
 import kotlin.math.ceil
 

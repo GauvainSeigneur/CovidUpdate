@@ -2,7 +2,7 @@ package com.gauvain.seigneur.covidupdate.widget
 
 
 import com.gauvain.seigneur.common.CHART_DATE_FORMAT
-import com.gauvain.seigneur.common.formatTo
+import com.gauvain.seigneur.presentation.utils.formatTo
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.util.*
 

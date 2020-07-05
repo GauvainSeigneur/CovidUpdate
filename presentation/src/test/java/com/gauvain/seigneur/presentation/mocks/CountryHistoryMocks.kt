@@ -2,7 +2,7 @@ package com.gauvain.seigneur.presentation.mocks
 
 
 import com.gauvain.seigneur.common.SERVER_DATE_FORMAT
-import com.gauvain.seigneur.common.toDate
+import com.gauvain.seigneur.data_adapter.utils.toDate
 import com.gauvain.seigneur.presentation.model.CaseStateDistributionItem
 import com.gauvain.seigneur.presentation.model.CountryCasesData
 import com.gauvain.seigneur.presentation.model.CountryChartHistoryItem

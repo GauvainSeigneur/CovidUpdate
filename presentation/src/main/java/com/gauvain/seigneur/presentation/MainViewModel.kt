@@ -2,7 +2,6 @@ package com.gauvain.seigneur.presentation
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.covidupdate.utils.event.Event
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
@@ -51,12 +50,12 @@ class MainViewModel(
     }
 
     fun refreshData() {
-        loadingState.value = LoadingState.REFRESH_IS_LOADING
-        viewModelScope.launch(Dispatchers.Main) {
+        loadingState.postValue(LoadingState.REFRESH_IS_LOADING)
+        ioJob {
             delay(LONG_DELAY)
             fetchStatistics()
         }
-        viewModelScope.launch(Dispatchers.Main) {
+        ioJob {
             delay(LONG_DELAY)
             fetchHistory()
         }
@@ -173,14 +172,14 @@ class MainViewModel(
             }
 
             statisticsData.postValue(LiveDataState.Success(
-                    result.data.sortedByDescending { it.casesModel.total }.map {
-                        it.toStatisticsItemData(
-                            getCountryCode(it.country),
-                            getNewCasesDate(it.casesModel.new),
-                            numberFormatProvider
-                        )
-                    }
-                )
+                result.data.sortedByDescending { it.casesModel.total }.map {
+                    it.toStatisticsItemData(
+                        getCountryCode(it.country),
+                        getNewCasesDate(it.casesModel.new),
+                        numberFormatProvider
+                    )
+                }
+            )
             )
         }
     }
