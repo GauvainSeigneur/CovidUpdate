@@ -9,14 +9,12 @@ internal class FetchCountryCodeUseCaseImpl(private val provider: CountryListProv
     FetchCountryCodeUseCase {
 
     override fun getCountryCode(countryName: String): String? {
-        var countryCode: String?
-        try {
+        return try {
             val countries = provider.getCountryList()
-            countryCode = fetchCountryCode(countryName, countries)
+            fetchCountryCode(countryName, countries)
         } catch (e: GetCountriesException) {
-            countryCode = null
+            null
         }
-        return countryCode
     }
 
     private fun fetchCountryCode(countryName: String, countries: List<CountryItemModel>): String? {

@@ -13,7 +13,7 @@ font style, dark mode, etc.)
 * Kotlin
 * AndroidX
 * Clean Architecture
-* Android Architecture Components - ViewModel, LiveData, Room, Paging
+* Android Architecture Components
 * Retrofit/Okhttp - Type-safe HTTP client
 * Gson - Serialization & deserialization
 * Coroutine - Asynchronous and non-blocking programming
@@ -22,15 +22,35 @@ font style, dark mode, etc.)
 * Koin - Dependency injection
 * MPAndroidChart - Chart views
 
-## State
-WIP
-
 ## How to use it ?
 Add a Koin.properties file inside assets folder and add the two following lines:
 ```
 server_url=https://covid-193.p.rapidapi.com
 api_key=YOUR_KEY
 ```
+
+## Architecture
+
+I tried to apply some of Clean Architecture pattern on this project. The app is divided into four
+modules
+
+### DataAdapter
+
+This module includes providers which will call function of remote data service or locale data 
+service. It also includes Adapters(which are implementation of providers). Adapters have the responsability to fetch data from remote or locale source. They handle exceptions(e.g IOException) and transform response into a business model or throw a dedicated exception.
+
+### Domain
+
+In this module the useCases are in charge to call the provider and transform the result (a business model or a dedicated exception) into an outcome<Model, Error> to be handled by presentation layer.
+
+### Presentatiobn
+
+Presentation is in charge to provide dedicated LiveDate or Event according to result received 
+by the domain layer. It tranform business model into Data to be displayed by View layer.
+
+### View
+
+This module includes Activity, fragment or UI related widgets. It observes data from presentation layer and can call function of ViewModel.
 
 ## Licence
 ```

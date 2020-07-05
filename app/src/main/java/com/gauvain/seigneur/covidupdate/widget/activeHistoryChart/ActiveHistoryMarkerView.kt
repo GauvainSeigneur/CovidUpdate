@@ -2,7 +2,7 @@ package com.gauvain.seigneur.covidupdate.widget.activeHistoryChart
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.gauvain.seigneur.common.DATA_DATE_FORMAT
+import com.gauvain.seigneur.presentation.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.presentation.utils.formatTo
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
