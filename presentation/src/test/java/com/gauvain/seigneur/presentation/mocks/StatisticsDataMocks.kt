@@ -1,12 +1,13 @@
 package com.gauvain.seigneur.presentation.mocks
 
-import com.gauvain.seigneur.common.addDay
+
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.presentation.R
 import com.gauvain.seigneur.presentation.utils.QuantityStringPresenter
 import com.gauvain.seigneur.presentation.utils.StringPresenter
+import com.gauvain.seigneur.presentation.utils.addDay
 import java.util.*
 
 object StatisticsDataMocks {
