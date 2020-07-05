@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.utils.AVDUtils
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener

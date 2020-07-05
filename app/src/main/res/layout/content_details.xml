@@ -2,10 +2,12 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/detailsNestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="invisible"
+    tools:visibility="visible"
     app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
     <LinearLayout
@@ -15,29 +17,65 @@
         android:nestedScrollingEnabled="false"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/casesChipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_m">
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m"/>
 
-            <com.gauvain.seigneur.covidupdate.widget.criticalActiveHistoryChart.CriticalActiveHistoryChartView
-                android:id="@+id/activeChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+            <!--<com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_circle"
+                android:text="1 000 000 actives"/>
 
-        </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_circle"
+                app:chipIconTint="@color/colorCaseCritical"
+                app:chipCornerRadius="8dp"
+                app:chipIconSize="16dp"
+                android:textAppearance="@style/Typography.TextAppearance.Overline"
+                android:text="100 000 critical"/>
 
-        <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_circle"
+                app:chipIconTint="@color/colorCaseRecovered"
+                app:chipCornerRadius="8dp"
+                app:chipIconSize="16dp"
+                android:textAppearance="@style/Typography.TextAppearance.Overline"
+                android:text="100 000 recovered"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipIcon="@drawable/ic_circle"
+                app:chipIconTint="@color/colorCaseDead"
+                app:chipCornerRadius="8dp"
+                app:chipIconSize="16dp"
+                android:textAppearance="@style/Typography.TextAppearance.Overline"
+                android:text="10 000 dead"/>
+
+        </com.google.android.material.chip.ChipGroup> -->
+
+        <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
+            android:id="@+id/activeCriticalEvolutionBlock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/space_m">
+            app:title="@string/active_critical_evolution_title"
+            app:chart="@layout/details_block_critical_active_chart"/>
 
-            <com.gauvain.seigneur.covidupdate.widget.casesDristributionChart.CasesDistributionBarChartView
-                android:id="@+id/distributionChart"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+        <com.gauvain.seigneur.covidupdate.widget.DetailsStatBlockView
+            android:id="@+id/casesDistributionBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/cases_distribution_title"
+            app:chart="@layout/details_block_cases_distribution_chart"/>
 
-        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

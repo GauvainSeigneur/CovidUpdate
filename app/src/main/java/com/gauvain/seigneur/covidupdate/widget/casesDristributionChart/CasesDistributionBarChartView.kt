@@ -7,9 +7,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
+import com.gauvain.seigneur.presentation.model.CaseStateDistributionItem
 import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
-import com.gauvain.seigneur.covidupdate.widget.activeHistoryChart.ActiveHistoryMarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
@@ -25,10 +24,10 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
 
     private val x: XAxis
     private val casesColor = intArrayOf(
-        ContextCompat.getColor(context, R.color.colorSecondary),
-        ContextCompat.getColor(context, R.color.colorOrangeSplitSecondary),
-        ContextCompat.getColor(context, R.color.colorDanger),
-        ContextCompat.getColor(context, R.color.colorCool)
+        ContextCompat.getColor(context, R.color.colorCaseActive),
+        ContextCompat.getColor(context, R.color.colorCaseCritical),
+        ContextCompat.getColor(context, R.color.colorCaseDead),
+        ContextCompat.getColor(context, R.color.colorCaseRecovered)
     )
 
     init {
@@ -79,7 +78,7 @@ class CasesDistributionBarChartView @JvmOverloads constructor(
         chart.setHighlightFullBarEnabled(false)
     }
 
-    fun setData(values: List<CaseStateDistributionItem>, label: String) {
+    fun setData(values: List<CaseStateDistributionItem>, label: String?) {
         val entries = values.map {
             BarEntry(
                 it.position,

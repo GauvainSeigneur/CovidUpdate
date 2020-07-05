@@ -6,8 +6,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.CaseStateDistributionItem
-import com.gauvain.seigneur.domain.provider.NumberFormatProvider
+import com.gauvain.seigneur.presentation.model.CaseStateDistributionItem
 import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight

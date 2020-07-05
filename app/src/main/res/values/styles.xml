@@ -47,7 +47,6 @@
     <style name="BottomSheetDialogTheme" parent="Widget.BaseBottomSheetDialog" />
 
     <!-- TextAppearance -->
-
     <style name="TextAppearance.StatisticsItem.Title" parent="@style/Typography.TextAppearance.Subtitle2"/>
 
     <style name="TextAppearance.StatisticsItem.subTitle" parent="@style/Typography.TextAppearance.Body2">

@@ -5,17 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
+import com.gauvain.seigneur.presentation.model.StatisticsItemData
+import com.gauvain.seigneur.presentation.utils.StringPresenter
 
 class StatisticsListAdapter(
     private val listener: Listener
 ) : RecyclerView.Adapter<StatisticsViewHolder>() {
 
     interface Listener {
-        fun onClick(countryName: String,
-                    countryCode: String?,
-                    rootView: View,
-                    flagImageView: View)
+        fun onClick(
+            countryName: String,
+            countryCode: String?,
+            rootView: View,
+            flagImageView: View,
+            totalCases: StringPresenter
+        )
     }
 
     private val statisticsList = mutableListOf<StatisticsItemData>()

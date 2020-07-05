@@ -4,8 +4,8 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.NewCasesData
-import com.gauvain.seigneur.covidupdate.model.StatisticsItemData
+import com.gauvain.seigneur.presentation.model.NewCasesData
+import com.gauvain.seigneur.presentation.model.StatisticsItemData
 import com.gauvain.seigneur.covidupdate.utils.loadCountry
 import kotlinx.android.synthetic.main.item_statistics.view.*
 
@@ -25,7 +25,8 @@ class StatisticsViewHolder(
                     itemData.country,
                     itemData.countryCode,
                     it.itemStatBackground,
-                    it.countryFlagView
+                    it.countryFlagView,
+                    itemData.casesData.total
                 )
             }
             countryTextView.text = itemData.country

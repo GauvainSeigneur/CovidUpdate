@@ -11,16 +11,17 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gauvain.seigneur.covidupdate.R
 import com.gauvain.seigneur.covidupdate.animation.makeSceneTransitionAnimation
-import com.gauvain.seigneur.covidupdate.model.AllHistoryData
-import com.gauvain.seigneur.covidupdate.model.ErrorData
-import com.gauvain.seigneur.covidupdate.model.base.LiveDataState
-import com.gauvain.seigneur.covidupdate.model.LoadingState
-import com.gauvain.seigneur.covidupdate.utils.StringPresenter
+import com.gauvain.seigneur.presentation.model.AllHistoryData
+import com.gauvain.seigneur.presentation.model.ErrorData
+import com.gauvain.seigneur.presentation.model.base.LiveDataState
+import com.gauvain.seigneur.presentation.model.LoadingState
 import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
 import com.gauvain.seigneur.covidupdate.widget.customSnackbar.CustomSnackbar
+import com.gauvain.seigneur.presentation.MainViewModel
+import com.gauvain.seigneur.presentation.utils.StringPresenter
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_chart_view.*
@@ -58,16 +59,27 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         observe()
     }
 
-    override fun onClick(countryName: String,
-                         countryCode: String?,
-                         rootView: View,
-                         flagImageView: View) {
+    override fun onClick(
+        countryName: String,
+        countryCode: String?,
+        rootView: View,
+        flagImageView: View,
+        totalCases: StringPresenter
+    ) {
         val options = makeSceneTransitionAnimation(
             this@MainActivity,
             Pair(rootView, getString(R.string.transition_root)),
             Pair(flagImageView, getString(R.string.transition_country_flag))
         )
-        startActivity(DetailsActivity.newIntent(this, countryName, countryCode), options.toBundle())
+        startActivity(
+            DetailsActivity.newIntent(
+                this, countryName,
+                totalCases.getFormattedString(this),
+                countryCode
+            ),
+            options
+                .toBundle()
+        )
     }
 
     private fun fetchData() {

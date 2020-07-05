@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.gauvain.seigneur.covidupdate.R
-import com.gauvain.seigneur.covidupdate.model.CountryHistoryData
+import com.gauvain.seigneur.presentation.model.CountryHistoryData
 import com.gauvain.seigneur.covidupdate.widget.DayAxisValueFormatter
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
@@ -73,7 +73,7 @@ class CriticalActiveHistoryChartView @JvmOverloads constructor(
         chart.invalidate()
     }
 
-    fun setData(value: CountryHistoryData, label: String) {
+    fun setData(value: CountryHistoryData, label: String?) {
         val activesEntries = value.activeChart.map {
             Entry(
                 it.position,
@@ -94,7 +94,7 @@ class CriticalActiveHistoryChartView @JvmOverloads constructor(
             activesEntries,
             R.color.colorSecondary,
             criticalEntries,
-            R.color.colorOrangeSplitSecondary
+            R.color.colorCaseCritical
         )
         // Set the marker to the chart
         mv.chartView = chart
@@ -135,7 +135,7 @@ class CriticalActiveHistoryChartView @JvmOverloads constructor(
         when (type) {
             CRITICAL_TYPE -> {
                 set.isHighlightEnabled = false // disable marker for this line.
-                set.color = ContextCompat.getColor(context, R.color.colorOrangeSplitSecondary)
+                set.color = ContextCompat.getColor(context, R.color.colorCaseCritical)
                 set.fillDrawable = ContextCompat.getDrawable(
                     context,
                     R.drawable.grandient_orange_chart

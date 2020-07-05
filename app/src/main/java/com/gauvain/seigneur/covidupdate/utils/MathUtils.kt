@@ -1,4 +1,3 @@
-package com.gauvain.seigneur.covidupdate.utils
 
 import android.content.Context
 import android.util.DisplayMetrics

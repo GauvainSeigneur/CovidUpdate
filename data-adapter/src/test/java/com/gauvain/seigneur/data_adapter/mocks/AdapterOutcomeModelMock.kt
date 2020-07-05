@@ -1,16 +1,11 @@
 package com.gauvain.seigneur.data_adapter.mocks
 
-import com.gauvain.seigneur.data_adapter.model.Stat
-import com.gauvain.seigneur.data_adapter.model.Statistics
 import com.gauvain.seigneur.domain.model.CasesModel
 import com.gauvain.seigneur.domain.model.DeathsModel
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
-import com.gauvain.seigneur.domain.utils.DATA_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
 import com.gauvain.seigneur.domain.utils.SERVER_TIME_FORMAT
 import com.gauvain.seigneur.domain.utils.toDate
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
 
 object AdapterOutcomeModelMock {
 
