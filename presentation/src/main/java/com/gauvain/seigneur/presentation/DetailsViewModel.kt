@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gauvain.seigneur.presentation.model.*
@@ -20,37 +21,46 @@ class DetailsViewModel(
 ) : ViewModel() {
 
     var countryName: String? = null
-    val sharedTransitionData = MutableLiveData<SharedTransitionState>()
-    val loadingData = MutableLiveData<LoadingState>()
-    val historyData: MutableLiveData<HistoryState> by lazy {
+    private val sharedTransitionState = MutableLiveData<SharedTransitionState>()
+    val sharedTransitionData: LiveData<SharedTransitionState> = sharedTransitionState
+    private val loadingState = MutableLiveData<LoadingState>()
+    val loadingData: LiveData<LoadingState> = loadingState
+    private val historyState: MutableLiveData<HistoryState> by lazy {
         getHistory()
         MutableLiveData<HistoryState>()
     }
+    val historyData: LiveData<HistoryState> by lazy {
+        historyState
+    }
 
-    fun getHistory() {
+    private fun getHistory() {
         ioJob {
-            loadingData.postValue(LoadingState.INITIAL_IS_LOADING)
+            loadingState.postValue(LoadingState.INITIAL_IS_LOADING)
             countryName?.let { fetchHistory(it) } ?: manageEmptyName()
         }
     }
 
+    fun retry() {
+        getHistory()
+    }
+
     fun onSharedTransitionStart() {
-        sharedTransitionData.value = SharedTransitionState.STARTED
+        sharedTransitionState.value = SharedTransitionState.STARTED
     }
 
     fun onSharedTransitionEnd() {
-        sharedTransitionData.value = SharedTransitionState.ENDED
+        sharedTransitionState.value = SharedTransitionState.ENDED
     }
 
     private suspend fun fetchHistory(countryName: String) {
         val result = fetchCountryHistoryUseCase.invoke(countryName)
         when (result) {
             is Outcome.Success -> {
-                historyData.postValue(LiveDataState.Success(result.data.toData(numberFormatProvider)))
-                loadingData.postValue(LoadingState.INITIAL_IS_LOADED)
+                historyState.postValue(LiveDataState.Success(result.data.toData(numberFormatProvider)))
+                loadingState.postValue(LoadingState.INITIAL_IS_LOADED)
             }
             is Outcome.Error -> {
-                historyData.postValue(
+                historyState.postValue(
                     LiveDataState.Error(
                         ErrorData(
                             ErrorDataType.RECOVERABLE,
@@ -65,8 +75,8 @@ class DetailsViewModel(
     }
 
     private fun manageEmptyName() {
-        loadingData.postValue(LoadingState.INITIAL_IS_LOADED)
-        historyData.postValue(
+        loadingState.postValue(LoadingState.INITIAL_IS_LOADED)
+        historyState.postValue(
             LiveDataState.Error(
                 ErrorData(
                     ErrorDataType.NOT_RECOVERABLE,

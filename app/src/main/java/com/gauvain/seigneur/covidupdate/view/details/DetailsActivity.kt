@@ -182,7 +182,7 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
 
     private fun manageRetryButtonActions(data: ErrorDataType): Unit =
         when (data) {
-            ErrorDataType.RECOVERABLE -> viewModel.getHistory()
+            ErrorDataType.RECOVERABLE -> viewModel.retry()
             else -> finish()
         }
 }

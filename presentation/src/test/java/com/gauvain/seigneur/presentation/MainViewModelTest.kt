@@ -51,7 +51,6 @@ class MainViewModelTest : BaseViewModelTest() {
         given(statisticsUseCase.invoke(null)).willReturn(
             Outcome.Success(StatisticsModelMocks.getStatisticsItemModelList())
         )
-        viewModel.fetchData()
         val value = viewModel.statisticsData.getOrAwaitValue()
         assertEquals(
             value, LiveDataState.Success(
@@ -63,7 +62,6 @@ class MainViewModelTest : BaseViewModelTest() {
     @Test
     fun given_statistics_usecase_return_empty_list_when_fetch_statistics_then_liveData_must_return_empty_error() {
         given(statisticsUseCase.invoke(null)).willReturn(Outcome.Success(listOf()))
-        viewModel.fetchData()
         val result = viewModel.statisticsData.getOrAwaitValue()
         assertEquals(
             result, LiveDataState.Error(
@@ -80,11 +78,16 @@ class MainViewModelTest : BaseViewModelTest() {
     @Test
     fun
         given_statistics_livedata_is_success_when_fetch_statistics_return_empty_list_when_fetch_statistics_then_dedicated_event_must_be_set() {
-        viewModel.statisticsData.value = LiveDataState.Success(
-            StatisticsDataMocks.getStatisticsList(numberFormatProvider)
+        //first call is a success
+        given(statisticsUseCase.invoke(null)).willReturn(
+            Outcome.Success(StatisticsModelMocks.getStatisticsItemModelList())
         )
+        //viewModel.fetchData()
+        viewModel.statisticsData.getOrAwaitValue()
+        //second call is a fail - check that a dedicated event is send and the liveData don't
+        // change
         given(statisticsUseCase.invoke(null)).willReturn(Outcome.Success(listOf()))
-        viewModel.fetchData()
+        viewModel.refresh()
         val event = viewModel.refreshDataEvent.getOrAwaitValue()
         assertEquals(
             event,
@@ -101,36 +104,15 @@ class MainViewModelTest : BaseViewModelTest() {
 
     @Test
     fun
-        given_statistics_livedata_is_success_when_fetch_statistics_with_error_then_liveData_must_return_event_error() {
-        viewModel.statisticsData.value = LiveDataState.Success(
-            StatisticsDataMocks.getStatisticsList(numberFormatProvider)
-        )
-        given(statisticsUseCase.invoke(null)).willReturn(Outcome.Error(ErrorType.ERROR_UNKNOWN))
-        viewModel.fetchData()
-        val event = viewModel.refreshDataEvent.getOrAwaitValue()
-        assertEquals(
-            event,
-            Event(
-                LiveDataState.Error(
-                    ErrorData(
-                        ErrorDataType.INFORMATIVE,
-                        StringPresenter(
-                            R.string.error_refresh_data_label
-                        )
-                    )
-                )
-            )
-        )
-    }
-
-    @Test
-    fun
         given_statistics_livedata_is_success_when_fetch_statistics_with_success_again_then_liveData_must_return_event_success() {
-        viewModel.statisticsData.value = LiveDataState.Success(
-            StatisticsDataMocks.getStatisticsList(numberFormatProvider)
+        //first call is a success
+        given(statisticsUseCase.invoke(null)).willReturn(
+            Outcome.Success(StatisticsModelMocks.getStatisticsItemModelList())
         )
+        viewModel.statisticsData.getOrAwaitValue()
+        //second call is a success again
         given(statisticsUseCase.invoke(null)).willReturn(Outcome.Success(StatisticsModelMocks.getStatisticsItemModelList()))
-        viewModel.fetchData()
+        viewModel.refresh()
         val event = viewModel.refreshDataEvent.getOrAwaitValue()
         assertEquals(
             event,
@@ -145,7 +127,6 @@ class MainViewModelTest : BaseViewModelTest() {
         given(historyUseCase.invoke()).willReturn(
             Outcome.Success(HistoryModelMocks.getHistoryModelMock())
         )
-        viewModel.fetchData()
         val value = viewModel.historyData.getOrAwaitValue()
         assertEquals(
             value, LiveDataState.Success(

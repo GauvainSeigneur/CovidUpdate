@@ -47,7 +47,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
             given(usecase.invoke("france")).willReturn(
                 Outcome.Success(CountryHistoryMocks.getUseCaseCountryHistoryModel())
             )
-            viewModel.getHistory()
+            //viewModel.getHistory()
             val value = viewModel.historyData.getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Success(
@@ -61,7 +61,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
     fun given_usecase_return_ERROR_UNKNOWN_HOST_view_model_must_return_error() {
        runBlockingTest {
             given(usecase.invoke("france")).willReturn(Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST))
-            viewModel.getHistory()
+            //viewModel.getHistory()
             val value = viewModel.historyData.getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Error(
@@ -80,7 +80,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
     fun given_usecase_return_ERROR_CONNECTION_LOST_view_model_must_return_error() {
        runBlockingTest {
             given(usecase.invoke("france")).willReturn(Outcome.Error(ErrorType.ERROR_CONNECTION_LOST))
-            viewModel.getHistory()
+            //viewModel.getHistory()
             val value = viewModel.historyData.getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Error(
@@ -99,7 +99,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
     fun given_usecase_return_ERROR_UNAUTHORIZED_view_model_must_return_error() {
         runBlockingTest {
             given(usecase.invoke("france")).willReturn(Outcome.Error(ErrorType.ERROR_UNAUTHORIZED))
-            viewModel.getHistory()
+            //viewModel.getHistory()
             val value = viewModel.historyData.getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Error(
@@ -118,7 +118,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
     fun given_usecase_return_ERROR_INTERNAL_SERVER_view_model_must_return_error() {
         runBlockingTest {
             given(usecase.invoke("france")).willReturn(Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER))
-            viewModel.getHistory()
+           // viewModel.getHistory()
             val value = viewModel.historyData.getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Error(
@@ -137,7 +137,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
     fun given_usecase_return_UNKNNOWN_ERROR_view_model_must_return_error() {
        runBlockingTest {
             given(usecase.invoke("france")).willReturn(Outcome.Error(ErrorType.ERROR_UNKNOWN))
-            viewModel.getHistory()
+            //viewModel.getHistory()
             val value = viewModel.historyData.getOrAwaitValue()
             assertEquals(
                 value, LiveDataState.Error(
@@ -155,7 +155,7 @@ class DetailsViewModelTest : BaseViewModelTest() {
     @Test
     fun given_country_name_is_null_view_model_must_return_error() {
         viewModel.countryName = null
-        viewModel.getHistory()
+        //viewModel.getHistory()
         val value = viewModel.historyData.getOrAwaitValue()
         assertEquals(
             value, LiveDataState.Error(

@@ -6,6 +6,7 @@ import com.gauvain.seigneur.domain.provider.HistoryProvider
 import java.util.*
 
 internal class FetchCountryHistoryUseCaseImpl(private val provider: HistoryProvider) :
+    BaseUseCase<GetHistoryException>(),
     FetchCountryHistoryUseCase {
 
     override suspend fun invoke(countryName: String): Outcome<CountryHistoryModel, ErrorType> {
@@ -26,33 +27,28 @@ internal class FetchCountryHistoryUseCaseImpl(private val provider: HistoryProvi
         }
     }
 
+    /**
+     * Api sends multiple history data for a day in a chronological order
+     * Here we get only the first we found into this list, which is the last updated value for
+     * the day selected
+     */
     private fun getOneDayOnlyHistoryList(
-        entry: List<StatisticsItemModel>
+        entries: List<StatisticsItemModel>
     ):
         List<CountryHistoryItemModel> {
         val dates = mutableSetOf<Date>()
-        entry.map { dates.add(it.day) }
+        entries.map { dates.add(it.day) }
+
         val oneDayOnlyHistory = mutableListOf<CountryHistoryItemModel>()
-        for (d in dates) {
-            for (e in entry) {
-                if (e.day == d) {
-                    oneDayOnlyHistory.add(
-                        e.toCountryHistoryItemModel()
-                    )
+        for (date in dates) {
+            for (entry in entries) {
+                if (entry.day == date) {
+                    oneDayOnlyHistory.add(entry.toCountryHistoryItemModel())
                     break
                 }
             }
         }
-
         return oneDayOnlyHistory
     }
 
-    private fun handleException(e: GetHistoryException): Outcome.Error<ErrorType> =
-        when (e.type) {
-            RequestExceptionType.UNKNOWN_HOST -> Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST)
-            RequestExceptionType.CONNECTION_LOST -> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
-            RequestExceptionType.UNAUTHORIZED -> Outcome.Error(ErrorType.ERROR_UNAUTHORIZED)
-            RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER)
-            else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
-        }
 }

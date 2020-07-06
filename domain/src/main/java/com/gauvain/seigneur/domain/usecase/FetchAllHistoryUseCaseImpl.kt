@@ -6,6 +6,7 @@ import com.gauvain.seigneur.domain.provider.HistoryProvider
 import java.util.*
 
 internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider) :
+    BaseUseCase<GetHistoryException>(),
     FetchAllHistoryUseCase {
 
     companion object {
@@ -51,13 +52,4 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
         }
         return smallHistoryList
     }
-
-    private fun handleException(e: GetHistoryException): Outcome.Error<ErrorType> =
-        when (e.type) {
-            RequestExceptionType.UNKNOWN_HOST -> Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST)
-            RequestExceptionType.CONNECTION_LOST -> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
-            RequestExceptionType.UNAUTHORIZED -> Outcome.Error(ErrorType.ERROR_UNAUTHORIZED)
-            RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER)
-            else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
-        }
 }
