@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gauvain.seigneur.covidupdate.utils.event
+package com.gauvain.seigneur.presentation.utils.event
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

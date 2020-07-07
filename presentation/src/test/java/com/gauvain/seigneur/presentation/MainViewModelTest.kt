@@ -2,7 +2,7 @@ package com.gauvain.seigneur.presentation
 
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.presentation.model.base.LiveDataState
-import com.gauvain.seigneur.covidupdate.utils.event.Event
+import com.gauvain.seigneur.presentation.utils.event.Event
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
 import com.gauvain.seigneur.domain.usecase.FetchAllHistoryUseCase

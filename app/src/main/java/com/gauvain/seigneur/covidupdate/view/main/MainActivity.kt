@@ -15,7 +15,7 @@ import com.gauvain.seigneur.presentation.model.AllHistoryData
 import com.gauvain.seigneur.presentation.model.ErrorData
 import com.gauvain.seigneur.presentation.model.base.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
-import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
+import com.gauvain.seigneur.presentation.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity

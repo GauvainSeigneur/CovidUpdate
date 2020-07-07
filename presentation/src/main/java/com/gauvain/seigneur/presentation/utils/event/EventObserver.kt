@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gauvain.seigneur.covidupdate.utils.event
+package com.gauvain.seigneur.presentation.utils.event
 
 import androidx.lifecycle.Observer
 
