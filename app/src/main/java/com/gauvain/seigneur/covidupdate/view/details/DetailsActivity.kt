@@ -9,7 +9,6 @@ import android.transition.Transition
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import coil.request.Request
 import com.gauvain.seigneur.covidupdate.R
@@ -28,7 +27,7 @@ import kotlinx.android.synthetic.main.content_details.*
 import kotlinx.android.synthetic.main.view_details_header_content.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class DetailsActivity : AppCompatActivity(), LifecycleObserver {
+class DetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val FADE_MAX_VALUE = 1f
@@ -70,7 +69,6 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
     }
 
     private fun initViews() {
-
         bigCountryNameTextView.text = viewModel.countryName
         bigTotalCasesTextView.text = intent.getStringExtra(TOTAL_CASES)
         toolbar.setNavigationOnClickListener { onBackPressed() }
@@ -182,7 +180,7 @@ class DetailsActivity : AppCompatActivity(), LifecycleObserver {
 
     private fun manageRetryButtonActions(data: ErrorDataType): Unit =
         when (data) {
-            ErrorDataType.RECOVERABLE -> viewModel.getHistory()
+            ErrorDataType.RECOVERABLE -> viewModel.retry()
             else -> finish()
         }
 }

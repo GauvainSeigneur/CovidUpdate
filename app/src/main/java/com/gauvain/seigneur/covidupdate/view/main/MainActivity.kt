@@ -15,7 +15,7 @@ import com.gauvain.seigneur.presentation.model.AllHistoryData
 import com.gauvain.seigneur.presentation.model.ErrorData
 import com.gauvain.seigneur.presentation.model.base.LiveDataState
 import com.gauvain.seigneur.presentation.model.LoadingState
-import com.gauvain.seigneur.covidupdate.utils.event.EventObserver
+import com.gauvain.seigneur.presentation.utils.event.EventObserver
 import com.gauvain.seigneur.covidupdate.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.covidupdate.view.BottomMenuDialog
 import com.gauvain.seigneur.covidupdate.view.details.DetailsActivity
@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchData()
         setContentView(R.layout.activity_main)
         initView()
         observe()
@@ -82,20 +81,12 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         )
     }
 
-    private fun fetchData() {
-        if (viewModel.statisticsData.value == null ||
-            viewModel.statisticsData.value is LiveDataState.Error
-        ) {
-            viewModel.fetchData()
-        }
-    }
-
     private fun initView() {
         bottomAppBar.setNavigationOnClickListener {
             BottomMenuDialog().show(supportFragmentManager, BOTTOM_MENU_TAG)
         }
         refreshFab.setOnSafeClickListener {
-            viewModel.refreshData()
+            viewModel.refresh()
         }
         initReviewsListAdapter()
         appBarLayout.addOnOffsetChangedListener(appBarOffsetListener)
@@ -124,7 +115,7 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
             }
         })
 
-        viewModel.loadingState.observe(this, Observer {
+        viewModel.loadingData.observe(this, Observer {
             when (it) {
                 LoadingState.INITIAL_IS_LOADING -> handleLoadingView(STATE_LOADING)
                 LoadingState.REFRESH_IS_LOADING -> handleRefreshLoading(true)
@@ -197,7 +188,7 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
                     errorData?.title?.getFormattedString(this),
                     errorData?.description?.getFormattedString(this),
                     errorData?.buttonText?.getFormattedString(this)
-                ) { viewModel.fetchData() }
+                ) { viewModel.retry() }
             }
             else -> {
                 refreshFab.show()

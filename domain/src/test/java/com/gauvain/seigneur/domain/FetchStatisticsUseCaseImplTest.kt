@@ -46,9 +46,9 @@ class FetchStatisticsUseCaseImplTest {
     }
 
     @Test
-    fun `When we receive ERROR BODY NULL from provider adapter must return OutCome Error`() {
+    fun `When we receive ERROR VALUE NULL from provider adapter must return OutCome Error`() {
         given(provider.statistics()).willThrow(
-            GetStatisticsException(RequestExceptionType.BODY_NULL)
+            GetStatisticsException(RequestExceptionType.VALUE_NULL)
         )
         useCase = FetchStatisticsUseCase.create(provider)
         val outcome = useCase.invoke(null)
@@ -98,16 +98,5 @@ class FetchStatisticsUseCaseImplTest {
         val outcome = useCase.invoke(null)
         assertThat(outcome).isNotNull()
         assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER))
-    }
-
-    @Test
-    fun `When we receive UNKNOWN_OBJECT from provider adapter must return OutCome Error`() {
-        given(provider.statistics()).willThrow(
-            GetStatisticsException(RequestExceptionType.UNKNOWN_OBJECT)
-        )
-        useCase = FetchStatisticsUseCase.create(provider)
-        val outcome = useCase.invoke(null)
-        assertThat(outcome).isNotNull()
-        assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_UNKNOWN))
     }
 }

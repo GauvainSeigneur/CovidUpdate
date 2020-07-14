@@ -1,8 +1,9 @@
 package com.gauvain.seigneur.presentation
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.gauvain.seigneur.covidupdate.utils.event.Event
+import com.gauvain.seigneur.presentation.utils.event.Event
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
@@ -34,13 +35,34 @@ class MainViewModel(
     }
 
     //LiveData
-    val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
-    val historyData: MutableLiveData<AllHistoryState> = MutableLiveData()
-    val statisticsData = MutableLiveData<StatisticsState>()
-    //Event (LiveData which can be consumed only once)
-    val refreshDataEvent = MutableLiveData<RefreshEventState>()
+    private val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
+    val loadingData :LiveData<LoadingState> = loadingState
 
-    fun fetchData() {
+    private val historyState: MutableLiveData<AllHistoryState> by lazy {
+        ioJob {
+            fetchHistory()
+        }
+        MutableLiveData<AllHistoryState>()
+    }
+    val historyData: LiveData<AllHistoryState> by lazy {
+        historyState
+    }
+
+    private val statisticsState: MutableLiveData<StatisticsState> by lazy {
+        ioJob {
+            fetchStatistics()
+        }
+        MutableLiveData<StatisticsState>()
+    }
+    val statisticsData: LiveData<StatisticsState> by lazy {
+        statisticsState
+    }
+
+    //Event (LiveData which can be consumed only once)
+    private val refreshState = MutableLiveData<RefreshEventState>()
+    val refreshDataEvent :LiveData<RefreshEventState> = refreshState
+
+    private fun fetchData() {
         ioJob {
             fetchStatistics()
         }
@@ -49,7 +71,11 @@ class MainViewModel(
         }
     }
 
-    fun refreshData() {
+    fun retry() {
+        fetchData()
+    }
+
+    fun refresh() {
         loadingState.postValue(LoadingState.REFRESH_IS_LOADING)
         ioJob {
             delay(LONG_DELAY)
@@ -85,11 +111,11 @@ class MainViewModel(
         }
     }
 
-    private suspend fun fetchHistory() {
+    private fun fetchHistory() {
         val result = fetchAllHistoryUseCase.invoke()
         when (result) {
             is Outcome.Success -> {
-                historyData.postValue(
+                historyState.postValue(
                     LiveDataState.Success(
                         result.data.toData(numberFormatProvider)
                     )
@@ -115,7 +141,7 @@ class MainViewModel(
         isRefreshing: Boolean
     ) {
         if (isRefreshing) {
-            refreshDataEvent.postValue(
+            refreshState.postValue(
                 Event(
                     LiveDataState.Error(
                         ErrorData(
@@ -127,7 +153,7 @@ class MainViewModel(
                 )
             )
         } else {
-            statisticsData.value = setErrorLiveData(result.error)
+            statisticsState.postValue(setErrorLiveData(result.error))
         }
     }
 
@@ -137,7 +163,7 @@ class MainViewModel(
     ) {
         if (result.data.isEmpty()) {
             if (isRefreshing) {
-                refreshDataEvent.postValue(
+                refreshState.postValue(
                     Event(
                         LiveDataState.Error(
                             ErrorData(
@@ -149,7 +175,7 @@ class MainViewModel(
                     )
                 )
             } else {
-                statisticsData.postValue(
+                statisticsState.postValue(
                     LiveDataState.Error(
                         ErrorData(
                             ErrorDataType.NOT_RECOVERABLE,
@@ -162,7 +188,7 @@ class MainViewModel(
             }
         } else {
             if (isRefreshing) {
-                refreshDataEvent.postValue(
+                refreshState.postValue(
                     Event(
                         LiveDataState.Success(
                             StringPresenter(R.string.data_refreshed_label)
@@ -171,7 +197,7 @@ class MainViewModel(
                 )
             }
 
-            statisticsData.postValue(LiveDataState.Success(
+            statisticsState.postValue(LiveDataState.Success(
                 result.data.sortedByDescending { it.casesModel.total }.map {
                     it.toStatisticsItemData(
                         getCountryCode(it.country),
@@ -188,7 +214,7 @@ class MainViewModel(
         if (totalNewCases == null || totalNewCases == 0) {
             NewCasesData(
                 StringPresenter(R.string.no_new_cases_label),
-                null,
+
                 R.color.colorCaseNoNew
             )
         } else {
@@ -197,8 +223,8 @@ class MainViewModel(
                     R.string.new_cases_label,
                     numberFormatProvider.format(totalNewCases)
                 ),
-                R.drawable.ic_new_case_label_icon,
-                R.color.colorCaseActive
+                R.color.colorCaseActive,
+                R.drawable.ic_new_case_label_icon
             )
         }
 

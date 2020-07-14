@@ -3,6 +3,7 @@ package com.gauvain.seigneur.domain.usecase
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.GetHistoryException
 import com.gauvain.seigneur.domain.provider.HistoryProvider
+import com.gauvain.seigneur.domain.utils.callProvider
 import java.util.*
 
 internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider) :
@@ -12,14 +13,20 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
         const val ALL_COUNTRY = "all"
     }
 
-    override fun invoke(): Outcome<AllHistoryModel, ErrorType> {
-        return try {
-            val result = provider.history(ALL_COUNTRY)
-            Outcome.Success(getAllHistoryModel(result))
-        } catch (e: GetHistoryException) {
-            handleException(e)
+    override fun invoke(): Outcome<AllHistoryModel, ErrorType> =
+        when (
+            val result = callProvider(
+                { provider.history(ALL_COUNTRY) },
+                GetHistoryException::class
+            )
+            ) {
+            is ProviderResult.Success -> {
+                Outcome.Success(getAllHistoryModel(result.data))
+            }
+            is ProviderResult.Error -> {
+                Outcome.Error(result.error)
+            }
         }
-    }
 
     private fun getAllHistoryModel(result: List<StatisticsItemModel>): AllHistoryModel {
         return result.run {
@@ -51,13 +58,4 @@ internal class FetchAllHistoryUseCaseImpl(private val provider: HistoryProvider)
         }
         return smallHistoryList
     }
-
-    private fun handleException(e: GetHistoryException): Outcome.Error<ErrorType> =
-        when (e.type) {
-            RequestExceptionType.UNKNOWN_HOST -> Outcome.Error(ErrorType.ERROR_UNKNOWN_HOST)
-            RequestExceptionType.CONNECTION_LOST -> Outcome.Error(ErrorType.ERROR_CONNECTION_LOST)
-            RequestExceptionType.UNAUTHORIZED -> Outcome.Error(ErrorType.ERROR_UNAUTHORIZED)
-            RequestExceptionType.SERVER_INTERNAL_ERROR -> Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER)
-            else -> Outcome.Error(ErrorType.ERROR_UNKNOWN)
-        }
 }

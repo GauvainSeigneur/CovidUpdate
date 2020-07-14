@@ -5,15 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class Statistics(
     @SerializedName("get")
     override val get: String,
-    /*@SerializedName("parameters")
-    override val parameters: List<String>,*/
     @SerializedName("errors")
     override val errors: List<String>,
-    @SerializedName("response")
-    val stats: List<Stat>,
     //in case of error like api key uncorrect
     @SerializedName("message")
-    override val message: String?=null
+    override val message: String?=null,
+    @SerializedName("response")
+    override val response: List<Stat>
 ):BaseResponse()
 
 data class Stat(

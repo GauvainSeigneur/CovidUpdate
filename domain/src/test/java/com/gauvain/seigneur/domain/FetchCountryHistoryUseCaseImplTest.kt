@@ -50,10 +50,10 @@ class FetchCountryHistoryUseCaseImplTest {
     }
 
     @Test
-    fun `When we receive ERROR BODY NULL from provider adapter must return OutCome Error`() {
+    fun `When we receive ERROR VALUE NULL from provider adapter must return OutCome Error`() {
         runBlockingTest {
             given(provider.history("france")).willThrow(
-                GetHistoryException(RequestExceptionType.BODY_NULL)
+                GetHistoryException(RequestExceptionType.VALUE_NULL)
             )
             val outcome = useCase.invoke("france")
             assertThat(outcome).isNotNull()
@@ -109,15 +109,4 @@ class FetchCountryHistoryUseCaseImplTest {
         }
     }
 
-    @Test
-    fun `When we receive UNKNOWN_OBJECT from provider adapter must return OutCome Error`() {
-        runBlockingTest {
-            given(provider.history("france")).willThrow(
-                GetHistoryException(RequestExceptionType.UNKNOWN_OBJECT)
-            )
-            val outcome = useCase.invoke("france")
-            assertThat(outcome).isNotNull()
-            assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_UNKNOWN))
-        }
-    }
 }
