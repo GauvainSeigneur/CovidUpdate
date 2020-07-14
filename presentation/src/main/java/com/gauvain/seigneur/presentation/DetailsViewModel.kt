@@ -53,8 +53,7 @@ class DetailsViewModel(
     }
 
     private suspend fun fetchHistory(countryName: String) {
-        val result = fetchCountryHistoryUseCase.invoke(countryName)
-        when (result) {
+        when (val result = fetchCountryHistoryUseCase.invoke(countryName)) {
             is Outcome.Success -> {
                 historyState.postValue(LiveDataState.Success(result.data.toData(numberFormatProvider)))
                 loadingState.postValue(LoadingState.INITIAL_IS_LOADED)

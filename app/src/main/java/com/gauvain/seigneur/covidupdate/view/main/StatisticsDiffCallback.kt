@@ -22,12 +22,21 @@ class StatisticsDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldStats[oldItemPosition].country === newStats[newItemPosition].country
+        return isContentTheSame(oldItemPosition, newItemPosition)
     }
 
     @Nullable
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
         //you can return particular field for changed item.
         return super.getChangePayload(oldItemPosition, newItemPosition)
+    }
+
+    private fun isContentTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldCasesData = oldStats[oldItemPosition].casesData
+        val newCasesData = newStats[newItemPosition].casesData
+
+        return oldCasesData.active == newCasesData.active
+            && oldCasesData.new == newCasesData.new
+            && oldCasesData.total == newCasesData.total
     }
 }
