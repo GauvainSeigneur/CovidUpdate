@@ -99,6 +99,7 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
                     setUpAllData(it.data)
                 }
                 is LiveDataState.Error -> {
+                    //must display a dedicated view
                 }
             }
         })

@@ -88,15 +88,16 @@ class MainViewModel(
     }
 
     private suspend fun fetchStatistics() {
+        //check if the data is refreshing or get for teh first time for UI purpose
+        //if it is a refresh, we add a small delay to get a smoother UI for loading animation
         val isRefreshData = statisticsData.value != null && statisticsData.value is LiveDataState.Success
-        val resultDelay: Long
-        when (isRefreshData) {
+        val resultDelay = when (isRefreshData) {
             true -> {
-                resultDelay = SMALL_DELAY
+                SMALL_DELAY
             }
             else -> {
                 loadingState.postValue(LoadingState.INITIAL_IS_LOADING)
-                resultDelay = NO_DELAY
+                NO_DELAY
             }
         }
         val result = getStatisticsOutcome(isRefreshData)
@@ -112,8 +113,7 @@ class MainViewModel(
     }
 
     private fun fetchHistory() {
-        val result = fetchAllHistoryUseCase.invoke()
-        when (result) {
+        when (val result = fetchAllHistoryUseCase.invoke()) {
             is Outcome.Success -> {
                 historyState.postValue(
                     LiveDataState.Success(
@@ -233,6 +233,14 @@ class MainViewModel(
 
     private fun setErrorLiveData(errorType: ErrorType): LiveDataState.Error =
         when (errorType) {
+            ErrorType.ERROR_UNAUTHORIZED ->
+                LiveDataState.Error(
+                    ErrorData(
+                        ErrorDataType.NOT_RECOVERABLE,
+                        StringPresenter(R.string.error_unauthorized_title),
+                        StringPresenter(R.string.error_unauthorized_description)
+                    )
+                )
             else -> LiveDataState.Error(
                 ErrorData(
                     ErrorDataType.RECOVERABLE,

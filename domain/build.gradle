@@ -14,5 +14,3 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kt_version"
 }
 
-sourceCompatibility = "8"
-targetCompatibility = "8"

@@ -166,7 +166,7 @@ class DetailsActivity : AppCompatActivity() {
     private fun displayCasesChips(countryCases: List<CountryCasesData>) {
         for (item in countryCases) {
             val chip = Chip(this@DetailsActivity)
-            chip.text = item.value + " actives"
+            chip.text = item.value
             chip.chipIcon = ContextCompat.getDrawable(this@DetailsActivity, R.drawable.ic_circle)
             chip.chipIconTint = ColorStateList.valueOf(
                 ContextCompat.getColor(

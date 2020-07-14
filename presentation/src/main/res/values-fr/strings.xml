@@ -37,6 +37,10 @@
     <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
     <string name="retry">retry</string>
 
+    <string name="error_unauthorized_title">Oops&#8230; something went wrong</string>
+    <string name="error_unauthorized_description">Please retry later.If the problem persist, please
+        contact us</string>
+
     <string name="error_no_country_name_title">Oops&#8230; we can\'t found the name of the
         country</string>
     <string name="error_no_country_name_desc">Please go back and retry</string>
