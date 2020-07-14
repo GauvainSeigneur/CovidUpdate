@@ -7,6 +7,7 @@ enum class RequestExceptionType {
     UNAUTHORIZED,
     SERVER_INTERNAL_ERROR,
     BODY_NULL,
+    RESULT_NULL,
     UNKNOWN_OBJECT,
     JSON_ERROR
 }

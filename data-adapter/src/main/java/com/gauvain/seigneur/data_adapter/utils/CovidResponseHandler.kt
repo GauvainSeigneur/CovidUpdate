@@ -18,31 +18,37 @@ import java.net.UnknownHostException
 fun <T> performCall(call: Call<T>): RequestResult<T, RequestExceptionContent> {
     val result = runCatching {
         call.execute()
-    }.onFailure {
-        val exceptionContent = getRequestExceptionContent(it)
+    }
+        .onFailure {
+            val exceptionContent = getRequestExceptionContent(it)
+            return RequestResult.Error(
+                RequestExceptionContent(
+                    exceptionContent.exceptionType,
+                    exceptionContent.message
+                )
+            )
+        }
+    return handleRequestResult(result.getOrElse {
         return RequestResult.Error(
             RequestExceptionContent(
-                exceptionContent.exceptionType,
-                exceptionContent.message
+                RequestExceptionType
+                    .RESULT_NULL, EXCEPTION_NULL_VALUE_DESC
             )
         )
-    }
-    return handleRequestResult(result.getOrNull())
+    })
 }
 
 //Suppress cast check because is already handled by retrofit in case of success
 @Suppress("UNCHECKED_CAST")
-private fun <T> handleRequestResult(result: Response<T>?): RequestResult<T,
+private fun <T> handleRequestResult(result: Response<T>): RequestResult<T,
     RequestExceptionContent> =
-    result?.let { response ->
-        response.body().let { body ->
-            (body as? BaseResponse)?.let { baseResponse ->
-                baseResponse.message?.let {
-                    setError(RequestExceptionType.UNAUTHORIZED, it)
-                } ?: RequestResult.Success(body as T)
-            } ?: setError(RequestExceptionType.UNKNOWN_OBJECT, EXCEPTION_UNKNOWN_OBJECT_DESC)
-        }
-    } ?: setError(RequestExceptionType.BODY_NULL, EXCEPTION_NULL_VALUE_DESC)
+    result.body()?.let { body ->
+        (body as? BaseResponse)?.let { baseResponse ->
+            baseResponse.message?.let {
+                setError(RequestExceptionType.UNAUTHORIZED, it)
+            } ?: RequestResult.Success(body as T)
+        } ?: setError(RequestExceptionType.UNKNOWN_OBJECT, EXCEPTION_UNKNOWN_OBJECT_DESC)
+    } ?: setError(RequestExceptionType.BODY_NULL, EXCEPTION_BODY_NULL_DESC)
 
 private fun setError(type: RequestExceptionType, message: String):
     RequestResult.Error<RequestExceptionContent> = RequestResult.Error(
@@ -78,7 +84,7 @@ private fun getRequestExceptionContent(throwable: Throwable): RequestExceptionCo
 const val EXCEPTION_UNKNOWN_HOST_DESC = "Unknown Host Exception"
 const val EXCEPTION_CONNECTION_LOST_DESC = "Connection lost during request"
 const val EXCEPTION_ERROR_UNKNOWN_DESC = "Error unknown"
-const val EXCEPTION_BODY_NUL_DESC = "Body is null"
+const val EXCEPTION_BODY_NULL_DESC = "Body is null"
 const val EXCEPTION_NULL_VALUE_DESC = "Value is null"
 const val EXCEPTION_UNKNOWN_OBJECT_DESC = "unknown object"
 

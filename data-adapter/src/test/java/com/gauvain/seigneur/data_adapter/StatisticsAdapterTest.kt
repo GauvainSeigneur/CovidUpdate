@@ -5,7 +5,7 @@ import com.gauvain.seigneur.data_adapter.mocks.AdapterOutcomeModelMock
 import com.gauvain.seigneur.data_adapter.mocks.CovidUpdateServiceMock
 import com.gauvain.seigneur.data_adapter.mocks.ResponseGsonObjectMock
 import com.gauvain.seigneur.data_adapter.service.CovidService
-import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_BODY_NUL_DESC
+import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_BODY_NULL_DESC
 import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_CONNECTION_LOST_DESC
 import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_ERROR_UNKNOWN_DESC
 import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_UNKNOWN_HOST_DESC
@@ -69,7 +69,7 @@ class StatisticsAdapterTest {
             RequestExceptionType.BODY_NULL
         )
         assertThat((result.exceptionOrNull() as GetStatisticsException).description).isEqualTo(
-            EXCEPTION_BODY_NUL_DESC)
+            EXCEPTION_BODY_NULL_DESC)
     }
 
     @Test
