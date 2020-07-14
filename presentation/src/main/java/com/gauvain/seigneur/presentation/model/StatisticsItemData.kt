@@ -7,8 +7,8 @@ import com.gauvain.seigneur.presentation.utils.StringPresenter
 
 data class StatisticsItemData(
     val country: String,
-    val countryCode: String? = null,
-    val casesData: CasesData
+    val casesData: CasesData,
+    val countryCode: String? = null
 )
 
 data class CasesData(
@@ -19,8 +19,8 @@ data class CasesData(
 
 data class NewCasesData(
     val total: StringPresenter,
-    @DrawableRes
-    val icon: Int? = null,
     @ColorRes
-    val color: Int
+    val color: Int,
+    @DrawableRes
+    val icon: Int? = null
 )

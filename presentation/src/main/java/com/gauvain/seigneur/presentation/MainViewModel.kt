@@ -1,7 +1,6 @@
 package com.gauvain.seigneur.presentation
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gauvain.seigneur.presentation.utils.event.Event
@@ -39,9 +38,6 @@ class MainViewModel(
     private val loadingState: MutableLiveData<LoadingState> = MutableLiveData()
     val loadingData :LiveData<LoadingState> = loadingState
 
-    /*private val historyState: MutableLiveData<AllHistoryState> = MutableLiveData()
-    val historyData: LiveData<AllHistoryState> = historyState*/
-
     private val historyState: MutableLiveData<AllHistoryState> by lazy {
         ioJob {
             fetchHistory()
@@ -51,9 +47,6 @@ class MainViewModel(
     val historyData: LiveData<AllHistoryState> by lazy {
         historyState
     }
-
-    /*private val statisticsState = MutableLiveData<StatisticsState>()
-    val statisticsData : LiveData<StatisticsState> = statisticsState*/
 
     private val statisticsState: MutableLiveData<StatisticsState> by lazy {
         ioJob {
@@ -160,7 +153,7 @@ class MainViewModel(
                 )
             )
         } else {
-            statisticsState.value = setErrorLiveData(result.error)
+            statisticsState.postValue(setErrorLiveData(result.error))
         }
     }
 
@@ -221,7 +214,7 @@ class MainViewModel(
         if (totalNewCases == null || totalNewCases == 0) {
             NewCasesData(
                 StringPresenter(R.string.no_new_cases_label),
-                null,
+
                 R.color.colorCaseNoNew
             )
         } else {
@@ -230,8 +223,8 @@ class MainViewModel(
                     R.string.new_cases_label,
                     numberFormatProvider.format(totalNewCases)
                 ),
-                R.drawable.ic_new_case_label_icon,
-                R.color.colorCaseActive
+                R.color.colorCaseActive,
+                R.drawable.ic_new_case_label_icon
             )
         }
 

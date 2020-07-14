@@ -5,10 +5,15 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class HeaderApiKeyInterceptor(val apiKeyValue: String) : Interceptor {
+
+    companion object {
+        const val API_HEADER_NAME = "x-rapidapi-key"
+    }
+
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
-        builder.addHeader("x-rapidapi-key", apiKeyValue)
+        builder.addHeader(API_HEADER_NAME, apiKeyValue)
         return chain.proceed(builder.build())
     }
 }

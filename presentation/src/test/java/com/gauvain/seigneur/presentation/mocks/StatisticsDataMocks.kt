@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.presentation.mocks
 
-
 import com.gauvain.seigneur.presentation.model.*
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.NumberFormatProvider
@@ -18,14 +17,14 @@ object StatisticsDataMocks {
         List<StatisticsItemData> =
         listOf(
             StatisticsItemData(
-                "USA", "US", CasesData(
+                "USA",  CasesData(
                     NewCasesData(
                         StringPresenter(
                             R.string.new_cases_label,
                             numberFormatProvider.format(10000)
                         ),
-                        R.drawable.ic_new_case_label_icon,
-                        R.color.colorCaseActive
+                        R.color.colorCaseActive,
+                        R.drawable.ic_new_case_label_icon
                     ),
                     QuantityStringPresenter(
                         R.plurals.active_case_label,
@@ -36,15 +35,15 @@ object StatisticsDataMocks {
                         R.string.total_case_label,
                         numberFormatProvider.format(30000)
                     )
-                )
+                ),
+                "US"
             ),
             StatisticsItemData(
-                "Spain", "ES", CasesData(
+                "Spain",  CasesData(
                     NewCasesData(
                         StringPresenter(
                             R.string.no_new_cases_label
                         ),
-                        null,
                         R.color.colorCaseNoNew
                     ),
                     QuantityStringPresenter(
@@ -56,17 +55,18 @@ object StatisticsDataMocks {
                         R.string.total_case_label,
                         numberFormatProvider.format(2500)
                     )
-                )
+                ),
+                "ES"
             ),
             StatisticsItemData(
-                "France", "FR", CasesData(
+                "France",  CasesData(
                     NewCasesData(
                         StringPresenter(
                             R.string.new_cases_label,
                             numberFormatProvider.format(100)
                         ),
-                        R.drawable.ic_new_case_label_icon,
-                        R.color.colorCaseActive
+                        R.color.colorCaseActive,
+                        R.drawable.ic_new_case_label_icon
                     ),
                     QuantityStringPresenter(
                         R.plurals.active_case_label,
@@ -77,15 +77,15 @@ object StatisticsDataMocks {
                         R.string.total_case_label,
                         numberFormatProvider.format(300)
                     )
-                )
+                ),
+                "FR"
             ),
             StatisticsItemData(
-                "Netherlands", "NL", CasesData(
+                "Netherlands", CasesData(
                     NewCasesData(
                         StringPresenter(
                             R.string.no_new_cases_label
                         ),
-                        null,
                         R.color.colorCaseNoNew
                     ),
                     QuantityStringPresenter(
@@ -97,7 +97,8 @@ object StatisticsDataMocks {
                         R.string.total_case_label,
                         numberFormatProvider.format(0)
                     )
-                )
+                ),
+                "NL"
             )
         )
 }

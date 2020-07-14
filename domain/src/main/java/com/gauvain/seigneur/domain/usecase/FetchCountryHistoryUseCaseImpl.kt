@@ -3,20 +3,21 @@ package com.gauvain.seigneur.domain.usecase
 import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.GetHistoryException
 import com.gauvain.seigneur.domain.provider.HistoryProvider
+import com.gauvain.seigneur.domain.utils.callProvider
 import java.util.*
 
 internal class FetchCountryHistoryUseCaseImpl(private val provider: HistoryProvider) :
-    BaseUseCase<GetHistoryException>(),
     FetchCountryHistoryUseCase {
 
-    override suspend fun invoke(countryName: String): Outcome<CountryHistoryModel, ErrorType> {
-        return try {
-            val result = provider.history(countryName)
-            Outcome.Success(getCountryHistoryModel(result))
-        } catch (e: GetHistoryException) {
-            handleException(e)
+    override suspend fun invoke(countryName: String): Outcome<CountryHistoryModel, ErrorType>  =
+        when (val result = callProvider ({ provider.history(countryName)}, GetHistoryException::class)) {
+            is ProviderResult.Success -> {
+                Outcome.Success(getCountryHistoryModel(result.data))
+            }
+            is ProviderResult.Error -> {
+                Outcome.Error(result.error)
+            }
         }
-    }
 
     private fun getCountryHistoryModel(result: List<StatisticsItemModel>): CountryHistoryModel {
         return result.run {

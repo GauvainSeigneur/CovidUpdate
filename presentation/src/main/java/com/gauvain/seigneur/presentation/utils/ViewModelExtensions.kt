@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
 var ui: CoroutineDispatcher = Dispatchers.Main
-var io: CoroutineDispatcher =  Dispatchers.IO
+var io: CoroutineDispatcher = Dispatchers.IO
 var background: CoroutineDispatcher = Dispatchers.Default
 
 fun ViewModel.uiJob(block: suspend CoroutineScope.() -> Unit): Job {
