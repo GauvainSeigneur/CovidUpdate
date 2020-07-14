@@ -14,7 +14,7 @@ class HistoryAdapter(private val service: CovidService) :
     override fun history(country: String): List<StatisticsItemModel> =
         when (val result = performCall(service.history(country))) {
             is RequestResult.Success -> {
-                result.data.stats.map { stat -> stat.toDomainStatistics() }
+                result.data.response.map { stat -> stat.toDomainStatistics() }
             }
             is RequestResult.Error -> {
                 throw GetHistoryException(result.error.exceptionType, result.error.message)

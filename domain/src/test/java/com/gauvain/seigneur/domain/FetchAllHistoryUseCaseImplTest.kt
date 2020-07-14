@@ -46,9 +46,9 @@ class FetchAllHistoryUseCaseImplTest {
     }
 
     @Test
-    fun `When we receive ERROR BODY NULL from provider adapter must return OutCome Error`() {
+    fun `When we receive ERROR VALUE NULL from provider adapter must return OutCome Error`() {
         given(provider.history("all")).willThrow(
-            GetHistoryException(RequestExceptionType.BODY_NULL)
+            GetHistoryException(RequestExceptionType.VALUE_NULL)
         )
         useCase = FetchAllHistoryUseCase.create(provider)
         val outcome = useCase.invoke()
@@ -100,14 +100,4 @@ class FetchAllHistoryUseCaseImplTest {
         assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_INTERNAL_SERVER))
     }
 
-    @Test
-    fun `When we receive UNKNOWN_OBJECT from provider adapter must return OutCome Error`() {
-        given(provider.history("all")).willThrow(
-            GetHistoryException(RequestExceptionType.UNKNOWN_OBJECT)
-        )
-        useCase = FetchAllHistoryUseCase.create(provider)
-        val outcome = useCase.invoke()
-        assertThat(outcome).isNotNull()
-        assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_UNKNOWN))
-    }
 }

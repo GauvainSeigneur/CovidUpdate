@@ -14,7 +14,7 @@ class StatisticsAdapter(private val service: CovidService) :
     override fun statistics(country: String?): List<StatisticsItemModel> =
         when (val result = performCall(service.statistics(country))) {
             is RequestResult.Success -> {
-                result.data.stats.map { stat -> stat.toDomainStatistics() }
+                result.data.response.map { stat -> stat.toDomainStatistics() }
             }
             is RequestResult.Error -> {
                 throw GetStatisticsException(result.error.exceptionType, result.error.message)

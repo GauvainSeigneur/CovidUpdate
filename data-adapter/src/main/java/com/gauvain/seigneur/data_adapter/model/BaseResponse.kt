@@ -7,4 +7,6 @@ abstract class BaseResponse {
     abstract val errors: List<String>
     //in case of error like wrong api key
     abstract val message: String?
+    //response received by server
+    abstract val response: Any?
 }

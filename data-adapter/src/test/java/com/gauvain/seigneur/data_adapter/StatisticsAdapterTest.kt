@@ -5,11 +5,7 @@ import com.gauvain.seigneur.data_adapter.mocks.AdapterOutcomeModelMock
 import com.gauvain.seigneur.data_adapter.mocks.CovidUpdateServiceMock
 import com.gauvain.seigneur.data_adapter.mocks.ResponseGsonObjectMock
 import com.gauvain.seigneur.data_adapter.service.CovidService
-import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_BODY_NULL_DESC
-import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_CONNECTION_LOST_DESC
-import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_ERROR_UNKNOWN_DESC
-import com.gauvain.seigneur.data_adapter.utils.EXCEPTION_UNKNOWN_HOST_DESC
-import com.gauvain.seigneur.domain.model.RequestExceptionType
+import com.gauvain.seigneur.domain.model.*
 import com.gauvain.seigneur.domain.provider.GetStatisticsException
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -52,7 +48,8 @@ class StatisticsAdapterTest {
             RequestExceptionType.UNAUTHORIZED
         )
         assertThat((result.exceptionOrNull() as GetStatisticsException).description).isEqualTo(
-            "Invalid X-Rapidapi-Key")
+            "Invalid X-Rapidapi-Key"
+        )
     }
 
     @Test
@@ -66,10 +63,11 @@ class StatisticsAdapterTest {
         assertThat(result.exceptionOrNull()).isNotNull()
         assertThat(result.exceptionOrNull()).isInstanceOf(GetStatisticsException::class.java)
         assertThat((result.exceptionOrNull() as GetStatisticsException).type).isEqualTo(
-            RequestExceptionType.BODY_NULL
+            RequestExceptionType.VALUE_NULL
         )
         assertThat((result.exceptionOrNull() as GetStatisticsException).description).isEqualTo(
-            EXCEPTION_BODY_NULL_DESC)
+            EXCEPTION_NULL_VALUE_DESC
+        )
     }
 
     @Test
