@@ -29,6 +29,7 @@ internal class FetchCountryCodeUseCaseImpl(private val provider: CountryListProv
         }
 
     private fun fetchCountryCode(countryName: String, countries: List<CountryItemModel>): String? {
+        println("fetchCountryCode A $countryName $countries")
         var code: String? = null
         for (item in countries) {
             if (countryName.toLowerCase(LOCAL) == item.country.toLowerCase(LOCAL)) {

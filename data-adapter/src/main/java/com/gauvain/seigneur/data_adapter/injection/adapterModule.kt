@@ -17,6 +17,10 @@ val adapterModule = module {
         HistoryAdapter(get())
     }
 
+    single<RegionListProvider> {
+        RegionListAdapter(get())
+    }
+
     factory<NumberFormatProvider> {
         NumberFormatAdapter()
     }

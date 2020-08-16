@@ -3,6 +3,7 @@ package com.gauvain.seigneur.domain.usecase
 import com.gauvain.seigneur.domain.model.ErrorType
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.model.StatisticsItemModel
+import com.gauvain.seigneur.domain.provider.RegionListProvider
 import com.gauvain.seigneur.domain.provider.StatisticsProvider
 
 interface FetchStatisticsUseCase {
@@ -10,8 +11,9 @@ interface FetchStatisticsUseCase {
 
     companion object {
         fun create(
-            provider: StatisticsProvider
+            provider: StatisticsProvider,
+            regionListProvider: RegionListProvider
         ): FetchStatisticsUseCase =
-            FetchStatisticsUseCaseImpl(provider)
+            FetchStatisticsUseCaseImpl(provider, regionListProvider)
     }
 }

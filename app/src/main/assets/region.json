@@ -1,0 +1,28 @@
+{
+  "continents": [
+    {
+      "name": "europe"
+    },
+    {
+      "name": "north-america"
+    },
+    {
+      "name": "south-america"
+    },
+    {
+      "name": "American Samoa"
+    },
+    {
+      "name": "asia"
+    },
+    {
+      "name": "africa"
+    },
+    {
+      "name": "world"
+    },
+    {
+      "name": "all"
+    }
+  ]
+}

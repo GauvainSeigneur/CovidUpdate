@@ -32,7 +32,7 @@ fun <T : BaseResponse> performCall(call: Call<T>): RequestResult<T, RequestExcep
 
 private fun <T : BaseResponse> handleResult(result: Result<Response<T>>): RequestResult<T,
     RequestExceptionContent> {
-    return result.run {
+    result.run {
         getOrNull()?.body()?.let { body ->
             body.message?.let { message ->
                 return setError(

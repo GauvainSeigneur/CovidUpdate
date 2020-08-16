@@ -88,7 +88,7 @@ class MainViewModel(
     }
 
     private suspend fun fetchStatistics() {
-        //check if the data is refreshing or get for teh first time for UI purpose
+        //check if the data is refreshing or get for the first time for UI purpose
         //if it is a refresh, we add a small delay to get a smoother UI for loading animation
         val isRefreshData = statisticsData.value != null && statisticsData.value is LiveDataState.Success
         val resultDelay = when (isRefreshData) {
