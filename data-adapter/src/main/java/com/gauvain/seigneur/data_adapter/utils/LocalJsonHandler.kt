@@ -20,7 +20,6 @@ inline fun <reified T> readJson(
     runCatching {
         parseJson(getJsonContent(application, fileName)) as T
     }
-
         .onFailure {
             result = RequestResult.Error(
                 RequestExceptionContent(

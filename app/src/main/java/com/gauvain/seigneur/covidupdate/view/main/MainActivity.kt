@@ -3,10 +3,14 @@ package com.gauvain.seigneur.covidupdate.view.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gauvain.seigneur.covidupdate.R
@@ -24,12 +28,15 @@ import com.gauvain.seigneur.presentation.MainViewModel
 import com.gauvain.seigneur.presentation.utils.StringPresenter
 import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.country_stat_list.*
 import kotlinx.android.synthetic.main.header_chart_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
 
     companion object {
+        const val DELAY_FILTER = 100L
         const val FADE_MAX_VALUE = 1f
         const val SCALE_MAX_VALUE = 1.5f
         const val BOTTOM_MENU_TAG = "BottomMenuDialogTAG"
@@ -50,6 +57,7 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
             val vRatio = (vTotalScrollRange.toFloat() + verticalOffset) / vTotalScrollRange
             manageHeaderAspect(vRatio)
         }
+    private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +98,14 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
         }
         initReviewsListAdapter()
         appBarLayout.addOnOffsetChangedListener(appBarOffsetListener)
+        searchInputEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // user is typing: reset already started timer (if existing)
+                timer?.cancel()
+            }
+            override fun afterTextChanged(s: Editable?) { applyFilter(s) }
+        })
     }
 
     private fun observe() {
@@ -202,5 +218,16 @@ class MainActivity : AppCompatActivity(), StatisticsListAdapter.Listener {
     private fun handleRefreshLoading(isVisible: Boolean) {
         refreshFab.isClickable = !isVisible
         showFabLoader(isVisible)
+    }
+
+    private fun applyFilter(s: Editable?) {
+        timer = Timer()
+        timer?.schedule(object : TimerTask() {
+            override fun run() {
+                this@MainActivity.runOnUiThread(Runnable {
+                    statisticsListAdapter.filter.filter(s)
+                })
+            }
+        }, DELAY_FILTER)
     }
 }

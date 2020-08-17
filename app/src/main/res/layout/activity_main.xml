@@ -7,13 +7,23 @@
     android:layout_height="match_parent"
     tools:context=".view.main.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <include
+            layout="@layout/country_stat_list"/>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/statsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
         android:layout_marginBottom="?attr/actionBarSize"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>-->
 
     <com.gauvain.seigneur.covidupdate.widget.FabLoadingView
         android:id="@+id/fabLoadingView"
